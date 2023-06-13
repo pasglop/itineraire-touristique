@@ -27,7 +27,7 @@ jobs:
           with:
             set-safe-directory: '/github/workspace'
         - run: |
-            git config --system --add safe.directory /github/workspace
+            git config --global --add safe.directory /github/workspace
         - name: Build Writerside docs using Docker
           uses: JetBrains/writerside-github-action@v3
         - name: Upload documentation
