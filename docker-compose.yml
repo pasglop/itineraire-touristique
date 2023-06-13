@@ -5,22 +5,22 @@ services:
       - "8000:5000"
   postgres:
     image: "postgres:15.3-alpine3.18"
-    container_name: postgres_container
+    container_name: ${PG_HOST}
     restart: always
     environment:
-      POSTGRES_USER: itinary
-      POSTGRES_PASSWORD: itinary_datascientest
-      POSTGRES_DB: idf-itinary
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ${PG_DB}
       PGDATA: /data/postgres
     volumes:
        - postgres:/data/postgres
     ports:
-      - "5432:5432"
+      - "${PG_PORT}:${PG_PORT}"
     networks:
       - postgres
 
   pgadmin:
-    container_name: pgadmin_container
+    container_name: ${PGADMIN_HOST}.env
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
