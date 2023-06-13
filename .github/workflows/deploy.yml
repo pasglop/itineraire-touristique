@@ -24,10 +24,10 @@ jobs:
         steps:
         - name: Checkout repository
           uses: actions/checkout@v3
-          with:
-            set-safe-directory: '/github/workspace'
+          run: git config --system --add safe.directory '/github/workspace'
         - name: Build Writerside docs using Docker
           uses: JetBrains/writerside-github-action@v3
+          run: git config --system --add safe.directory '/github/workspace'
         - name: Upload documentation
           uses: actions/upload-artifact@v3
           with:
