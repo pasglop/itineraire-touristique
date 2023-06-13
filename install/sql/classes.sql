@@ -5,7 +5,7 @@ create table public.classes
     name        varchar                                not null,
     type        varchar                                not null,
     schema_url  varchar                                not null,
-    "createdAt" time with time zone      default now() not null,
+    "createdAt" timestamp with time zone      default now() not null,
     "updatedAt" timestamp with time zone default now() not null
 );
 

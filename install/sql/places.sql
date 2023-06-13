@@ -7,7 +7,7 @@ create table public.places
     website                  varchar,
     latitude                 double precision                  not null,
     longitude                double precision                  not null,
-    "lastUpdate"             time with time zone default now() not null,
+    "lastUpdate"             timestamp with time zone default now() not null,
     "sourceUpdated"          date                              not null
 );
 
@@ -18,7 +18,7 @@ create table public.places_to_classes
 (
     id         bigserial,
     places_id  integer not null,
-    "createdAt" time with time zone      default now() not null,
+    "createdAt" timestamp with time zone      default now() not null,
     "updatedAt" timestamp with time zone default now() not null
         constraint places_to_classes_pk
             primary key
@@ -43,7 +43,7 @@ create table public.contacts
     schema_url varchar,
     type       varchar,
     phone      varchar,
-    "createdAt" time with time zone      default now() not null,
+    "createdAt" timestamp with time zone      default now() not null,
     "updatedAt" timestamp with time zone default now() not null
 );
 
@@ -62,7 +62,7 @@ create table public.descriptions
             references public.places,
     lang       varchar,
     schema_url varchar,
-    "createdAt" time with time zone      default now() not null,
+    "createdAt" timestamp with time zone      default now() not null,
     "updatedAt" timestamp with time zone default now() not null,
     constraint descriptions_pk2
         unique (lang, places_id)
@@ -83,7 +83,7 @@ create table public.addresses
     locality   varchar,
     zipcode    integer,
     street     varchar,
-    "createdAt" time with time zone      default now() not null,
+    "createdAt" timestamp with time zone      default now() not null,
     "updatedAt" timestamp with time zone default now() not null
 );
 
@@ -102,7 +102,7 @@ create table public.openings
     through   date,
     opens     time with time zone,
     closes    time with time zone,
-    "createdAt" time with time zone      default now() not null,
+    "createdAt" timestamp with time zone      default now() not null,
     "updatedAt" timestamp with time zone default now() not null
 );
 
