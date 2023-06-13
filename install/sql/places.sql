@@ -16,17 +16,17 @@ alter table public.places
 
 create table public.places_to_classes
 (
-    id         bigserial,
-    places_id  integer not null,
-    "createdAt" timestamp with time zone      default now() not null,
-    "updatedAt" timestamp with time zone default now() not null
-        constraint places_to_classes_pk
-            primary key
+    id         bigserial        constraint places_to_classes_pk
+            primary key,
+    places_id  integer not null
         constraint places_fk
             references public.places,
     classes_id integer not null
         constraint classes_fk
-            references public.classes
+            references public.classes,
+    "createdAt" timestamp with time zone      default now() not null,
+    "updatedAt" timestamp with time zone default now() not null
+
 );
 
 alter table public.places_to_classes

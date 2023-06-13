@@ -42,6 +42,11 @@ Dockerfile contient :
 * PGadmin sur http://localhost:5050/
   * définir le mot de passe master de votre choix (mais s'en souvenir...)
   * Créer un serveur avec les paramètres definis dans .env
+* Configure Python environnement:
+  * Run `python3 -m venv venv`
+  * Run `source venv/bin/activate`
+  * Run `pip install -r requirements.txt`
+* Run `python3 install/install.py` to load data into Postgres
 
 ## Usage
 * load data
