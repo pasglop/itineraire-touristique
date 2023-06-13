@@ -6,7 +6,7 @@ Projet Datascientest by :
 - Marouen 
 - David Delpuech
 
-Documentation du projet : [Documentation](Writerside/starter-topic.md)
+Documentation du projet : [Documentation](https://pasglop.github.io/itineraire-touristique)
 
 ## project Spaces
 [Click-Up](https://app.clickup.com/4714782/v/l/s/90030384214)

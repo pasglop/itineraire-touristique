@@ -11,6 +11,8 @@ You can use it as a sandbox to play with Writerside features, and remove it from
 
 [Data Discovery](Datatourisme-Ontology-Overview.md)
 
+![Itinary DB.png](../../artifacts/ItinaryDB.png)
+[DB Diagramme](https://dbdiagram.io/d/64887fb9722eb77494e43a40)
 
 ## Consommation de la donnée 
 Appliquer le clustering pour pouvoir faire des trajets dans les clusters, le but ce serait d’arriver à avoir un trajet, ensuite il faut visualiser un trajet via Dash. 
