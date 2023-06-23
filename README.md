@@ -46,7 +46,7 @@ Dockerfile contient :
   * Run `python3 -m venv venv`
   * Run `source venv/bin/activate`
   * Run `pip install -r requirements.txt`
-* Run `python3 install/install.py` to load data into Postgres
+* Run `python3 source/install/install.py` to load data into Postgres
 
 ## Usage
 * load data
