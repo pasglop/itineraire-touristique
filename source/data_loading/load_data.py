@@ -5,6 +5,7 @@ import requests
 import git
 import time
 from zipfile import ZipFile
+import shutil
 
 load_dotenv()
 
@@ -30,7 +31,10 @@ class LoadData():
         # delete all files in the raw_data folder
         files = os.listdir(self.path)
         for file in files:
-            os.remove(self.path + file)
+            if os.path.isdir(self.path + file):
+                shutil.rmtree(self.path + file)
+            else:
+                os.remove(self.path + file)
 
     def download_data(self):
         if self.check_file_exists():
