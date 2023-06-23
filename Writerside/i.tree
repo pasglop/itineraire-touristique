@@ -8,4 +8,5 @@
 
     <toc-element topic="starter-topic.md"/>
     <toc-element topic="Datatourisme-Ontology-Overview.md"/>
+    <toc-element topic="Processing-des-données.md"/>
 </instance-profile>
