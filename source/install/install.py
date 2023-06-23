@@ -46,13 +46,13 @@ cur = conn.cursor()
 
 # Function to execute sql file
 def execute_sql_file(filename):
-    with open(filename, 'r') as f:
+    with open(os.path.abspath(filename), 'r') as f:
         cur.execute(sql.SQL(f.read()))
 
 
 # Execute the sql files
-execute_sql_file('sql/classes.sql')
-execute_sql_file('sql/places.sql')
+execute_sql_file('artifacts/sql/classes.sql')
+execute_sql_file('artifacts/sql/places.sql')
 
 # Commit changes and close
 conn.commit()
