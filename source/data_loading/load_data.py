@@ -10,7 +10,7 @@ import shutil
 load_dotenv()
 
 
-class LoadData():
+class LoadData:
     def __init__(self):
         self.url = os.getenv("DT_API_URL")
         self.key = os.getenv("DT_API_KEY")

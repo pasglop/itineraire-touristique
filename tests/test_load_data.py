@@ -4,7 +4,7 @@ from source.data_loading.load_data import LoadData
 
 
 class TestLoadData:
-    @pytest.fixture(autouse=True)
+    @pytest.fixture
     def loader(self):
         return LoadData()
 
