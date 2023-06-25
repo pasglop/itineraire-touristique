@@ -7,8 +7,12 @@ import psycopg2
 from dotenv import load_dotenv
 
 from source.data_loading.load_data import LoadData
+import source.data_processing.table_processing as tp
 
 load_dotenv()
+
+load_object = LoadData()
+fullDirPath = load_object.fullDirPath
 
 
 def connect_db():
@@ -60,16 +64,20 @@ def process_file(json_object):
     cur = db.cursor()
     if not find_object(json_object, cur):
         # open the json file
-        with open(json_object['file']) as json_file:
+        with open(fullDirPath + 'objects/' + json_object['file']) as json_file:
             data = json.load(json_file)
-            # insert the data into the database
-            query = f"""
-            INSERT INTO public.places (id, name, schema_url, website, latitude, longitude, "lastUpdate", "sourceUpdated") 
-            VALUES 
-            ('{data['dc:identifier']}', '{json_object['label']}', '{data['@id']}', 
-            '{data['isOwnedBy']['foaf:homepage']}', {data['schema:geo']['schema:latitude']}, 
-            {data['schema:geo']['schema:longitude']}, now(), '{json_object['lastUpdateDatatourisme']}')"
-            """
+            # Combine both json objects
+            data.update(json_object)
+            # map the data to the a cleaner object?
+
+            # Insert into the database
+            try:
+                tp.places_load(data, cur)
+            except tp.ProcessError:
+                print(f"Error: {tp.ProcessError}")
+                return False
+
+    cur.close()
     db.close()
 
 
@@ -89,8 +97,7 @@ class ProcessData:
         :return:
         """
         self.data = None
-        load_object = LoadData()
-        self.fullDirPath = load_object.fullDirPath
+        self.fullDirPath = fullDirPath
 
     def read_toc(self):
         """
