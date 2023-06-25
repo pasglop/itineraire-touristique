@@ -1,6 +1,6 @@
 import pytest
 
-from source.data_processing.process_data import ProcessData, connect_db, find_object
+from source.data_processing.process_data import ProcessData, connect_db, find_object, process_file
 
 
 class TestProcessData:
@@ -16,7 +16,6 @@ class TestProcessData:
 
     def test_find_object(self, processing):
         processing.read_toc()
-        print(processing.data[0])
         assert True
 
     def test_query_object_exits(self, processing):
@@ -27,3 +26,8 @@ class TestProcessData:
         cur.close()
         db.close()
         assert type(test) is bool
+
+    def test_process_file(self, processing):
+        processing.read_toc()
+        test = process_file(processing.data[0])
+        assert True
