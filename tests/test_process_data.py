@@ -1,9 +1,9 @@
 import pytest
 import dateutil.parser
 
-from source.data_processing.process_data import ProcessData, connect_db, find_object, process_file, disconnect_db, \
+from source.data_processing.places_processing import PlacesProcessing
+from source.data_processing.process_data import ProcessData, connect_db, process_file, disconnect_db, \
     load_json_object
-from source.data_processing.table_processing import TableProcessing
 
 
 class TestProcessData:
@@ -14,7 +14,7 @@ class TestProcessData:
     @pytest.fixture
     def db_session(self):
         conn, db_session = connect_db()
-        yield db_session
+        yield conn, db_session
         disconnect_db(conn, db_session)
 
     def test_read_toc(self, processing):
@@ -29,7 +29,9 @@ class TestProcessData:
 
     def test_query_object_exits(self, processing, db_session):
         processing.read_toc()
-        test = find_object(processing.data[0], db_session)
+        data = load_json_object(processing.data[0])
+        places = PlacesProcessing(data, db_session)
+        test = places.find_object()
         assert type(test) is bool
 
     def test_process_file(self, processing):
@@ -37,20 +39,33 @@ class TestProcessData:
         test = process_file(processing.data[0])
         assert True
 
-    def test_table_ops_check(self, processing, db_session):
+    def test_places_ops_check(self, processing, db_session):
         # get a record from TOC
         processing.read_toc()
         data = load_json_object(processing.data[0])
         # check if it exists in the database
-        # we need a dict with keys to compare / preferably primary keys
-        compare_keys = {"id": "dc:identifier", "source_updated": "lastUpdateDatatourisme"}
-
-        tp = TableProcessing('public.places', compare_keys, data, db_session)
+        tp = PlacesProcessing(data, db_session)
         test = tp.exists()
 
         # manually check if the record exists in the database
-        db_session.execute(f"SELECT 1 FROM public.places "
-                                   f"WHERE id = '{data['dc:identifier']}' AND"
-                                   f" source_updated = '{dateutil.parser.parse(data['lastUpdateDatatourisme'])}'")
+        db_conn, db_session = db_session
+        query = f"""
+            SELECT 1 FROM public.places 
+            WHERE id = '{data['dc_identifier']}' AND 
+            source_updated <= '{dateutil.parser.parse(data['lastUpdateDatatourisme'])}'
+            """
+        db_session.execute(query)
         result = True if db_session.fetchone() else False
         assert result == test
+
+    def test_places_ops_insert(self, processing, db_session):
+        # get a record from TOC
+        processing.read_toc()
+        data = load_json_object(processing.data[0])
+
+        tp = PlacesProcessing(data, db_session)
+        if tp.exists():
+            assert True
+        else:
+            test = tp.insert()
+            assert test is True

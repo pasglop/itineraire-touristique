@@ -1,3 +1,4 @@
+import dpath
 import psycopg2
 import dateutil.parser
 
@@ -10,11 +11,12 @@ class ProcessError(Exception):
 
 
 class TableProcessing:
-    def __init__(self, table, comparison_keys, data, db_session):
+    def __init__(self, table, mapping, comparison_keys, data, db_session):
         self.table = table
+        self.mapping = mapping
         self.comparisonKeys = comparison_keys
         self.data = data
-        self.db_session = db_session
+        self.db_conn, self.db_session = db_session
 
     def prepare_comparison(self):
         """
@@ -25,27 +27,30 @@ class TableProcessing:
         # first we check that the object has all the keys we need
         # then we create the comparison string
         comparison = ""
-        for key, value in self.comparisonKeys.items():
-            if value not in self.data.keys():
-                raise ProcessError(f"Field {value} is missing from the object")
+        for value in self.comparisonKeys:
+            json_key = self.mapping[value]
+            if json_key not in self.data.keys():
+                raise ProcessError(f"Field {json_key} is missing from the object")
             # detecting a json date object
             try:
-                test_date = dateutil.parser.parse(self.data[self.comparisonKeys[key]])
-                comparison += f"{key} < '{test_date}' AND "
+                test_date = dateutil.parser.parse(self.data[json_key])
+                comparison += f"{value} <= '{test_date}' AND "
             except ValueError:
-                comparison += f"{key} = '{self.data[self.comparisonKeys[key]]}' AND "
+                comparison += f"{value} = '{self.data[json_key]}' AND "
         comparison = comparison[:-5]
         return comparison
 
-    def exists(self):
+    def exists(self, where=None):
         """
         This function is used to check if the object already exists in the database.
+        :param where:
         :param self:
         :return:
         """
-        comparison = self.prepare_comparison()
+        if where is None:
+            where = self.prepare_comparison()
         query = f"""
-        SELECT 1 FROM {self.table} WHERE {comparison}
+        SELECT 1 FROM {self.table} WHERE {where}
         """
         try:
             self.db_session.execute(query)
@@ -58,23 +63,46 @@ class TableProcessing:
 
         return True
 
+    def parse_data(self):
+        """
+        This function is used to parse the data from the object.
+        :param self:
+        :return:
+        """
+        values = []
+        for key in self.mapping.keys():
+            json_key = self.mapping[key]
+            if json_key.find("/") != -1:
+                try:
+                    dict_value = dpath.get(self.data, json_key)
+                    values.append(dict_value)
+                except ValueError or IndexError:
+                    raise ProcessError(f"Field {json_key} is missing from the object or is not properly formatted")
+            else:
+                values.append(self.data[json_key])
 
-def places_load(data, cursor):
+        return values
 
-    print(data['isOwnedBy'])
-    query = f"""
-    INSERT
-    INTO
-    public.places(id, name, schema_url, website, latitude, longitude, "lastUpdate", "sourceUpdated")
-    VALUES
-    ('{data['dc:identifier']}', '{data['label']}', '{data['@id']}',
-    '{data['isOwnedBy']['foaf:homepage']}', {data['schema:geo']['schema:latitude']},
-    {data['schema:geo']['schema:longitude']}, now(), '{data['lastUpdateDatatourisme']}')"
-    """
+    def insert(self):
+        """
+        This function is used to insert the object in the database.
+        :param self:
+        :return:
+        """
+        cols = self.mapping.keys()
+        values = self.parse_data()
 
-    try:
-        cursor.execute(query)
-    except psycopg2.Error as e:
-        raise ProcessError(e.pgerror)
+        query = f"""
+        INSERT INTO {self.table} ({', '.join(cols)}, updated_at)
+        VALUES ('{"','".join(values)}', NOW())
+        """
+        try:
+            self.db_session.execute(query)
+            self.db_conn.commit()
+        except psycopg2.Error as e:
+            raise ProcessError(e.pgerror)
 
-    return True
+        return True
+
+    def update(self):
+        pass

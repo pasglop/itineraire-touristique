@@ -3,6 +3,7 @@ from psycopg2 import sql
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from dotenv import load_dotenv
 import os
+import git
 
 load_dotenv()  # take environment variables from .env.
 
@@ -46,13 +47,15 @@ cur = conn.cursor()
 
 # Function to execute sql file
 def execute_sql_file(filename):
+    repo = git.Repo('', search_parent_directories=True)
+    path = repo.working_tree_dir + f'/{filename}/'
     with open(os.path.abspath(filename), 'r') as f:
         cur.execute(sql.SQL(f.read()))
 
 
 # Execute the sql files
-execute_sql_file('../../artifacts/sql/classes.sql')
-execute_sql_file('../../artifacts/sql/places.sql')
+execute_sql_file('artifacts/sql/classes.sql')
+execute_sql_file('artifacts/sql/places.sql')
 
 # Commit changes and close
 conn.commit()

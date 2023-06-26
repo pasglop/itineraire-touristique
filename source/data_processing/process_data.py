@@ -7,7 +7,7 @@ import psycopg2
 from dotenv import load_dotenv
 
 from source.data_loading.load_data import LoadData
-import source.data_processing.table_processing as tp
+from source.data_processing.places_processing import PlacesProcessing
 
 load_dotenv()
 
@@ -35,6 +35,28 @@ def disconnect_db(conn, sess):
     conn.close()
 
 
+def clean_key(obj):
+    for key in list(obj):
+        new_key = key.replace(":", "_")
+        if new_key != key:
+            obj[new_key] = obj[key]
+            del obj[key]
+    return obj
+
+
+def process_file(json_object):
+    # Process the file here
+    # Replace this with your actual file processing logic
+    db, cur = connect_db()
+    print(f"Processing Object: {json_object['label']}")
+    json_object['schema_url'] = generate_schema_url(json_object['file'])
+    places = PlacesProcessing(json_object, (db, cur))
+    if not places.find_object():
+        # open the json file
+        data = load_json_object(json_object)
+    disconnect_db(db, cur)
+
+
 def generate_schema_url(path_to_object):
     # example path 0/00/13-00006084-c3d9-3d90-8a22-e0a70f5c119a.json
     # example schema_url https://data.datatourisme.gouv.fr/13/00006084-c3d9-3d90-8a22-e0a70f5c119a
@@ -44,41 +66,13 @@ def generate_schema_url(path_to_object):
     return re.sub(regex, subst, path_to_object, 0)
 
 
-def find_object(json_obj, cur):
-    """
-    This function is used to find the object in the database.
-    and check if it needs to be updated.
-    :param json_obj: object from json TOC
-    :param cur: DB cursor
-    :return: boolean
-    """
-    schema_url = generate_schema_url(json_obj['file'])
-    query = f"SELECT 1 FROM public.places WHERE schema_url = '{schema_url}'"
-    cur.execute(query)
-    result = cur.fetchone()
-    if result is None:
-        return False
-
-    return True
-
-
-def process_file(json_object):
-    # Process the file here
-    # Replace this with your actual file processing logic
-    db, cur = connect_db()
-    print(f"Processing Object: {json_object['label']}")
-    cur = db.cursor()
-    if not find_object(json_object, cur):
-        # open the json file
-        data = load_json_object(json_object)
-    disconnect_db(db, cur)
-
-
 def load_json_object(json_object):
     with open(fullDirPath + 'objects/' + json_object['file']) as json_file:
-        data = json.load(json_file)
+        data = json.load(json_file, object_hook=clean_key)
         # Combine both json objects
         data.update(json_object)
+        # process specific fields
+        data['schema_url'] = generate_schema_url(data['file'])
         return data
 
 
