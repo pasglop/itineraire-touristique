@@ -69,3 +69,15 @@ class TestProcessData:
         else:
             test = tp.insert()
             assert test is True
+            
+    def test_places_ops_update(self, processing, db_session):
+        # get a record from TOC
+        processing.read_toc()
+        data = load_json_object(processing.data[0])
+
+        tp = PlacesProcessing(data, db_session)
+        if tp.exists():
+            test = tp.update()
+            assert test is True
+        else:
+            assert True

@@ -105,4 +105,22 @@ class TableProcessing:
         return True
 
     def update(self):
-        pass
+        """
+        This function is used to update the object in the database.
+        """
+        cols = list(self.mapping)
+        values = self.parse_data()
+        where = self.prepare_comparison()
+        # combine cols and values
+        cols_values = [f"{cols[i]} = '{values[i]}'" for i in range(len(cols))]
+        
+        query = f"""
+            UPDATE {self.table} SET {', '.join(cols_values)}, updated_at = NOW()
+        """
+        try:
+            self.db_session.execute(query)
+            self.db_conn.commit()
+        except psycopg2.Error as e:
+            raise ProcessError(e.pgerror)
+
+        return True
