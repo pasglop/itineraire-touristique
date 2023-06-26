@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 
 from source.data_loading.load_data import LoadData
 from source.data_processing.places_processing import PlacesProcessing
+from source.data_processing.table_processing import ProcessError
 
 load_dotenv()
 
@@ -54,7 +55,12 @@ def process_file(json_object):
     if not places.find_object():
         # Table Places
         data = load_json_object(json_object)
-        places.process(data)
+        try:
+            places.process(data)
+        except ProcessError as e:
+            # bypass this record
+            print(f"Error : {e}")
+            db.rollback()
     disconnect_db(db, cur)
 
 

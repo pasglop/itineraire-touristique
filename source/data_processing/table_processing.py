@@ -31,6 +31,11 @@ class TableProcessing:
             json_key = self.mapping[value]
             if json_key not in self.data.keys():
                 raise ProcessError(f"Field {json_key} is missing from the object")
+            if value == "id":
+                if type(self.data[json_key]) != int:
+                    raise ProcessError(f"Field {json_key} is not an integer")
+                comparison += f"{value} = '{self.data[json_key]}' AND "
+                continue
             # detecting a json date object
             try:
                 test_date = dateutil.parser.parse(self.data[json_key])
@@ -48,7 +53,13 @@ class TableProcessing:
         :return:
         """
         if where is None:
-            where = self.prepare_comparison()
+            try:
+                where = self.prepare_comparison()
+            except ProcessError:
+                # bypass this record
+                return True
+
+
         query = f"""
         SELECT 1 FROM {self.table} WHERE {where}
         """
