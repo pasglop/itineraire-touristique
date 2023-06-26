@@ -38,6 +38,8 @@ class TestProcessData:
         processing.read_toc()
         test = process_file(processing.data[0])
         assert True
+        
+class TestPlacesProcessing(TestProcessData):
 
     def test_places_ops_check(self, processing, db_session):
         # get a record from TOC
@@ -81,3 +83,8 @@ class TestProcessData:
             assert test is True
         else:
             assert True
+            
+class TestContactsProcessing(TestProcessData):
+    
+    def test_contacts_ops_check(self, processing, db_session):
+        pass            

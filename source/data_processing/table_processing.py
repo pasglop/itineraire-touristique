@@ -7,7 +7,7 @@ class ProcessError(Exception):
     """Base class for exceptions in this module."""
 
     def __init__(self, message):
-        self.message = message
+        self.value = message
 
 
 class TableProcessing:
@@ -56,7 +56,7 @@ class TableProcessing:
             self.db_session.execute(query)
             result = self.db_session.fetchone()
         except psycopg2.Error as e:
-            raise ProcessError(e.pgerror)
+            raise ProcessError(f"Error for record {self.data['dc_identifier']} : {e.pgerror}")
 
         if result is None:
             return False
@@ -78,6 +78,8 @@ class TableProcessing:
                     values.append(dict_value)
                 except ValueError or IndexError:
                     raise ProcessError(f"Field {json_key} is missing from the object or is not properly formatted")
+                except KeyError:
+                    values.append("")
             else:
                 values.append(self.data[json_key])
 
@@ -91,16 +93,18 @@ class TableProcessing:
         """
         cols = self.mapping.keys()
         values = self.parse_data()
+        # add updated_at value
+        values.append('now()')
 
         query = f"""
         INSERT INTO {self.table} ({', '.join(cols)}, updated_at)
-        VALUES ('{"','".join(values)}', NOW())
+        VALUES ({', '.join(['%s'] * len(values))})
         """
         try:
-            self.db_session.execute(query)
+            self.db_session.execute(query, values)
             self.db_conn.commit()
         except psycopg2.Error as e:
-            raise ProcessError(e.pgerror)
+            raise ProcessError(f"Error for record {self.data} : {e.pgerror}")
 
         return True
 
@@ -111,16 +115,30 @@ class TableProcessing:
         cols = list(self.mapping)
         values = self.parse_data()
         where = self.prepare_comparison()
-        # combine cols and values
-        cols_values = [f"{cols[i]} = '{values[i]}'" for i in range(len(cols))]
+        # add updated_at value
+        cols.append('updated_at')
+        values.append('now()')
+        # combine cols and place holders
+        cols_values = [f"{cols[i]} = %s" for i in range(len(cols))]
         
         query = f"""
-            UPDATE {self.table} SET {', '.join(cols_values)}, updated_at = NOW()
+            UPDATE {self.table} SET {', '.join(cols_values)} WHERE {where}
         """
         try:
-            self.db_session.execute(query)
+            self.db_session.execute(query, values)
             self.db_conn.commit()
         except psycopg2.Error as e:
-            raise ProcessError(e.pgerror)
+            raise ProcessError(f"Error for record {self.data} : {e.pgerror}")
 
+        return True
+    
+    def process(self, data):
+        self.data = data
+        # check if the object exists
+        if self.exists():
+            # if it exists, we update it
+            self.update()
+        else:
+            self.insert()
+            
         return True

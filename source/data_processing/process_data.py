@@ -52,8 +52,9 @@ def process_file(json_object):
     json_object['schema_url'] = generate_schema_url(json_object['file'])
     places = PlacesProcessing(json_object, (db, cur))
     if not places.find_object():
-        # open the json file
+        # Table Places
         data = load_json_object(json_object)
+        places.process(data)
     disconnect_db(db, cur)
 
 
