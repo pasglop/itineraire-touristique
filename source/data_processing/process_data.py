@@ -26,7 +26,13 @@ def connect_db():
         password=os.getenv("PG_PASSWORD"),
         host=os.getenv("PG_HOST"),
         port=os.getenv("PG_PORT"))
-    return conn
+    sess = conn.cursor()
+    return conn, sess
+
+
+def disconnect_db(conn, sess):
+    sess.close()
+    conn.close()
 
 
 def generate_schema_url(path_to_object):
@@ -59,26 +65,21 @@ def find_object(json_obj, cur):
 def process_file(json_object):
     # Process the file here
     # Replace this with your actual file processing logic
-    db = connect_db()
+    db, cur = connect_db()
     print(f"Processing Object: {json_object['label']}")
     cur = db.cursor()
     if not find_object(json_object, cur):
         # open the json file
-        with open(fullDirPath + 'objects/' + json_object['file']) as json_file:
-            data = json.load(json_file)
-            # Combine both json objects
-            data.update(json_object)
-            # map the data to the a cleaner object?
+        data = load_json_object(json_object)
+    disconnect_db(db, cur)
 
-            # Insert into the database
-            try:
-                tp.places_load(data, cur)
-            except tp.ProcessError:
-                print(f"Error: {tp.ProcessError}")
-                return False
 
-    cur.close()
-    db.close()
+def load_json_object(json_object):
+    with open(fullDirPath + 'objects/' + json_object['file']) as json_file:
+        data = json.load(json_file)
+        # Combine both json objects
+        data.update(json_object)
+        return data
 
 
 class ProcessData:
@@ -126,7 +127,6 @@ class ProcessData:
         with Pool(num_processes) as pool:
             # Map the file processing function to the file paths and execute them in parallel
             pool.map(process_file, self.data)
-
 
 
 if __name__ == "__main__":
