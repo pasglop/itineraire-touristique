@@ -7,7 +7,7 @@ create table public.places
     website                  varchar,
     latitude                 double precision                  not null,
     longitude                double precision                  not null,
-    last_update             timestamp with time zone default now() not null,
+    updated_at             timestamp with time zone default now() not null,
     source_updated          date                              not null
 );
 
