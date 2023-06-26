@@ -5,8 +5,8 @@ create table public.classes
     name        varchar                                not null,
     type        varchar                                not null,
     schema_url  varchar                                not null,
-    "createdAt" timestamp with time zone      default now() not null,
-    "updatedAt" timestamp with time zone default now() not null
+    created_at timestamp with time zone      default now() not null,
+    updated_at timestamp with time zone default now() not null
 );
 
 alter table public.classes

@@ -7,8 +7,8 @@ create table public.places
     website                  varchar,
     latitude                 double precision                  not null,
     longitude                double precision                  not null,
-    "lastUpdate"             timestamp with time zone default now() not null,
-    "sourceUpdated"          date                              not null
+    last_update             timestamp with time zone default now() not null,
+    source_updated          date                              not null
 );
 
 alter table public.places
@@ -24,8 +24,8 @@ create table public.places_to_classes
     classes_id integer not null
         constraint classes_fk
             references public.classes,
-    "createdAt" timestamp with time zone      default now() not null,
-    "updatedAt" timestamp with time zone default now() not null
+    created_at timestamp with time zone      default now() not null,
+    updated_at timestamp with time zone default now() not null
 
 );
 
@@ -43,8 +43,8 @@ create table public.contacts
     schema_url varchar,
     type       varchar,
     phone      varchar,
-    "createdAt" timestamp with time zone      default now() not null,
-    "updatedAt" timestamp with time zone default now() not null
+    created_at timestamp with time zone      default now() not null,
+    updated_at timestamp with time zone default now() not null
 );
 
 comment on column public.contacts.type is 'pour le moment en varchar, mais aprés ingestion on fera un enum';
@@ -62,8 +62,8 @@ create table public.descriptions
             references public.places,
     lang       varchar,
     schema_url varchar,
-    "createdAt" timestamp with time zone      default now() not null,
-    "updatedAt" timestamp with time zone default now() not null,
+    created_at timestamp with time zone      default now() not null,
+    updated_at timestamp with time zone default now() not null,
     constraint descriptions_pk2
         unique (lang, places_id)
 );
@@ -83,8 +83,8 @@ create table public.addresses
     locality   varchar,
     zipcode    integer,
     street     varchar,
-    "createdAt" timestamp with time zone      default now() not null,
-    "updatedAt" timestamp with time zone default now() not null
+    created_at timestamp with time zone      default now() not null,
+    updated_at timestamp with time zone default now() not null
 );
 
 alter table public.addresses
@@ -98,12 +98,12 @@ create table public.openings
     places_id integer
         constraint openings_places_id_fk
             references public.places,
-    "from"    date,
-    through   date,
+    start_date    date,
+    end_date   date,
     opens     time with time zone,
     closes    time with time zone,
-    "createdAt" timestamp with time zone      default now() not null,
-    "updatedAt" timestamp with time zone default now() not null
+    created_at timestamp with time zone      default now() not null,
+    updated_at timestamp with time zone default now() not null
 );
 
 alter table public.openings

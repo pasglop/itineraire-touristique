@@ -51,8 +51,8 @@ def execute_sql_file(filename):
 
 
 # Execute the sql files
-execute_sql_file('artifacts/sql/classes.sql')
-execute_sql_file('artifacts/sql/places.sql')
+execute_sql_file('../../artifacts/sql/classes.sql')
+execute_sql_file('../../artifacts/sql/places.sql')
 
 # Commit changes and close
 conn.commit()
