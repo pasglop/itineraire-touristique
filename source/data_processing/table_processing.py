@@ -32,7 +32,7 @@ class TableProcessing:
             if json_key not in self.data.keys():
                 raise ProcessError(f"Field {json_key} is missing from the object")
             if value == "id":
-                if type(self.data[json_key]) != int:
+                if self.data[json_key].isdigit() is False:
                     raise ProcessError(f"Field {json_key} is not an integer")
                 comparison += f"{value} = '{self.data[json_key]}' AND "
                 continue
