@@ -35,6 +35,28 @@ services:
       - postgres
     restart: unless-stopped
 
+  neo4j:
+      container_name: ${NEO4J_CONTAINER}
+      image: neo4j:4.4-community
+      restart: unless-stopped
+      ports:
+        - ${NEO4J_PORT}:${NEO4J_PORT}
+        - ${NEO4J_BOLT_PORT}:${NEO4J_BOLT_PORT}
+      volumes:
+        - neo4j:/conf
+        - neo4j:/data
+        - neo4j:/import
+        - neo4j:/logs
+        - neo4j:/plugins
+      environment:
+        # Raise memory limits
+        NEO4J_server_memory_pagecache_size: 1G
+        NEO4J_server_memory_heap_initial__size: 1G
+        NEO4J_server_memory_heap_max__size: 1G
+        NEO4J_AUTH: neo4j/${NEO4J_PASSWORD}
+        NEO4JLABS_PLUGINS: '["graph-data-science", "apoc"]'
+        NEO4J_dbms_security_procedures_allowlist: gds.*, apoc.*
+        NEO4J_dbms_security_procedures_unrestricted: gds.*, apoc.*
 networks:
   postgres:
     driver: bridge
@@ -42,3 +64,4 @@ networks:
 volumes:
     postgres:
     pgadmin:
+    neo4j:

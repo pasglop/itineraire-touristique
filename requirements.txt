@@ -8,5 +8,6 @@ pytest-env
 requests~=2.31.0
 gitpython~=3.1.18
 dpath==2.1.6
+neo4j~=4.3.1
 
 
