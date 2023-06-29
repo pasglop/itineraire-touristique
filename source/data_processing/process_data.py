@@ -9,6 +9,15 @@ from dotenv import load_dotenv
 from source.data_loading.load_data import LoadData
 from source.data_processing.places_processing import PlacesProcessing
 from source.data_processing.table_processing import ProcessError
+from source.data_processing.openings_processing import OpeningsProcessing
+from source.data_processing.addresses_processing import AddressesProcessing
+from source.data_processing.descriptions_processing import DescriptionsProcessing
+# from source.data_processing.classes_processing import ClassesProcessing
+# from source.data_processing.Places_to_classes_processing import Places_to_classesProcessing
+# from source.data_processing.contacts_processing import ContactsProcessing
+
+
+
 
 load_dotenv()
 
@@ -52,11 +61,23 @@ def process_file(json_object):
     print(f"Processing Object: {json_object['label']}")
     json_object['schema_url'] = generate_schema_url(json_object['file'])
     places = PlacesProcessing(json_object, (db, cur))
+    descriptions = DescriptionsProcessing(json_object, (db, cur))
+    addresses = AddressesProcessing(json_object, (db, cur))
+    openings = OpeningsProcessing(json_object, (db, cur))
+    # places_to_classes = Places_to_classesProcessing(json_object, (db, cur))
+    # classes = ClassesProcessing(json_object, (db, cur))
+    # contacts = ContactsProcessing(json_object, (db, cur))
     if not places.find_object():
         # Table Places
         data = load_json_object(json_object)
         try:
             places.process(data)
+            descriptions.process(data)
+            addresses.process(data)
+            openings.process(data)
+            # places_to_classes.process(data)
+            # classes.process(data)
+            # contacts.process(data)
         except ProcessError as e:
             # bypass this record
             print(f"Error : {e}")
