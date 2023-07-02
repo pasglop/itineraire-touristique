@@ -5,13 +5,12 @@ class OpeningsProcessing(TableProcessing):
     def __init__(self, data, db_session):
         mapping = {
             "places_id": "dc_identifier",
-            "from": 'isLocatedAt/0/schema_openingHoursSpecification/schema_validFrom',
-            "through": 'isLocatedAt/0/schema_openingHoursSpecification/schema_validThrough',
-            "opens": 'isLocatedAt/0/schema_openingHoursSpecification/schema_opens', # valeur pas toujours disponible selon json
-            "closes": 'isLocatedAt/0/schema_openingHoursSpecification/schema_closes', # valeur pas toujours disponible selon json
-            "source_updated": "lastUpdateDatatourisme"          
+            "start_date": 'isLocatedAt/0/schema_openingHoursSpecification/0/schema_validFrom',
+            "end_date": 'isLocatedAt/0/schema_openingHoursSpecification/0/schema_validThrough',
+            "opens": 'isLocatedAt/0/schema_openingHoursSpecification/0/schema_opens', # valeur pas toujours disponible selon json
+            "closes": 'isLocatedAt/0/schema_openingHoursSpecification/0/schema_closes'       
         }
-        compare_keys = ["places_id", "source_updated"]
+        compare_keys = ["places_id"]
         super().__init__('openings', mapping, compare_keys, data, db_session)
         
 

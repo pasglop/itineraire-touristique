@@ -3,6 +3,7 @@ import psycopg2
 import dateutil.parser
 
 
+
 class ProcessError(Exception):
     """Base class for exceptions in this module."""
 
@@ -74,27 +75,27 @@ class TableProcessing:
 
         return True
 
-    def parse_data(self):
+    def parse_data(self, cols):
         """
         This function is used to parse the data from the object.
         :param self:
         :return:
         """
-        values = []
-        for key in self.mapping.keys():
+        values = {}
+        for key in cols:
             json_key = self.mapping[key]
             if json_key.find("/") != -1:
                 try:
                     dict_value = dpath.get(self.data, json_key)
-                    values.append(dict_value)
+                    values[key] = None if dict_value == '' else dict_value
                 except ValueError or IndexError:
                     raise ProcessError(f"Field {json_key} is missing from the object or is not properly formatted")
                 except KeyError:
-                    values.append("")
+                    values[key] = None
             else:
-                values.append(self.data[json_key])
+                values[key] = None if self.data[json_key] == '' else self.data[json_key]
 
-        return values
+        return {k:v for k,v in values.items() if v is not None}
 
     def insert(self):
         """
@@ -103,18 +104,18 @@ class TableProcessing:
         :return:
         """
         cols = self.mapping.keys()
-        values = self.parse_data()
+        values = self.parse_data(cols)
         # add updated_at value
-        values.append('now()')
+        values['updated_at'] = 'now()'
 
         query = f"""
-        INSERT INTO {self.table} ({', '.join(cols)}, updated_at)
+        INSERT INTO {self.table} ({', '.join(values.keys())})
         VALUES ({', '.join(['%s'] * len(values))})
         """
         try:
-            self.db_session.execute(query, values)
+            self.db_session.execute(query, list(values.values()))
             self.db_conn.commit()
-        except psycopg2.Error as e:
+        except (psycopg2.Error, psycopg2.DataError) as e:
             raise ProcessError(f"Error for record {self.data} : {e.pgerror}")
 
         return True
@@ -124,16 +125,15 @@ class TableProcessing:
         This function is used to update the object in the database.
         """
         cols = list(self.mapping)
-        values = self.parse_data()
+        values = self.parse_data(cols)
         where = self.prepare_comparison()
         # add updated_at value
-        cols.append('updated_at')
-        values.append('now()')
+        values['updated_at'] = 'now()'
         # combine cols and place holders
-        cols_values = [f"{cols[i]} = %s" for i in range(len(cols))]
+        sql_values = ', '.join('{} = {}'.format(key, value) for key, value in values.items())
         
         query = f"""
-            UPDATE {self.table} SET {', '.join(cols_values)} WHERE {where}
+            UPDATE {self.table} SET {sql_values} WHERE {where}
         """
         try:
             self.db_session.execute(query, values)

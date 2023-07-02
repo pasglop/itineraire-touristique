@@ -81,7 +81,7 @@ def process_file(json_object):
         except ProcessError as e:
             # bypass this record
             print(f"Error : {e}")
-            db.rollback()
+            
     disconnect_db(db, cur)
 
 
