@@ -60,12 +60,12 @@ create table public.descriptions
     places_id  integer
         constraint descriptions_places_id_fk
             references public.places,
-    lang       varchar,
+    content text,
     schema_url varchar,
     created_at timestamp with time zone      default now() not null,
     updated_at timestamp with time zone default now() not null,
     constraint descriptions_pk2
-        unique (lang, places_id)
+        unique (places_id)
 );
 
 alter table public.descriptions

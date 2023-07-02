@@ -5,11 +5,10 @@ class DescriptionsProcessing(TableProcessing):
     def __init__(self, data, db_session):
         mapping = {
             "places_id": "dc_identifier",
-            "lang": 'hasDescription/0/shortDescription/fr',
-            "schema_url": 'hasDescription/@id',
-            "source_updated": "lastUpdateDatatourisme"
+            "content": 'hasDescription/0/shortDescription/fr/0',
+            "schema_url": 'hasDescription/0/@id'
         }
-        compare_keys = ["places_id", "source_updated"]
+        compare_keys = ["places_id"]
         super().__init__('descriptions', mapping, compare_keys, data, db_session)
 
 

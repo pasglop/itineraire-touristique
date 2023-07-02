@@ -5,13 +5,12 @@ class AddressesProcessing(TableProcessing):
     def __init__(self, data, db_session):
         mapping = {
             "places_id": "dc_identifier",
-            "schema_url": 'isLocatedAt/0/schema_address/@id',
-            "locality": 'isLocatedAt/0/schema_address/schema_addressLocality',
-            "zipcode": 'isLocatedAt/0/schema_address/schema_postalCode',
-            "street": 'isLocatedAt/0/schema_address/0/schema_streetAddress',
-            "source_updated": "lastUpdateDatatourisme"
+            "schema_url": 'isLocatedAt/0/schema_address/0/@id',
+            "locality": 'isLocatedAt/0/schema_address/0/schema_addressLocality',
+            "zipcode": 'isLocatedAt/0/schema_address/0/schema_postalCode',
+            "street": 'isLocatedAt/0/schema_address/0/schema_streetAddress/0'
         }
-        compare_keys = ["places_id", "source_updated"]
+        compare_keys = ["places_id"]
         super().__init__('addresses', mapping, compare_keys, data, db_session)
 
 
