@@ -1,13 +1,13 @@
 flask~=2.3.2
 psycopg2-binary
 python-dotenv~=1.0.0
-pytest~=7.3.2
+pytest==7.4.0
 pytest-mock
 pytest-bdd
 pytest-env
 requests~=2.31.0
 gitpython~=3.1.18
 dpath==2.1.6
-neo4j~=4.3.1
+neo4j==5.10.0
 
 
