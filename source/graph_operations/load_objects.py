@@ -2,17 +2,18 @@ from neo4j import GraphDatabase
 from dotenv import load_dotenv
 import os
 
+from source.databases import connect_neo4j, disconnect_neo4j
 
 load_dotenv()  # take environment variables from .env.
 
 
 class LoadObjects:
 
-    def __init__(self, uri, user, password):
-        self.driver = GraphDatabase.driver(uri, auth=(user, password))
+    def __init__(self):
+        self.driver = connect_neo4j()
 
     def close(self):
-        self.driver.close()
+        disconnect_neo4j(self.driver)
 
     def print_greeting(self, message):
         with self.driver.session() as session:

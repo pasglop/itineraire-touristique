@@ -2,8 +2,8 @@ import pytest
 import dateutil.parser
 
 from source.data_processing.places_processing import PlacesProcessing
-from source.data_processing.process_data import ProcessData, connect_db, process_file, disconnect_db, \
-    load_json_object
+from source.data_processing.process_data import ProcessData, process_file, load_json_object
+from source.databases import connect_db, disconnect_db
 
 
 class TestProcessData:
