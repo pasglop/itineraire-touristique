@@ -48,8 +48,8 @@ cur = conn.cursor()
 
 # Function to execute sql file
 def execute_sql_file(filename):
-    path = get_project_root() / f'{filename}/'
-    with open(os.path.abspath(filename), 'r') as f:
+    path = f'{get_project_root()}/{filename}'
+    with open(path, 'r') as f:
         cur.execute(sql.SQL(f.read()))
 
 

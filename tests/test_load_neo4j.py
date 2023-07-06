@@ -1,6 +1,7 @@
 import pytest
 
 from source.databases import connect_db, disconnect_db
+from source.graph_operations.load_objects import LoadObjects
 
 # TDD file for loading data into Neo4j
 
@@ -26,5 +27,7 @@ class TestLoadNeo4j:
         yield conn, db_session
         disconnect_db(conn, db_session)
 
-    def test_should_get_data_from_postgresql(self):
-        assert True
+    def test_should_have_poi_data_with_geo_coordinates(self):
+        process = LoadObjects()
+        data = process.load_data_from_db()
+        assert data[0]['geo_coordinates'] is not None

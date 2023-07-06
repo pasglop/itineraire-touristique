@@ -27,7 +27,6 @@ def disconnect_db(conn, sess):
 def connect_neo4j():
     """
     This function is used to connect to the neo4j database.
-    :return:
     """
     host = os.getenv("NEO4J_CONTAINER")
     bolt_port = os.getenv("NEO4J_BOLT_PORT")
