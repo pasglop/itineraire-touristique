@@ -1,12 +1,12 @@
 import pytest
 import os
-from source.data_loading.load_data import LoadData
+from .context import load_data
 
 
 class TestLoadData:
     @pytest.fixture
     def loader(self):
-        return LoadData()
+        return load_data.LoadData()
 
     def test_url_exists(self, loader):
         assert loader.url is not None

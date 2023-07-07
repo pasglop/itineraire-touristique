@@ -1,33 +1,48 @@
 from neo4j import GraphDatabase
 from dotenv import load_dotenv
 import os
+import csv
 
+from source.databases import connect_neo4j, disconnect_neo4j, connect_db
+from source.utils import get_project_root
 
 load_dotenv()  # take environment variables from .env.
 
 
 class LoadObjects:
 
-    def __init__(self, uri, user, password):
-        self.driver = GraphDatabase.driver(uri, auth=(user, password))
+    def __init__(self):
+        self.graphdb = connect_neo4j()
+        self.db, self.cursor = connect_db()
 
     def close(self):
-        self.driver.close()
+        disconnect_neo4j(self.graphdb)
 
-    def print_greeting(self, message):
-        with self.driver.session() as session:
-            greeting = session.execute_write(self._create_and_return_greeting, message)
-            print(greeting)
+    def load_data_from_db(self, limit=None):
+        query = """
+        SELECT p.id, name, latitude, longitude, a.street, a.zipcode, a.locality 
+        FROM public.places p 
+        left join addresses a on p.id = a.places_id 
+        """
+        if limit is not None:
+            query = query + " order by random() LIMIT " + str(limit)
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
 
-    @staticmethod
-    def _create_and_return_greeting(tx, message):
-        result = tx.run("CREATE (a:Greeting) "
-                        "SET a.message = $message "
-                        "RETURN a.message + ', from node ' + id(a)", message=message)
-        return result.single()[0]
+    def generate_csv_file_with_poi(self):
+        # create file if not exists
+        file_path = f"{get_project_root()}/raw_data/poi.csv"
+        res = self.load_data_from_db()
+        headers = [i[0] for i in self.cursor.description]
+        csv_file = csv.writer(open(file_path, 'w'),
+                              delimiter=',',
+                              lineterminator='\r\n',
+                              quoting=csv.QUOTE_ALL,
+                              escapechar='\\')
+        csv_file.writerow(headers)
+        csv_file.writerows(res)
+        return True
 
 
 if __name__ == "__main__":
-    greeter = HelloWorldExample("bolt://localhost:7687", "neo4j", "password")
-    greeter.print_greeting("hello, world")
-    greeter.close()
+    pass

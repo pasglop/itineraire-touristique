@@ -3,7 +3,6 @@ import os
 from multiprocessing import Pool
 import re
 
-import psycopg2
 from dotenv import load_dotenv
 
 from source.data_loading.load_data import LoadData
@@ -12,6 +11,8 @@ from source.data_processing.table_processing import ProcessError
 from source.data_processing.openings_processing import OpeningsProcessing
 from source.data_processing.addresses_processing import AddressesProcessing
 from source.data_processing.descriptions_processing import DescriptionsProcessing
+from source.databases import connect_db, disconnect_db
+
 # from source.data_processing.classes_processing import ClassesProcessing
 # from source.data_processing.Places_to_classes_processing import Places_to_classesProcessing
 # from source.data_processing.contacts_processing import ContactsProcessing
@@ -23,26 +24,6 @@ load_dotenv()
 
 load_object = LoadData()
 fullDirPath = load_object.fullDirPath
-
-
-def connect_db():
-    """
-    This function is used to connect to the postgresql database.
-    :return:
-    """
-    conn = psycopg2.connect(
-        dbname=os.getenv("PG_DB"),
-        user=os.getenv("PG_USER"),
-        password=os.getenv("PG_PASSWORD"),
-        host=os.getenv("PG_HOST"),
-        port=os.getenv("PG_PORT"))
-    sess = conn.cursor()
-    return conn, sess
-
-
-def disconnect_db(conn, sess):
-    sess.close()
-    conn.close()
 
 
 def clean_key(obj):
