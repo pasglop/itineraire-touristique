@@ -3,7 +3,6 @@ import psycopg2
 import dateutil.parser
 
 
-
 class ProcessError(Exception):
     """Base class for exceptions in this module."""
 
@@ -60,7 +59,6 @@ class TableProcessing:
                 # bypass this record
                 return True
 
-
         query = f"""
         SELECT 1 FROM {self.table} WHERE {where}
         """
@@ -95,7 +93,7 @@ class TableProcessing:
             else:
                 values[key] = None if self.data[json_key] == '' else self.data[json_key]
 
-        return {k:v for k,v in values.items() if v is not None}
+        return {k: v for k, v in values.items() if v is not None}
 
     def insert(self):
         """
@@ -131,7 +129,7 @@ class TableProcessing:
         values['updated_at'] = 'now()'
         # combine cols and place holders
         sql_values = ', '.join('{} = {}'.format(key, value) for key, value in values.items())
-        
+
         query = f"""
             UPDATE {self.table} SET {sql_values} WHERE {where}
         """
@@ -142,7 +140,7 @@ class TableProcessing:
             raise ProcessError(f"Error for record {self.data} : {e.pgerror}")
 
         return True
-    
+
     def process(self, data):
         self.data = data
         # check if the object exists
@@ -151,5 +149,5 @@ class TableProcessing:
             self.update()
         else:
             self.insert()
-            
+
         return True
