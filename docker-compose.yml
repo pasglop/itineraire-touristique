@@ -45,7 +45,7 @@ services:
       volumes:
         - neo4j:/conf
         - neo4j:/data
-        - neo4j:/import
+        - ./raw_data/:/import
         - neo4j:/logs
         - neo4j:/plugins
       environment:
