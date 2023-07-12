@@ -43,6 +43,39 @@ class TestLoadNeo4j:
         generated = process.generate_csv_file_with_poi()
         assert generated is True
 
-    def test_should_create_node_in_neo4j(self):
-        assert False
+    def test_should_copy_csv_file_to_neo4j(self):
+        process = LoadObjects()
+        copied = process.copy_csv_file_to_neo4j()
+        assert copied is True
 
+    def test_should_create_node_in_neo4j(self):
+        process = LoadObjects()
+        created = process.create_node_in_neo4j()
+        assert created.counters.nodes_created > 0
+
+    def test_should_load_stations(self):
+        process = LoadObjects()
+        loaded = process.load_stations()
+        assert loaded.counters.nodes_created > 0
+
+    def test_should_create_stations(self):
+        process = LoadObjects()
+        created = process.create_stations()
+        assert created.counters.nodes_created > 0
+        assert created.counters.relationships_created > 0
+
+    def test_should_create_correspondance(self):
+        process = LoadObjects()
+        created = process.create_direct_correspondance()
+        assert created.counters.relationships_created > 0
+
+    def test_should_create_walk_correspondance(self):
+        process = LoadObjects()
+        created = process.create_walk_correspondance()
+        assert created.counters.relationships_created > 0
+
+
+    def test_should_create_lines(self):
+        process = LoadObjects()
+        created = process.create_lines()
+        assert created.counters.relationships_created > 0
