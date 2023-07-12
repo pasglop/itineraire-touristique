@@ -128,13 +128,13 @@ class TableProcessing:
         # add updated_at value
         values['updated_at'] = 'now()'
         # combine cols and place holders
-        sql_values = ', '.join('{} = {}'.format(key, value) for key, value in values.items())
+        sql_values = ', '.join(f'{key} = %s' for key in values.keys())
 
         query = f"""
             UPDATE {self.table} SET {sql_values} WHERE {where}
         """
         try:
-            self.db_session.execute(query, values)
+            self.db_session.execute(query, list(values.values()))
             self.db_conn.commit()
         except psycopg2.Error as e:
             raise ProcessError(f"Error for record {self.data} : {e.pgerror}")

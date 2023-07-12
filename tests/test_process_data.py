@@ -82,8 +82,3 @@ class TestPlacesProcessing(TestProcessData):
             assert test is True
         else:
             assert True
-            
-class TestContactsProcessing(TestProcessData):
-    
-    def test_contacts_ops_check(self, processing, db_session):
-        pass            
