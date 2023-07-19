@@ -27,7 +27,7 @@ class LoadObjects:
 
     def generate_csv_file_with_poi(self):
         # create file if not exists
-        file_path = f"{get_project_root()}/raw_data/poi.csv"
+        file_path = f"{get_project_root()}/neo4j/import/poi.csv"
         res = self.load_data_from_db()
         headers = [i[0] for i in self.cursor.description]
         csv_file = csv.writer(open(file_path, 'w'),
@@ -43,7 +43,7 @@ class LoadObjects:
     def copy_csv_file_to_neo4j():
         # copy csv file to neo4j import folder
         # get neo4j import folder from .env
-        neo4j_import_folder = f"{get_project_root()}/raw_data/"
+        neo4j_import_folder = f"{get_project_root()}/neo4j/import/"
         file_path = f"{get_project_root()}/artifacts/*.csv"
         os.system(f"cp {file_path} {neo4j_import_folder}")
         return True
@@ -52,10 +52,11 @@ class LoadObjects:
     def create_node_in_neo4j():
         # create node in neo4j from csv file
         # Cypher to import file
-        query = f"""
+        query = '''
         LOAD CSV WITH HEADERS FROM 'file:///poi.csv' AS row
-        CREATE (p:POI {{id: row.id, name: row.name, latitude: row.latitude, longitude: row.longitude, street: row.street, zipcode: row.zipcode, locality: row.locality}})
-        """
+        CREATE (p:POI {id: row.id, name: row.name, latitude: row.latitude, longitude: row.longitude, street: row.street, zipcode: row.zipcode, locality: row.locality})
+        SET p.coordinates = point({ latitude: toFloat(row.latitude), longitude: toFloat(row.longitude), height: 0 });
+        '''
         reset_graph("POI")
         return create_graph(query)
 
@@ -65,7 +66,7 @@ class LoadObjects:
         query = '''
         LOAD CSV WITH HEADERS FROM 'file:///stations.csv' AS row
         CREATE (sl:StationLine {name: row.nom_clean + ' - ' + row.ligne, station:row.nom_gare, station_name: row.nom_clean, city:row.Ville, stats: toInteger(row.Trafic)})
-        SET sl.coordinates = point({ y: toFloat(row.y), x: toFloat(row.x) });
+        SET sl.coordinates = point({ latitude: toFloat(row.y), longitude: toFloat(row.x), height: 0 });
         '''
 
         summary = create_graph(query)
@@ -84,7 +85,6 @@ class LoadObjects:
         MERGE (s1:Station {name: sl1.station_name, station: sl1.station, city: sl1.city, stats: sl1.stats, coordinates: sl1.coordinates})
         MERGE (s1)-[:HAS_LINE {duration:0}]->(sl1)
         MERGE (sl1)-[:HAS_LINE {duration:0}]->(s1)
-        REMOVE sl1.station_name, sl1.station, sl1.city, sl1.stats, sl1.coordinates
         '''
         summary = create_graph(query)
         print(

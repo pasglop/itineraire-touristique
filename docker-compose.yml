@@ -32,8 +32,8 @@ services:
       volumes:
         - neo4j:/conf
         - neo4j:/data
-        - ./raw_data/:/import
-        - neo4j:/logs
+        - ./neo4j/import/:/import
+        - ./neo4j/logs/:/logs
         - neo4j:/plugins
       environment:
         # Raise memory limits
