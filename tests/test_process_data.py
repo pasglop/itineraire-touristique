@@ -35,7 +35,7 @@ class TestProcessData:
 
     def test_process_file(self, processing):
         processing.read_toc()
-        test = process_data.process_file(processing.data[0])
+        test = process_data.process_file(processing.data[0], True)
         assert True
         
 class TestPlacesProcessing(TestProcessData):

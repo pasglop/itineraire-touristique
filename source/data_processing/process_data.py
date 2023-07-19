@@ -33,7 +33,7 @@ def clean_key(obj):
     return obj
 
 
-def process_file(json_object):
+def process_file(json_object, force_update=False):
     # Process the file here
     # Replace this with your actual file processing logic
     db, cur = connect_db()
@@ -45,7 +45,7 @@ def process_file(json_object):
     openings = OpeningsProcessing(json_object, (db, cur))
     places_to_classes = PlacesToClassesProcessing(json_object, (db, cur))
     contacts = ContactsProcessing(json_object, (db, cur))
-    if not places.find_object():
+    if not places.find_object() or force_update:
         # Table Places
         data = load_json_object(json_object)
         try:
