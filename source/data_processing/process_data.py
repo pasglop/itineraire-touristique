@@ -6,16 +6,14 @@ import re
 from dotenv import load_dotenv
 
 from source.data_loading.load_data import LoadData
+from source.databases import connect_db, disconnect_db
 from source.data_processing.places_processing import PlacesProcessing
 from source.data_processing.table_processing import ProcessError
 from source.data_processing.openings_processing import OpeningsProcessing
 from source.data_processing.addresses_processing import AddressesProcessing
 from source.data_processing.descriptions_processing import DescriptionsProcessing
-from source.databases import connect_db, disconnect_db
-
-# from source.data_processing.classes_processing import ClassesProcessing
-# from source.data_processing.Places_to_classes_processing import Places_to_classesProcessing
-# from source.data_processing.contacts_processing import ContactsProcessing
+from source.data_processing.places_to_classes import PlacesToClassesProcessing
+from source.data_processing.contacts_processing import ContactsProcessing
 
 
 
@@ -45,9 +43,8 @@ def process_file(json_object):
     descriptions = DescriptionsProcessing(json_object, (db, cur))
     addresses = AddressesProcessing(json_object, (db, cur))
     openings = OpeningsProcessing(json_object, (db, cur))
-    # places_to_classes = Places_to_classesProcessing(json_object, (db, cur))
-    # classes = ClassesProcessing(json_object, (db, cur))
-    # contacts = ContactsProcessing(json_object, (db, cur))
+    places_to_classes = PlacesToClassesProcessing(json_object, (db, cur))
+    contacts = ContactsProcessing(json_object, (db, cur))
     if not places.find_object():
         # Table Places
         data = load_json_object(json_object)
@@ -56,9 +53,8 @@ def process_file(json_object):
             descriptions.process(data)
             addresses.process(data)
             openings.process(data)
-            # places_to_classes.process(data)
-            # classes.process(data)
-            # contacts.process(data)
+            contacts.process(data)
+            places_to_classes.process(data)
         except ProcessError as e:
             # bypass this record
             print(f"Error : {e}")
