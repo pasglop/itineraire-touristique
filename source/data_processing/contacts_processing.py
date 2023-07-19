@@ -8,14 +8,14 @@ class ContactsProcessing(TableProcessing):
             "schema_url": 'hasContact/0/foaf_homepage/0',								
             "type": 'hasContact/0/@type/1',								
             "phone": 'hasContact/0/schema_telephone/0',								
-            "source_updated": "lastUpdateDatatourisme"								
+            "updated_at": "lastUpdateDatatourisme"
             }								
-        compare_keys = ["places_id", "source_updated"]								
+        compare_keys = ["places_id", "updated_at"]
         super().__init__('contacts', mapping, compare_keys, data, db_session)								
 								
 								
     def process(self, data):								
- # To make sure it is a POI, we need to check dc_identifier								
-       if data['dc_identifier'] is None:								
-        raise ProcessError(f"Field dc_identifier is missing from the object')
-                          
+        # To make sure it is a POI, we need to check dc_identifier
+        if data['dc_identifier'] is None:
+            raise ProcessError(f'Field dc_identifier is missing from the object')
+        super().process(data)
