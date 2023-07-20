@@ -21,11 +21,12 @@ class PlacesToClassesProcessing(TableProcessing):
         # this is a particular case as we have one place ID and many classes IDs
         # so we need to check all classes and place combinations
         for class_id in data['@type']:
-            if not ':' in class_id:
-                super().process({
-                    'dc_identifier': data['dc_identifier'],
-                    '@type': class_id
-                })
+            if ':' in class_id or 'PlaceOfInterest' in class_id or 'PointOfInterest' in class_id:
+                continue
+            super().process({
+                'dc_identifier': data['dc_identifier'],
+                '@type': class_id
+            })
 
     def exists(self, where=None):
         """

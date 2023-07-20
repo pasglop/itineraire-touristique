@@ -31,10 +31,11 @@ class TestLoadNeo4j:
     def test_should_have_poi_data_with_geo_coordinates(self):
         process = LoadObjects()
         data = process.load_data_from_db(limit=10)
-        #geoLoc = Nominatim(user_agent="GetLoc")
-        #locname = geoLoc.reverse((data[0][2], data[0][3]), exactly_one=True, language='fr')
-        #print(locname)
-        #print(data[0][1], data[0][4], data[0][5], data[0][6])
+        # essai de validation de l'adresse par geopy (inconsistant pas)
+        # geoLoc = Nominatim(user_agent="GetLoc")
+        # locname = geoLoc.reverse((data[0][2], data[0][3]), exactly_one=True, language='fr')
+        # print(locname)
+        # print(data[0][1], data[0][4], data[0][5], data[0][6])
         assert isinstance(data[0][0], int)
         assert isinstance(data[0][1], str)
 
@@ -73,7 +74,6 @@ class TestLoadNeo4j:
         process = LoadObjects()
         created = process.create_walk_correspondance()
         assert created.counters.relationships_created > 0
-
 
     def test_should_create_lines(self):
         process = LoadObjects()

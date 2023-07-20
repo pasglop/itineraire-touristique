@@ -23,7 +23,8 @@ class PlacesProcessing(TableProcessing):
         :param cur: DB cursor
         :return: boolean
         """
-        return self.exists(f"schema_url = '{self.data['schema_url']}' AND source_updated <= '{self.data['lastUpdateDatatourisme']}'")
+        return self.exists(
+            f"schema_url = '{self.data['schema_url']}' AND source_updated <= '{self.data['lastUpdateDatatourisme']}'")
 
     def process(self, data):
         # To make sure it is a POI, we need to check dc_identifier
