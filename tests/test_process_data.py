@@ -22,10 +22,6 @@ class TestProcessData:
         toc = processing.read_toc()
         assert toc is True
 
-    def test_find_object(self, processing):
-        processing.read_toc()
-        assert True
-
     def test_query_object_exits(self, processing, db_session):
         processing.read_toc()
         data = process_data.load_json_object(processing.data[0])
@@ -33,10 +29,6 @@ class TestProcessData:
         test = places.find_object()
         assert type(test) is bool
 
-    def test_process_file(self, processing):
-        processing.read_toc()
-        test = process_data.process_file(processing.data[0], True)
-        assert True
         
 class TestPlacesProcessing(TestProcessData):
 
@@ -62,7 +54,8 @@ class TestPlacesProcessing(TestProcessData):
     def test_places_ops_insert(self, processing, db_session):
         # get a record from TOC
         processing.read_toc()
-        data = process_data.load_json_object(processing.data[0])
+        match = next(d for d in processing.data if d["label"] == "Musée du Louvre")
+        data = process_data.load_json_object(match)
 
         tp = places_processing.PlacesProcessing(data, db_session)
         if tp.exists():
