@@ -16,9 +16,15 @@ class LoadObjects:
 
     def load_data_from_db(self, limit=None):
         query = """
-        SELECT p.id, name, latitude, longitude, a.street, a.zipcode, a.locality 
-        FROM public.places p 
-        left join addresses a on p.id = a.places_id 
+        SELECT p.id, p.name, 
+        latitude, longitude, 
+        a.street || '\n' || a.zipcode || ' ' || a.locality as address,
+        array_agg(c.type) as class 
+        FROM public.places p
+        left join addresses a on p.id = a.places_id
+        left join places_to_classes ptc on p.id = ptc.places_id
+        left join classes c on ptc.classes_id = c.id 
+        group by p.id, p.name, latitude, longitude, a.street, a.zipcode, a.locality
         """
         if limit is not None:
             query = query + " order by random() LIMIT " + str(limit)
