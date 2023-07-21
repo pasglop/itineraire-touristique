@@ -28,7 +28,7 @@ def connect_neo4j():
     """
     This function is used to connect to the neo4j database.
     """
-    host = os.getenv("NEO4J_CONTAINER")
+    host = 'localhost' #os.getenv("NEO4J_CONTAINER")
     bolt_port = os.getenv("NEO4J_BOLT_PORT")
     uri = f"bolt://{host}:{bolt_port}"
     return GraphDatabase.driver(uri, auth=(os.getenv("NEO4J_USER"), os.getenv("NEO4J_PASSWORD")))

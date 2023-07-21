@@ -45,7 +45,29 @@ RETURN gds.util.asNode(nodeId).name AS name, communityId, intermediateCommunityI
 
 ORDER BY communityId ASC
 ```
+```cypher
+CALL gds.graph.project(
+    'itinaries',
+    {
+      POI: {
+        properties: 'coordinates'
+      }
+    },
+    '*'
+)
+```
 
+```cypher
+CALL gds.beta.kmeans.stream('itinaries', {
+  nodeProperty: 'coordinates',
+  nodeLabels: ['POI'],
+  k: 8,
+  seedCentroids: [[40.712776,-74.005974]]
+})
+YIELD nodeId, communityId
+RETURN gds.util.asNode(nodeId).name AS name, communityId
+ORDER BY communityId, name ASC
+```
 ## 3. Résultats
 On obtient les résultats suivants:
 
