@@ -19,11 +19,13 @@ class LoadObjects:
         SELECT p.id, p.name, 
         latitude, longitude, 
         a.street || '\n' || a.zipcode || ' ' || a.locality as address,
+        locality,
         array_agg(c.type) as class 
         FROM public.places p
         left join addresses a on p.id = a.places_id
         left join places_to_classes ptc on p.id = ptc.places_id
         left join classes c on ptc.classes_id = c.id 
+        where c.type in ('CulturalSite', 'SportsAndLeisurePlaces', 'NaturalSite', 'Restaurant', 'Shopping', 'EntertainmentAndEvent', 'ParkAndGarden', 'Museum','BistroOrWineBar', 'Church', 'ArtGalleryOrExhibitionGallery', 'RemarkableBuilding', 'Castle', 'NightClub', 'SightseeingBoat', 'ZooAnimalPark')
         group by p.id, p.name, latitude, longitude, a.street, a.zipcode, a.locality
         """
         if limit is not None:
