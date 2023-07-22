@@ -1,0 +1,1 @@
+from .poi_detail_model import PoiDetailSchema, poi_detail_example
