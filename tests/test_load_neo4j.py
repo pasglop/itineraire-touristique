@@ -79,3 +79,8 @@ class TestLoadNeo4j:
         process = LoadObjects()
         created = process.create_lines()
         assert created.counters.relationships_created > 0
+
+    def test_should_create_walking_to_station(self):
+        process = LoadObjects()
+        created = process.create_walk_to_station()
+        assert created.counters.relationships_created > 0
