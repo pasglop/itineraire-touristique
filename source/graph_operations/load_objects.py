@@ -74,7 +74,7 @@ class LoadObjects:
         query = '''
         LOAD CSV WITH HEADERS FROM 'file:///stations.csv' AS row
         CREATE (sl:StationLine {name: row.nom_clean + ' - ' + row.ligne, station:row.nom_gare, station_name: row.nom_clean, city:row.Ville, stats: toInteger(row.Trafic)})
-        SET sl.coordinates = point({ latitude: toFloat(row.y), longitude: toFloat(row.x), height: 0 });
+        SET sl.coordinates = point({ latitude: toFloat(row.x), longitude: toFloat(row.y), height: 0 });
         '''
 
         summary = create_graph(query)
@@ -123,13 +123,13 @@ class LoadObjects:
     def create_walk_correspondance():
         query = '''
         MATCH (s1:Station), (s2:Station)
-        WHERE s1 <> s2 AND distance(s1.coordinates, s2.coordinates) <= 1000
+        WHERE s1 <> s2 AND distance(s1.coordinates, s2.coordinates) <= 400
         MERGE (s1)-[r:WALKING_CORRESPONDANCE]->(s2)
         SET r.distance = distance(s1.coordinates, s2.coordinates), 
         r.duration = distance(s1.coordinates, s2.coordinates) / 1.11111 // 1.11111 m/s for 4 km/h
         MERGE (s2)-[r2:WALKING_CORRESPONDANCE]->(s1)
-        SET r2.distance = distance(s1.coordinates, s2.coordinates), 
-        r2.duration = distance(s1.coordinates, s2.coordinates) / 1.11111
+        SET r2.distance = distance(s2.coordinates, s1.coordinates), 
+        r2.duration = distance(s2.coordinates, s1.coordinates) / 1.11111
         '''
         summary = create_graph(query)
         print("Create_walk_correspondance : created {relationships_created} relationships in {time} ms.".format(
@@ -148,7 +148,7 @@ class LoadObjects:
         MERGE (sl1)-[r:IS_LINE {ligne: row.ligne}]->(sl2)
         SET r.distance = distance(sl1.coordinates, sl2.coordinates), r.duration = distance(sl1.coordinates, sl2.coordinates) / 11.11111111111111 // 11.11111111111111 m/s for 40 km/h
         MERGE (sl2)-[r2:IS_LINE {ligne: row.ligne}]->(sl1)
-        SET r2.distance = distance(sl1.coordinates, sl2.coordinates), r2.duration = distance(sl1.coordinates, sl2.coordinates) / 11.11111111111111
+        SET r2.distance = distance(sl2.coordinates, sl1.coordinates), r2.duration = distance(sl2.coordinates, sl1.coordinates) / 11.11111111111111
         '''
         summary = create_graph(query)
         print("Create_lines : created {relationships_created} relationships in {time} ms.".format(
@@ -158,6 +158,25 @@ class LoadObjects:
 
         return summary
 
+    @staticmethod
+    def create_walk_to_station():
+        query = '''
+        MATCH (p:POI), (s:Station)
+        WHERE id(p) <> id(s) AND point.distance(p.coordinates, s.coordinates) <= 400
+        MERGE (p)-[r:WALKING_TO_STATION]->(s)
+        SET r.distance = distance(p.coordinates, s.coordinates), 
+        r.duration = distance(p.coordinates, s.coordinates) / 1.11111 // 1.11111 m/s for 4 km/h
+        MERGE (s)-[r2:WALKING_FROM_STATION]->(p)
+        SET r2.distance = distance(s.coordinates, p.coordinates), 
+        r2.duration = distance(s.coordinates, p.coordinates) / 1.11111
+        '''
+        summary = create_graph(query)
+        print("Create_walk_to_station : created {relationships_created} relationships in {time} ms.".format(
+            relationships_created=summary.counters.relationships_created,
+            time=summary.result_available_after
+        ))
+
+        return summary
 
 if __name__ == "__main__":
     pass
