@@ -1,10 +1,10 @@
 services:
   web:
-    build: dash/.
+    build: source/dash/.
     ports:
       - "8080:8080"
   api:
-    build: api/.
+    build: source/api/.
     ports:
       - "8000:8000"
   postgres:
