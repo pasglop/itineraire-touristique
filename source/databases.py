@@ -1,6 +1,7 @@
 import os
 
 import psycopg2
+import psycopg2.extras
 from neo4j import GraphDatabase
 
 
@@ -15,13 +16,15 @@ def connect_db():
         password=os.getenv("PG_PASSWORD"),
         host=os.getenv("PG_HOST"),
         port=os.getenv("PG_PORT"))
-    sess = conn.cursor()
+    sess = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     return conn, sess
 
 
 def disconnect_db(conn, sess):
     sess.close()
     conn.close()
+
+
 
 
 def connect_neo4j():

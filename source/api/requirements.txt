@@ -1,4 +1,6 @@
 fastapi
+starlette==0.30.0
+httpx
 pydantic
 uvicorn
 psycopg2-binary
