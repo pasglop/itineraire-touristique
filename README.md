@@ -3,7 +3,7 @@
 ## Description
 Projet Datascientest by :
 - Jean Beuzeval
-- Marouen 
+- Marouen Arfaoui
 - David Delpuech
 
 Documentation du projet : [Documentation](https://pasglop.github.io/itineraire-touristique)
