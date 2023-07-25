@@ -1,4 +1,6 @@
 import os
+import sys
+
 import dotenv
 import uvicorn
 
@@ -8,4 +10,4 @@ API_HOST = 'localhost'
 API_PORT = 8000
 
 if __name__ == "__main__":
-    uvicorn.run("source.api.app.app:app", host=API_HOST, port=API_PORT, reload=True)
+    uvicorn.run("app:app", host=API_HOST, port=API_PORT, reload=True)

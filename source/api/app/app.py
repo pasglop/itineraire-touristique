@@ -2,8 +2,8 @@ from typing import Union, List
 
 from fastapi import FastAPI, HTTPException
 
-from source.api.app.v1.poi import InputPoiClass, get_poi_by_class, PoiListSchema
-from source.api.app.v1.poi.poi_detail_model import get_poi_detail, PoiDetailSchema
+from v1.poi import InputPoiClass, get_poi_by_class, PoiListSchema
+from v1.poi.poi_detail_model import get_poi_detail, PoiDetailSchema
 
 app = FastAPI()
 
