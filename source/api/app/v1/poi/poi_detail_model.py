@@ -1,7 +1,7 @@
 from array import array
 from typing import List, Dict, Optional
 from pydantic import BaseModel, Field, RootModel
-from source.api.app import connect_db
+from ..utils.db import connect_db
 
 poi_detail_example = {
                 "id": 678296,
@@ -26,7 +26,7 @@ class PoiDetailSchema(BaseModel):
     description: str
     classname: List[str]
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": poi_detail_example
         }
 

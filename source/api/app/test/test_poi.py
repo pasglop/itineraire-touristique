@@ -1,15 +1,10 @@
-import sys
-from pathlib import Path
-
 import pytest
 from fastapi.testclient import TestClient
 
-
-path_root = Path(__file__).parents[4]
-sys.path.append(str(path_root))
-
-from source.api.app import connect_db, app
-from source.api.app.v1.poi import InputPoiClass, get_poi_by_class, get_poi_detail, PoiDetailSchema, poi_detail_example
+from ..v1.utils.db import connect_db
+from ..v1.poi.poi_detail_model import get_poi_detail, PoiDetailSchema, poi_detail_example
+from ..v1.poi.poi_list import get_poi_by_class, InputPoiClass
+from ..app import app
 
 parsedPoiDetailModel = {'properties': {'address': {'title': 'Address', 'type': 'string'},
                                        'classname': {'items': {'type': 'string'},

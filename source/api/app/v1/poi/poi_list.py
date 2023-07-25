@@ -2,8 +2,8 @@ from typing import List
 
 from pydantic import BaseModel
 
-from source.api.app.v1.poi import PoiDetailSchema, get_poi_sql, poi_detail_example
-from source.api.app import connect_db
+from .poi_detail_model import PoiDetailSchema, get_poi_sql, poi_detail_example
+from ..utils.db import connect_db
 
 
 # a model for input one class and get poi list
@@ -11,7 +11,7 @@ class PoiListSchema(BaseModel):
     poi : List[PoiDetailSchema]
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "poi" : [
                 poi_detail_example
             ]}
