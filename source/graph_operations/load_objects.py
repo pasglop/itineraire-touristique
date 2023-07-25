@@ -60,11 +60,11 @@ class LoadObjects:
     def create_node_in_neo4j():
         # create node in neo4j from csv file
         # Cypher to import file
-        query = '''LOAD CSV WITH HEADERS FROM 'file:///poi.csv' AS row CREATE (p:POI {id: row.id, name: row.name, 
-        latitude: row.latitude, longitude: row.longitude, street: row.street, zipcode: row.zipcode, locality: 
+        query = '''LOAD CSV WITH HEADERS FROM 'file:///poi.csv' AS row CREATE (p:POI {id: toInteger(row.id), name: row.name, 
+        latitude: toFloat(row.latitude), longitude: toFloat(row.longitude), street: row.street, zipcode: row.zipcode, locality: 
         row.locality, class: row.class}) 
-        SET p.coordinates = point({ latitude: toFloat(row.latitude), longitude: toFloat(
-        row.longitude), height: 0 });'''
+        SET p.coordinates = point({ latitude: toFloat(row.latitude), longitude: toFloat(row.longitude), height: 0 })
+        SET p.model_coordinates = [ toFloat(row.latitude), toFloat(row.longitude)] ;'''
         reset_graph("POI")
         return create_graph(query)
 
