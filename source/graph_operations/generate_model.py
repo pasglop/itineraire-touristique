@@ -42,7 +42,7 @@ def extend_remarkable_pois():
     # create a new index on RemarkablePO
     query = """
     LOAD CSV WITH HEADERS FROM 'file:///mustseen.csv' AS row
-    MATCH (poi:POI {id: toInteger(row.id)})
+    MATCH (poi:POI {id: row.id})
     SET poi.mustseen = true, poi.remarkable = toBoolean(row.remarkable)
     """
     summary = create_graph(query)

@@ -4,7 +4,7 @@ from source.data_processing.table_processing import TableProcessing, ProcessErro
 class PlacesProcessing(TableProcessing):
     def __init__(self, data, db_session):
         mapping = {
-            "id": "dc_identifier",
+            "poi_id": "dc_identifier",
             "name": "label",
             "schema_url": "schema_url",
             "website": 'hasContact/0/foaf_homepage/0',
@@ -12,7 +12,7 @@ class PlacesProcessing(TableProcessing):
             "longitude": 'isLocatedAt/0/schema_geo/schema_longitude',
             "source_updated": "lastUpdateDatatourisme"
         }
-        compare_keys = ["id", "source_updated"]
+        compare_keys = ["poi_id", "source_updated"]
         super().__init__('public.places', mapping, compare_keys, data, db_session)
 
     def find_object(self):

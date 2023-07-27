@@ -35,7 +35,7 @@ class TestLoadNeo4j:
         # locname = geoLoc.reverse((data[0][2], data[0][3]), exactly_one=True, language='fr')
         # print(locname)
         # print(data[0][1], data[0][4], data[0][5], data[0][6])
-        assert isinstance(data[0][0], int)
+        assert isinstance(data[0][0], str)
         assert isinstance(data[0][1], str)
 
     def test_generate_csv_file_with_poi(self):

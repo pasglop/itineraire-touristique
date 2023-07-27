@@ -16,17 +16,17 @@ class LoadObjects:
 
     def load_data_from_db(self, limit=None):
         query = """
-        SELECT p.id, p.name, 
+        SELECT p.poi_id as id, p.name, 
         latitude, longitude, 
         a.street || '\n' || a.zipcode || ' ' || a.locality as address,
         locality,
         array_agg(c.type) as class 
         FROM public.places p
-        left join addresses a on p.id = a.places_id
-        left join places_to_classes ptc on p.id = ptc.places_id
+        left join addresses a using(poi_id)
+        left join places_to_classes ptc using(poi_id)
         left join classes c on ptc.classes_id = c.id 
         where c.type in ('CulturalSite', 'SportsAndLeisurePlaces', 'NaturalSite', 'Restaurant', 'Shopping', 'EntertainmentAndEvent', 'ParkAndGarden', 'Museum','BistroOrWineBar', 'Church', 'ArtGalleryOrExhibitionGallery', 'RemarkableBuilding', 'Castle', 'NightClub', 'SightseeingBoat', 'ZooAnimalPark', 'Hotel')
-        group by p.id, p.name, latitude, longitude, a.street, a.zipcode, a.locality
+        group by p.poi_id, p.name, latitude, longitude, a.street, a.zipcode, a.locality
         """
         if limit is not None:
             query = query + " order by random() LIMIT " + str(limit)
@@ -60,7 +60,7 @@ class LoadObjects:
     def create_node_in_neo4j():
         # create node in neo4j from csv file
         # Cypher to import file
-        query = '''LOAD CSV WITH HEADERS FROM 'file:///poi.csv' AS row CREATE (p:POI {id: toInteger(row.id), name: row.name, 
+        query = '''LOAD CSV WITH HEADERS FROM 'file:///poi.csv' AS row CREATE (p:POI {id: row.id, name: row.name, 
         latitude: toFloat(row.latitude), longitude: toFloat(row.longitude), street: row.street, zipcode: row.zipcode, locality: 
         row.locality}) 
         SET p.coordinates = point({ latitude: toFloat(row.latitude), longitude: toFloat(row.longitude), height: 0 })

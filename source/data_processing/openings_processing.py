@@ -4,13 +4,13 @@ from source.data_processing.table_processing import TableProcessing, ProcessErro
 class OpeningsProcessing(TableProcessing):
     def __init__(self, data, db_session):
         mapping = {
-            "places_id": "dc_identifier",
+            "poi_id": "dc_identifier",
             "start_date": 'isLocatedAt/0/schema_openingHoursSpecification/0/schema_validFrom',
             "end_date": 'isLocatedAt/0/schema_openingHoursSpecification/0/schema_validThrough',
             "opens": 'isLocatedAt/0/schema_openingHoursSpecification/0/schema_opens', # valeur pas toujours disponible selon json
             "closes": 'isLocatedAt/0/schema_openingHoursSpecification/0/schema_closes'       
         }
-        compare_keys = ["places_id"]
+        compare_keys = ["poi_id"]
         super().__init__('openings', mapping, compare_keys, data, db_session)
         
 

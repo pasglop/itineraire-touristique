@@ -1,14 +1,17 @@
 create table public.places
 (
-    id                       integer                           not null
+    id                       serial                           not null
         primary key,
+    poi_id                   varchar                           not null,
     name                     varchar                           not null,
     schema_url               varchar                           not null,
     website                  varchar,
     latitude                 double precision                  not null,
     longitude                double precision                  not null,
     updated_at             timestamp with time zone default now() not null,
-    source_updated          date                              not null
+    source_updated          date                              not null,
+    constraint places_poi_id_uindex
+        unique (poi_id)
 );
 
 alter table public.places
@@ -18,9 +21,9 @@ create table public.places_to_classes
 (
     id         bigserial        constraint places_to_classes_pk
             primary key,
-    places_id  integer not null
+    poi_id  varchar not null
         constraint places_fk
-            references public.places,
+            references public.places(poi_id),
     classes_id integer not null
         constraint classes_fk
             references public.classes,
@@ -37,9 +40,9 @@ create table public.contacts
     id         serial
         constraint contacts_pk
             primary key,
-    places_id  integer not null
+    poi_id  varchar not null
         constraint contacts_places_id_fk
-            references public.places,
+            references public.places(poi_id),
     schema_url varchar,
     type       varchar,
     phone      varchar,
@@ -57,15 +60,15 @@ create table public.descriptions
     id         bigserial
         constraint descriptions_pk
             primary key,
-    places_id  integer
+    poi_id  varchar not null
         constraint descriptions_places_id_fk
-            references public.places,
+            references public.places(poi_id),
     content text,
     schema_url varchar,
     created_at timestamp with time zone      default now() not null,
     updated_at timestamp with time zone default now() not null,
     constraint descriptions_pk2
-        unique (places_id)
+        unique (poi_id)
 );
 
 alter table public.descriptions
@@ -76,9 +79,9 @@ create table public.addresses
     id         serial
         constraint addresses_pk
             primary key,
-    places_id  integer
+    poi_id  varchar not null
         constraint addresses_places_id_fk
-            references public.places,
+            references public.places(poi_id),
     schema_url varchar not null,
     locality   varchar,
     zipcode    integer,
@@ -95,9 +98,9 @@ create table public.openings
     id        bigserial
         constraint openings_pk
             primary key,
-    places_id integer
+    poi_id varchar not null
         constraint openings_places_id_fk
-            references public.places,
+            references public.places(poi_id),
     start_date    date,
     end_date   date,
     opens     time with time zone,
