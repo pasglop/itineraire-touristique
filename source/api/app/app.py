@@ -1,4 +1,4 @@
-from typing import Union, List
+from typing import Union
 
 from fastapi import FastAPI, HTTPException
 
@@ -13,7 +13,7 @@ def read_root():
     return {"Hello": "World"}
 
 @app.get("/poi/{poi_id}", response_model=Union[PoiDetailSchema, None])
-def get_poi(poi_id: int):
+def get_poi(poi_id: str):
     poi = get_poi_detail(poi_id)
     if poi is None:
         raise HTTPException(status_code=404, detail="Poi not found")

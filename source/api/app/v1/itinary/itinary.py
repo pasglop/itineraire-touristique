@@ -79,9 +79,10 @@ class VisitDetailSchema(PoiDetailSchema):
     duration: float = 60
 
     class Config:
-        poi_detail_example["duration"] = 60
+        poi_visit_example = poi_detail_example.copy()
+        poi_visit_example["duration"] = 60
         json_schema_extra = {
-            "example": poi_detail_example
+            "example": poi_visit_example
         }
 
 
@@ -98,14 +99,14 @@ class ItinaryStepVisitSchema(ItinaryStepGenericSchema):
     step_detail: VisitDetailSchema
 
     class Config:
-
-        poi_detail_example["duration"] = 60
+        poi_visit_example = poi_detail_example.copy()
+        poi_visit_example["duration"] = 60
         json_schema_extra = {
                 "example": {
                     "step": 1,
                     "name": "Tour Eiffel",
                     "step_type": StepTypeEnum.visit,
-                    "step_detail": poi_detail_example,
+                    "step_detail": poi_visit_example,
                     "instruction": "Prendre le métro",
                     "comment": "La Tour Eiffel, créée par Gustave Eiffel pour l'Exposition universelle de Paris de 1889, est devenue le symbole de la capitale française et un site touristique de premier plan : il s'agit du second site culturel français payant le plus visité en 2011, avec 7,1 millions de visiteurs dont 75 % d'étrangers en 2011, la cathédrale Notre-Dame de Paris étant en tête des monuments à l'accès libre avec 13,6 millions de visiteurs estimés en 2011."
                 }
