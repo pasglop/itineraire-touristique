@@ -6,3 +6,4 @@ python-dotenv
 uvicorn==0.23.1
 psycopg2-binary
 neo4j==5.10.0
+graphdatascience

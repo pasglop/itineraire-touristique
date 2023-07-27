@@ -6,10 +6,10 @@ from source.data_processing.table_processing import TableProcessing, ProcessErro
 class PlacesToClassesProcessing(TableProcessing):
     def __init__(self, data, db_session):
         mapping = {
-            "places_id": "dc_identifier",
+            "poi_id": "dc_identifier",
             "classes_id": "@type"
         }
-        compare_keys = ["places_id"]
+        compare_keys = ["poi_id"]
         super().__init__('public.places_to_classes', mapping, compare_keys, data, db_session)
 
     
@@ -63,7 +63,7 @@ class PlacesToClassesProcessing(TableProcessing):
         :return:
         """
         query = f"""
-        INSERT INTO public.places_to_classes (places_id, classes_id)
+        INSERT INTO public.places_to_classes (poi_id, classes_id)
         VALUES (
         '{self.data['dc_identifier']}', 
         (select id from public.classes where type = '{self.data['@type']}')
@@ -83,7 +83,7 @@ class PlacesToClassesProcessing(TableProcessing):
         """
         query = f"""
         UPDATE public.places_to_classes
-        SET places_id = '{self.data['dc_identifier']}',
+        SET poi_id = '{self.data['dc_identifier']}',
             classes_id = (select id from public.classes where type = '{self.data['@type']}')
         WHERE {self.prepare_comparison()} AND 
         classes_id = (select id from public.classes where type = '{self.data['@type']}');

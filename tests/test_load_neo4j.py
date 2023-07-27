@@ -1,5 +1,4 @@
 import pytest
-from geopy.geocoders import Nominatim
 
 from source.databases import connect_db, disconnect_db
 from source.graph_operations.load_objects import LoadObjects
@@ -36,7 +35,7 @@ class TestLoadNeo4j:
         # locname = geoLoc.reverse((data[0][2], data[0][3]), exactly_one=True, language='fr')
         # print(locname)
         # print(data[0][1], data[0][4], data[0][5], data[0][6])
-        assert isinstance(data[0][0], int)
+        assert isinstance(data[0][0], str)
         assert isinstance(data[0][1], str)
 
     def test_generate_csv_file_with_poi(self):
@@ -78,4 +77,9 @@ class TestLoadNeo4j:
     def test_should_create_lines(self):
         process = LoadObjects()
         created = process.create_lines()
+        assert created.counters.relationships_created > 0
+
+    def test_should_create_walking_to_station(self):
+        process = LoadObjects()
+        created = process.create_walk_to_station()
         assert created.counters.relationships_created > 0

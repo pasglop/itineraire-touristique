@@ -1,5 +1,5 @@
-fastapi
-pydantic
+fastapi==0.100.0
+pydantic==2.0.3
 uvicorn
 psycopg2-binary
 python-dotenv~=1.0.0

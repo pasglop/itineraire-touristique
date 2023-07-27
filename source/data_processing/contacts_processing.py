@@ -4,13 +4,13 @@ from source.data_processing.table_processing import TableProcessing, ProcessErro
 class ContactsProcessing(TableProcessing):								
     def __init__(self, data, db_session):								
         mapping = {								
-            "places_id": "dc_identifier",								
+            "poi_id": "dc_identifier",
             "schema_url": 'hasContact/0/foaf_homepage/0',								
             "type": 'hasContact/0/@type/1',								
             "phone": 'hasContact/0/schema_telephone/0',								
             "updated_at": "lastUpdateDatatourisme"
             }								
-        compare_keys = ["places_id", "updated_at"]
+        compare_keys = ["poi_id", "updated_at"]
         super().__init__('contacts', mapping, compare_keys, data, db_session)								
 								
 								

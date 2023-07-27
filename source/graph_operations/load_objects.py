@@ -1,12 +1,12 @@
-from neo4j import GraphDatabase
 from dotenv import load_dotenv
 import os
 import csv
 
-from source.databases import connect_neo4j, disconnect_neo4j, connect_db, reset_graph, create_graph
+load_dotenv()  # take environment variables from .env.
+
+from source.databases import connect_db, reset_graph, create_graph
 from source.utils import get_project_root
 
-load_dotenv()  # take environment variables from .env.
 
 
 class LoadObjects:
@@ -16,15 +16,17 @@ class LoadObjects:
 
     def load_data_from_db(self, limit=None):
         query = """
-        SELECT p.id, p.name, 
+        SELECT p.poi_id as id, p.name, 
         latitude, longitude, 
         a.street || '\n' || a.zipcode || ' ' || a.locality as address,
+        locality,
         array_agg(c.type) as class 
         FROM public.places p
-        left join addresses a on p.id = a.places_id
-        left join places_to_classes ptc on p.id = ptc.places_id
+        left join addresses a using(poi_id)
+        left join places_to_classes ptc using(poi_id)
         left join classes c on ptc.classes_id = c.id 
-        group by p.id, p.name, latitude, longitude, a.street, a.zipcode, a.locality
+        where c.type in ('CulturalSite', 'SportsAndLeisurePlaces', 'NaturalSite', 'Restaurant', 'Shopping', 'EntertainmentAndEvent', 'ParkAndGarden', 'Museum','BistroOrWineBar', 'Church', 'ArtGalleryOrExhibitionGallery', 'RemarkableBuilding', 'Castle', 'NightClub', 'SightseeingBoat', 'ZooAnimalPark', 'Hotel')
+        group by p.poi_id, p.name, latitude, longitude, a.street, a.zipcode, a.locality
         """
         if limit is not None:
             query = query + " order by random() LIMIT " + str(limit)
@@ -59,10 +61,11 @@ class LoadObjects:
         # create node in neo4j from csv file
         # Cypher to import file
         query = '''LOAD CSV WITH HEADERS FROM 'file:///poi.csv' AS row CREATE (p:POI {id: row.id, name: row.name, 
-        latitude: row.latitude, longitude: row.longitude, street: row.street, zipcode: row.zipcode, locality: 
-        row.locality, class: row.class}) 
-        SET p.coordinates = point({ latitude: toFloat(row.latitude), longitude: toFloat(
-        row.longitude), height: 0 });'''
+        latitude: toFloat(row.latitude), longitude: toFloat(row.longitude), street: row.street, zipcode: row.zipcode, locality: 
+        row.locality}) 
+        SET p.coordinates = point({ latitude: toFloat(row.latitude), longitude: toFloat(row.longitude), height: 0 })
+        SET p.model_coordinates = [ toFloat(row.latitude), toFloat(row.longitude)] 
+        SET p.listOfClass = apoc.convert.fromJsonList(row.class);'''
         reset_graph("POI")
         return create_graph(query)
 
@@ -72,7 +75,7 @@ class LoadObjects:
         query = '''
         LOAD CSV WITH HEADERS FROM 'file:///stations.csv' AS row
         CREATE (sl:StationLine {name: row.nom_clean + ' - ' + row.ligne, station:row.nom_gare, station_name: row.nom_clean, city:row.Ville, stats: toInteger(row.Trafic)})
-        SET sl.coordinates = point({ latitude: toFloat(row.y), longitude: toFloat(row.x), height: 0 });
+        SET sl.coordinates = point({ latitude: toFloat(row.x), longitude: toFloat(row.y), height: 0 });
         '''
 
         summary = create_graph(query)
@@ -121,13 +124,13 @@ class LoadObjects:
     def create_walk_correspondance():
         query = '''
         MATCH (s1:Station), (s2:Station)
-        WHERE s1 <> s2 AND distance(s1.coordinates, s2.coordinates) <= 1000
+        WHERE s1 <> s2 AND distance(s1.coordinates, s2.coordinates) <= 400
         MERGE (s1)-[r:WALKING_CORRESPONDANCE]->(s2)
         SET r.distance = distance(s1.coordinates, s2.coordinates), 
         r.duration = distance(s1.coordinates, s2.coordinates) / 1.11111 // 1.11111 m/s for 4 km/h
         MERGE (s2)-[r2:WALKING_CORRESPONDANCE]->(s1)
-        SET r2.distance = distance(s1.coordinates, s2.coordinates), 
-        r2.duration = distance(s1.coordinates, s2.coordinates) / 1.11111
+        SET r2.distance = distance(s2.coordinates, s1.coordinates), 
+        r2.duration = distance(s2.coordinates, s1.coordinates) / 1.11111
         '''
         summary = create_graph(query)
         print("Create_walk_correspondance : created {relationships_created} relationships in {time} ms.".format(
@@ -146,7 +149,7 @@ class LoadObjects:
         MERGE (sl1)-[r:IS_LINE {ligne: row.ligne}]->(sl2)
         SET r.distance = distance(sl1.coordinates, sl2.coordinates), r.duration = distance(sl1.coordinates, sl2.coordinates) / 11.11111111111111 // 11.11111111111111 m/s for 40 km/h
         MERGE (sl2)-[r2:IS_LINE {ligne: row.ligne}]->(sl1)
-        SET r2.distance = distance(sl1.coordinates, sl2.coordinates), r2.duration = distance(sl1.coordinates, sl2.coordinates) / 11.11111111111111
+        SET r2.distance = distance(sl2.coordinates, sl1.coordinates), r2.duration = distance(sl2.coordinates, sl1.coordinates) / 11.11111111111111
         '''
         summary = create_graph(query)
         print("Create_lines : created {relationships_created} relationships in {time} ms.".format(
@@ -156,6 +159,25 @@ class LoadObjects:
 
         return summary
 
+    @staticmethod
+    def create_walk_to_station():
+        query = '''
+        MATCH (p:POI), (s:Station)
+        WHERE id(p) <> id(s) AND point.distance(p.coordinates, s.coordinates) <= 400
+        MERGE (p)-[r:WALKING_TO_STATION]->(s)
+        SET r.distance = distance(p.coordinates, s.coordinates), 
+        r.duration = distance(p.coordinates, s.coordinates) / 1.11111 // 1.11111 m/s for 4 km/h
+        MERGE (s)-[r2:WALKING_FROM_STATION]->(p)
+        SET r2.distance = distance(s.coordinates, p.coordinates), 
+        r2.duration = distance(s.coordinates, p.coordinates) / 1.11111
+        '''
+        summary = create_graph(query)
+        print("Create_walk_to_station : created {relationships_created} relationships in {time} ms.".format(
+            relationships_created=summary.counters.relationships_created,
+            time=summary.result_available_after
+        ))
+
+        return summary
 
 if __name__ == "__main__":
     pass
