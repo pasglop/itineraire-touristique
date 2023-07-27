@@ -2,6 +2,7 @@ import os
 
 import psycopg2
 import psycopg2.extras
+from graphdatascience import GraphDataScience
 from neo4j import GraphDatabase
 
 
@@ -27,19 +28,31 @@ def disconnect_db(conn, sess):
 
 
 
+
+def url_neo4j():
+    """
+    This function is used to connect to the neo4j database.
+    """
+    host = 'localhost' # os.getenv("NEO4J_CONTAINER")
+    bolt_port = os.getenv("NEO4J_BOLT_PORT")
+    uri = f"bolt://{host}:{bolt_port}"
+    return uri
+
 def connect_neo4j():
     """
     This function is used to connect to the neo4j database.
     """
-    host = 'localhost' #os.getenv("NEO4J_CONTAINER")
+    host = os.getenv("NEO4J_CONTAINER")
     bolt_port = os.getenv("NEO4J_BOLT_PORT")
-    uri = f"bolt://{host}:{bolt_port}"
+    uri = url_neo4j()
     return GraphDatabase.driver(uri, auth=(os.getenv("NEO4J_USER"), os.getenv("NEO4J_PASSWORD")))
-
 
 def disconnect_neo4j(driver):
     driver.close()
 
+def connect_gds():
+    bolt_url = url_neo4j()
+    return GraphDataScience(bolt_url, auth=(os.getenv("NEO4J_USER"), os.getenv("NEO4J_PASSWORD")))
 
 def query_graph(query):
     db = connect_neo4j()

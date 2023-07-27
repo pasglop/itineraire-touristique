@@ -1,5 +1,4 @@
 import pytest
-from geopy.geocoders import Nominatim
 
 from source.databases import connect_db, disconnect_db
 from source.graph_operations.load_objects import LoadObjects

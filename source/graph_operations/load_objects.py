@@ -1,12 +1,12 @@
-from neo4j import GraphDatabase
 from dotenv import load_dotenv
 import os
 import csv
 
-from source.databases import connect_neo4j, disconnect_neo4j, connect_db, reset_graph, create_graph
+load_dotenv()  # take environment variables from .env.
+
+from source.databases import connect_db, reset_graph, create_graph
 from source.utils import get_project_root
 
-load_dotenv()  # take environment variables from .env.
 
 
 class LoadObjects:
@@ -25,7 +25,7 @@ class LoadObjects:
         left join addresses a on p.id = a.places_id
         left join places_to_classes ptc on p.id = ptc.places_id
         left join classes c on ptc.classes_id = c.id 
-        where c.type in ('CulturalSite', 'SportsAndLeisurePlaces', 'NaturalSite', 'Restaurant', 'Shopping', 'EntertainmentAndEvent', 'ParkAndGarden', 'Museum','BistroOrWineBar', 'Church', 'ArtGalleryOrExhibitionGallery', 'RemarkableBuilding', 'Castle', 'NightClub', 'SightseeingBoat', 'ZooAnimalPark')
+        where c.type in ('CulturalSite', 'SportsAndLeisurePlaces', 'NaturalSite', 'Restaurant', 'Shopping', 'EntertainmentAndEvent', 'ParkAndGarden', 'Museum','BistroOrWineBar', 'Church', 'ArtGalleryOrExhibitionGallery', 'RemarkableBuilding', 'Castle', 'NightClub', 'SightseeingBoat', 'ZooAnimalPark', 'Hotel')
         group by p.id, p.name, latitude, longitude, a.street, a.zipcode, a.locality
         """
         if limit is not None:
@@ -62,9 +62,10 @@ class LoadObjects:
         # Cypher to import file
         query = '''LOAD CSV WITH HEADERS FROM 'file:///poi.csv' AS row CREATE (p:POI {id: toInteger(row.id), name: row.name, 
         latitude: toFloat(row.latitude), longitude: toFloat(row.longitude), street: row.street, zipcode: row.zipcode, locality: 
-        row.locality, class: row.class}) 
+        row.locality}) 
         SET p.coordinates = point({ latitude: toFloat(row.latitude), longitude: toFloat(row.longitude), height: 0 })
-        SET p.model_coordinates = [ toFloat(row.latitude), toFloat(row.longitude)] ;'''
+        SET p.model_coordinates = [ toFloat(row.latitude), toFloat(row.longitude)] 
+        SET p.listOfClass = apoc.convert.fromJsonList(row.class);'''
         reset_graph("POI")
         return create_graph(query)
 
