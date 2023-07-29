@@ -5,13 +5,14 @@ from dotenv import load_dotenv
 
 load_dotenv()  # take environment variables from .env.
 
-from source.databases import create_graph, connect_gds
+from source.databases import create_graph, connect_gds, reset_graph
 
 csv_remarkable = """
 id, name, latitude, longitude
 678296,Tour Eiffel,48.85836,2.294543
 682672,Arc de triomphe,48.873757,2.295909
 4679111,Cathédrale Notre-Dame de Paris,48.85267,2.349292
+696760, Basilique du Sacré-Cœur de Montmartre,48.886704,2.343104
 705679,Centre Pompidou,48.860713,2.352254
 705742,Galeries nationales du Grand Palais,48.8659,2.313395
 700946,Musée du Louvre,48.861347,2.335457
@@ -43,7 +44,7 @@ def extend_remarkable_pois():
     query = """
     LOAD CSV WITH HEADERS FROM 'file:///mustseen.csv' AS row
     MATCH (poi:POI {id: row.id})
-    SET poi.mustseen = true, poi.remarkable = toBoolean(row.remarkable)
+    SET poi.mustseen = true
     """
     summary = create_graph(query)
     return summary
@@ -73,10 +74,11 @@ def create_poi_relationships():
 
 
 def generate_mustseen_labels():
+    reset_graph('MustSeen')
     query = """
     MATCH(p:POI)
     where p.locality = 'Paris' and
-    ANY(category IN ['CulturalSite', 'Museum', 'RemarkableBuilding'] WHERE category in p.listOfClass)
+    ANY(category IN ['Museum', 'RemarkableBuilding'] WHERE category in p.listOfClass)
     SET p:MustSeen
     """
     summary = create_graph(query)
@@ -89,12 +91,8 @@ def generate_mustseen_labels():
 
 def project_gds_model():
     gds = connect_gds()
-    try:
-        gds.graph.drop('mustseen')
-    except:
-        pass
-
-    G_routes, result = gds.graph.project('mustseen',
+    gds.graph.drop('mustseenodes')
+    result = gds.graph.project('mustseenodes',
                                          {
                                              "MustSeen": {
                                                  "properties": {
@@ -106,14 +104,52 @@ def project_gds_model():
                                                      }
                                                  }
                                              }
-                                         },
-
-                                         {"DISTANCE":
-                                              {"orientation": "UNDIRECTED",
-                                               "aggregation": "MAX"}
-                                          },
-                                         relationshipProperties="weight"
+                                         }
                                          )
+    print("project_gds_model : created {nodes_count} nodes in {time} ms.".format(
+        nodes_count=result.nodes_created,
+        time=result.result_available_after
+    ))
+    return result
+
+def generate_kmeans_model():
+    gds = connect_gds()
+    result = gds.graph.run("CALL gds.beta.kmeans.write('mustseenodes', {"
+                           "writeProperty: 'kmeans', "
+                           "maxIterations: 10, "
+                           "k: 5, "
+                           "nodeWeightProperty: 'weight', "
+                           "concurrency: 4, "
+                           "writeConcurrency: 4, "
+                           "embeddingDimension: 2, "
+                           "embeddingWeightProperty: 'embedding', "
+                           "embeddingFeatureProperty: 'embeddingFeature', "
+                           "embeddingFeatureDimension: 2, "
+                           "embeddingFeatureProperty: 'embeddingFeature', "
+                           "embeddingFeatureDimension: 2, "
+                           "embeddingFeatureProperty: 'embeddingFeature', "
+                           "embeddingFeatureDimension: 2, "
+                           "embeddingFeatureProperty: 'embeddingFeature', "
+                           "embeddingFeatureDimension: 2, "
+                           "embeddingFeatureProperty: 'embeddingFeature', "
+                           "embeddingFeatureDimension: 2, "
+                           "embeddingFeatureProperty: 'embeddingFeature', "
+                           "embeddingFeatureDimension: 2, "
+                           "embeddingFeatureProperty: 'embeddingFeature', "
+                           "embeddingFeatureDimension: 2, "
+                           "embeddingFeatureProperty: 'embeddingFeature', "
+                           "embeddingFeatureDimension: 2, "
+                           "embeddingFeatureProperty: 'embeddingFeature', "
+                           "embeddingFeatureDimension: 2, "
+                           "embeddingFeatureProperty: 'embeddingFeature', "
+                           "embeddingFeatureDimension: 2"
+                           "}) YIELD nodesCommitted, relationshipsCommitted, createMillis, computeMillis, writeMillis")
+    print("generate_kmeans_model : created {nodes_count} nodes and {relationships_count} relationships in {time} ms.".format(
+        nodes_count=result.nodesCommitted,
+        relationships_count=result.relationshipsCommitted,
+        time=result.createMillis + result.computeMillis + result.writeMillis
+    ))
+    return result
 
 
 if __file__ == "__main__":
