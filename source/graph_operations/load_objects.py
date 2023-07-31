@@ -8,7 +8,6 @@ from source.databases import connect_db, reset_graph, create_graph
 from source.utils import get_project_root
 
 
-
 class LoadObjects:
 
     def __init__(self):
@@ -66,7 +65,7 @@ class LoadObjects:
         SET p.coordinates = point({ latitude: toFloat(row.latitude), longitude: toFloat(row.longitude), height: 0 })
         SET p.model_coordinates = [ toFloat(row.latitude), toFloat(row.longitude)] 
         SET p.listOfClass = apoc.convert.fromJsonList(row.class);'''
-        reset_graph("POI")
+        reset_graph()
         return create_graph(query)
 
     @staticmethod
@@ -164,12 +163,12 @@ class LoadObjects:
         query = '''
         MATCH (p:POI), (s:Station)
         WHERE id(p) <> id(s) AND point.distance(p.coordinates, s.coordinates) <= 400
+        WITH p, s, point.distance(p.coordinates, s.coordinates) AS distance,
+        point.distance(p.coordinates, s.coordinates) / 1.11111 AS duration
         MERGE (p)-[r:WALKING_TO_STATION]->(s)
-        SET r.distance = distance(p.coordinates, s.coordinates), 
-        r.duration = distance(p.coordinates, s.coordinates) / 1.11111 // 1.11111 m/s for 4 km/h
+        SET r.distance = distance, r.duration = duration 
         MERGE (s)-[r2:WALKING_FROM_STATION]->(p)
-        SET r2.distance = distance(s.coordinates, p.coordinates), 
-        r2.duration = distance(s.coordinates, p.coordinates) / 1.11111
+        SET r2.distance = distance, r2.duration = duration
         '''
         summary = create_graph(query)
         print("Create_walk_to_station : created {relationships_created} relationships in {time} ms.".format(
@@ -178,6 +177,7 @@ class LoadObjects:
         ))
 
         return summary
+
 
 if __name__ == "__main__":
     pass

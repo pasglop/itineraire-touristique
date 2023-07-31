@@ -1,4 +1,4 @@
-from source.data_processing.table_processing import TableProcessing, ProcessError								
+from source.data_processing.table_processing import TableProcessing, ProcessError
 								
 								
 class ContactsProcessing(TableProcessing):								
