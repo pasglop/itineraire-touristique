@@ -11,8 +11,9 @@ services:
     build:
         context: source/.
         dockerfile: ./api/Dockerfile
+    container_name: ${API_CONTAINER}
     environment:
-        - NEO4J_URI=bolt://${NEO4J_CONTAINER}:${NEO4J_BOLT_PORT}
+        - NEO4J_URI=bolt://${NEO4J_HOST}:${NEO4J_BOLT_PORT}
         - NEO4J_USER=neo4j
         - NEO4J_PASSWORD=${NEO4J_PASSWORD}
         - PG_HOST=${PG_CONTAINER}
@@ -20,8 +21,10 @@ services:
         - PG_USER=${PG_USER}
         - PG_PASSWORD=${PG_PASSWORD}
         - PG_DB=${PG_DB}
+        - API_HOST=${API_CONTAINER}
+        - API_PORT=${API_PORT}
     ports:
-      - "8000:8000"
+      - ${API_PORT}:${API_PORT}
   postgres:
     image: "postgres:15.3-alpine3.18"
     container_name: ${PG_CONTAINER}

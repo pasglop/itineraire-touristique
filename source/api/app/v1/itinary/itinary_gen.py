@@ -26,7 +26,9 @@ class ItinaryGenerator:
     def __init__(self):
         self.db, self.cursor = connect_db()
         self.knn_model = None
+        self.days_df = None
         self.poi_remarkable = None
+        self.list_steps = []
 
     def load_poi_remakable(self):
         self.poi_remarkable = pd.read_csv(StringIO(self.csv_remarkable), sep=",", dtype=str)
@@ -34,19 +36,21 @@ class ItinaryGenerator:
     def create_itinary(self, payload: ItinaryCreationSchema) -> ItinaryCreationResponseSchema:
         # public method
         # first create the KNN model
+        self._create_knn_model(days=payload.days)
 
         # then generate each steps with path
 
         # Map to step classes
 
-        # return the itinary
+        # save the itinary
+        itinary_id = self._save_itinary()
 
-        return ItinaryCreationResponseSchema(itinary_id="1234")
+        return ItinaryCreationResponseSchema(itinary_id=itinary_id)
 
     def _save_itinary(self):
         # private method
         # save the itinary in the db
-        return True
+        return 1234
 
     def _create_knn_model(self, days: int = 7):
         # private method
@@ -77,6 +81,9 @@ class ItinaryGenerator:
 
         sorted_df = sorted_df.reset_index(drop=True)
         sorted_df = sorted_df.drop(columns=['sort_order'])
+
+        days = sorted_df.groupby('communityId')
+        self.days_df = {community_id: df for community_id, df in days}
 
         self.knn_model = sorted_df
 
@@ -110,30 +117,41 @@ class ItinaryGenerator:
         summary = query_graph(query)
         return summary
 
-    def get_shortest_path(self, df, hotel_poi, index):
-        gds = connect_gds()
 
-        # use the projected graph to find the shortest path
+    def _find_next_step(self, day_index, start_node):
+        daily_df = self.days_df[day_index]
+
+        # get the shortest path POI walking or taking the subway
         query = f"""
-        MATCH (source) WHERE source.id = "{hotel_poi}"
-        CALL gds.allShortestPaths.dijkstra.stream('com_graph_0', {{
-        sourceNode: source,
-        relationshipWeightProperty: 'duration'
-        }})
-        YIELD index, sourceNode, targetNode, totalCost, nodeIds, costs, path
-        WITH targetNode, sourceNode, totalCost, nodeIds, costs, path
-        where gds.util.asNode(targetNode).id in {df['poi_id'].tolist()}
-        RETURN
-        gds.util.asNode(sourceNode).name AS sourceNodeName,
-        gds.util.asNode(targetNode).name AS targetNodeName,
-        totalCost,
-        [nodeId IN nodeIds | gds.util.asNode(nodeId).name] AS nodeNames,
-        costs,
-        nodes(path) as path
-        order by totalCost asc
-        limit 1
-        """
+            MATCH (source) WHERE source.id = "{start_node['n']['id']}"
+            CALL gds.allShortestPaths.dijkstra.stream('shortest_path_graph', {{
+            sourceNode: source,
+            relationshipWeightProperty: 'duration'
+            }})
+            YIELD index, sourceNode, targetNode, totalCost, nodeIds, costs, path
+            WITH targetNode, sourceNode, totalCost, nodeIds, costs, path
+            where gds.util.asNode(targetNode).id in {daily_df['poi_id'].tolist()}
+            RETURN
+            gds.util.asNode(sourceNode).name AS sourceNodeName,
+            gds.util.asNode(targetNode).name AS targetNodeName,
+            totalCost,
+            [nodeId IN nodeIds | gds.util.asNode(nodeId).name] AS nodeNames,
+            costs,
+            nodes(path) as path
+            order by totalCost asc
+            limit 1
+            """
+        result = query_graph(query)[0]
 
-        result = query_graph(query)
+        self.list_steps[day_index]['steps'].append(result)
 
         return result
+
+    def _init_steps(self):
+        # private method
+        # create as much days as needed
+        self.list_steps = [{'Day': x+1, 'day_index': x, 'steps': []} for x in self.days_df.keys()]
+        return True
+
+
+

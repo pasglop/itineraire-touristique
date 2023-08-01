@@ -1,9 +1,10 @@
 fastapi==0.100.1
-starlette==0.31.0
+starlette==0.27.0
 httpx
 pydantic==2.1.1
 python-dotenv
-uvicorn==0.23.1
+uvicorn==0.23.2
 psycopg2-binary
-neo4j==5.10.0
-graphdatascience
+neo4j==5.11.0
+graphdatascience==1.7.0
+

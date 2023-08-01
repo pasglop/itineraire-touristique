@@ -12,7 +12,7 @@ def url_neo4j():
     """
     This function is used to connect to the neo4j database.
     """
-    host = os.getenv("NEO4J_CONTAINER")
+    host = os.getenv("NEO4J_HOST")
     bolt_port = os.getenv("NEO4J_BOLT_PORT")
     uri = f"bolt://{host}:{bolt_port}"
     return uri
