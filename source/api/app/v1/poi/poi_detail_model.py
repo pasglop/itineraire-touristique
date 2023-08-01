@@ -21,7 +21,7 @@ class PoiDetailSchema(BaseModel):
     website: Optional[str]
     latitude: float
     longitude: float
-    address: str
+    address: Optional[str]
     phone: Optional[str]
     description: Optional[str]
     classname: List[str]
@@ -34,7 +34,7 @@ def get_poi_sql(where_clause: str, limit: int = None) -> str:
     query = f"""SELECT 
                     p.poi_id as id, p.name as name, 
                     p.website, p.latitude, p.longitude, 
-                    p.name || '\n' || a.street || '\n' || a.zipcode || ' ' || a.locality as address,
+                    COALESCE(p.name, '') || '\n' || COALESCE(a.street,'') || '\n' || COALESCE(CAST(a.zipcode as varchar),'') || ' ' || COALESCE(a.locality,'') as address,
                     co.phone, d.content as description, 
                    array_agg(c.type order by c.type) as classname 
                    FROM places p 

@@ -81,10 +81,7 @@ class ItinaryGenerator:
 
         sorted_df = sorted_df.reset_index(drop=True)
         sorted_df = sorted_df.drop(columns=['sort_order'])
-
-        days = sorted_df.groupby('communityId')
-        self.days_df = {community_id: df for community_id, df in days}
-
+        self.days_df = {community_id: df for community_id, df in sorted_df.groupby('communityId')}
         self.knn_model = sorted_df
 
         return True
@@ -117,13 +114,12 @@ class ItinaryGenerator:
         summary = query_graph(query)
         return summary
 
-
-    def _find_next_step(self, day_index, start_node):
+    def _find_next_step(self, day_index, poi_id):
         daily_df = self.days_df[day_index]
 
         # get the shortest path POI walking or taking the subway
         query = f"""
-            MATCH (source) WHERE source.id = "{start_node['n']['id']}"
+            MATCH (source) WHERE source.id = "{poi_id}"
             CALL gds.allShortestPaths.dijkstra.stream('shortest_path_graph', {{
             sourceNode: source,
             relationshipWeightProperty: 'duration'
@@ -133,7 +129,9 @@ class ItinaryGenerator:
             where gds.util.asNode(targetNode).id in {daily_df['poi_id'].tolist()}
             RETURN
             gds.util.asNode(sourceNode).name AS sourceNodeName,
+            gds.util.asNode(sourceNode).id AS sourceNodePoiId,
             gds.util.asNode(targetNode).name AS targetNodeName,
+            gds.util.asNode(targetNode).id AS targetNodePoiId,
             totalCost,
             [nodeId IN nodeIds | gds.util.asNode(nodeId).name] AS nodeNames,
             costs,
@@ -141,17 +139,50 @@ class ItinaryGenerator:
             order by totalCost asc
             limit 1
             """
-        result = query_graph(query)[0]
+        return query_graph(query)[0]
 
-        self.list_steps[day_index]['steps'].append(result)
-
-        return result
+    def _add_to_steps(self, day_index, step):
+        # private method
+        # add the step to the list of steps
+        self.list_steps[day_index]['steps'].append(step)
+        return True
 
     def _init_steps(self):
         # private method
         # create as much days as needed
-        self.list_steps = [{'Day': x+1, 'day_index': x, 'steps': []} for x in self.days_df.keys()]
+        self.list_steps = [{'Day': x + 1, 'day_index': x, 'steps': []} for x in self.days_df.keys()]
         return True
 
+    def _compute_itinary(self, days, hotel_poi_id):
+        # private method
 
+        # init the steps
+        self._init_steps()
+
+        # for each day from range 0 to days
+        poi_id = None
+        for day_index in range(days):
+            # get list of POIs
+            df_pois = self.days_df[day_index]
+            nb_steps = len(df_pois)
+
+            for step_index in range(nb_steps):
+                if step_index == 0:
+                    # generate the first step from the hotel to the first POI
+                    step = self._find_next_step(day_index=day_index, poi_id=hotel_poi_id)
+                    self._add_to_steps(day_index=day_index, step=step)
+                # find the target poi in step
+                poi_id = step['targetNodePoiId']
+
+                # generate the next step
+                step = self._find_next_step(day_index=day_index, poi_id=poi_id)
+                self._add_to_steps(day_index=day_index, step=step)
+
+                # remove the target poi from the list of pois
+                df_pois = df_pois[df_pois['poi_id'] != poi_id]
+
+                print(f"Day {day_index + 1} - {step['sourceNodeName']} -> {step['targetNodeName']}")
+
+        # generate the first step
+        #self._find_next_step(day_index=0, poi_id=hotel_poi_id)
 
