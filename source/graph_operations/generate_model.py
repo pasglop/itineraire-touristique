@@ -32,8 +32,8 @@ def drop_all_indexes():
 
 
 def create_graph_index():
-    create_graph("CREATE INDEX ON :POI(id)")
-    summary = create_graph("CREATE INDEX ON :POI(coordinates)")
+    create_graph("CREATE INDEX poi_id_index FOR (n:POI) ON (n.id)")
+    summary = create_graph("CREATE INDEX coord_index FOR (n:POI) ON (n.coordinates)")
     print("Creation of index on POI(id) and POI(coordinates)")
     return summary
 
@@ -68,17 +68,31 @@ def generate_mustseen_labels():
     return summary
 
 
+def generate_hotels_labels():
+    reset_graph('Hotel')
+    query = """
+    MATCH(p:POI)
+    where p.locality = 'Paris' and
+    ANY(category IN ['Hotel', 'Accomodation'] WHERE category in p.listOfClass)
+    SET p:Hotel
+    """
+    summary = create_graph(query)
+    print("generate_hotels_labels : created {labels_added} labels in {time} ms.".format(
+        labels_added=summary.counters.labels_added,
+        time=summary.result_available_after
+    ))
+    return summary
+
+
 def create_poi_relationships():
-    # create a new label RemarkablePOI
-    # create a new index on RemarkablePO
     query = '''
-    CALL apoc.periodic.iterate("MATCH (n1:MustSeen)
+    CALL apoc.periodic.iterate("MATCH (n1:POI)
     RETURN n1", "
     WITH n1
-    MATCH (n2:MustSeen)
+    MATCH (n2:POI)
     WHERE id(n1) <> id(n2)
-    WITH n1, n2, distance(n1.coordinates,n2.coordinates) as dist, 
-    distance(n1.coordinates,n2.coordinates) / 1.11111 as duration 
+    WITH n1, n2, point.distance(n1.coordinates,n2.coordinates) as dist, 
+    point.distance(n1.coordinates,n2.coordinates) / 1.11111 as duration 
     ORDER BY dist LIMIT 1
     CREATE (n1)-[r:DISTANCE{distance:dist, duration: duration}]->(n2)
     CREATE (n2)-[r2:DISTANCE{distance:dist, duration: duration}]->(n1)", {batchSize:1, parallel:true, concurrency:10})
@@ -191,70 +205,81 @@ def generate_kmeans_model(g_tmp, days=7):
     #         """)
 
 
-def get_shortest_path(df):
+def project_gds_model_mustseen_and_hotels():
     gds = connect_gds()
-    # first we need to project the graph for the community
-    # then we need to run the shortest path algorithm
-    # then we need to return the result
-
+    node_config = {
+        "MustSeen": {
+            "properties": ['latitude', 'longitude']
+        },
+        "Hotel": {
+            "properties": ['latitude', 'longitude']
+        },
+        "Station": {
+            "properties": ['latitude', 'longitude']
+        },
+        "StationLine": {}
+    }
+    relationship_config = {
+        "DISTANCE": {
+            "properties": ['distance', 'duration']
+        },
+        "IS_LINE": {
+            "properties": ['distance', 'duration']
+        },
+        "HAS_LINE": {
+            "properties": ['distance', 'duration']
+        },
+        "WALKING_TO_STATION": {
+            "properties": ['distance', 'duration']
+        },
+        "WALKING_FROM_STATION": {
+            "properties": ['distance', 'duration']
+        },
+        "WALKING_CORRESPONDANCE": {
+            "properties": ['distance', 'duration']
+        },
+        "DIRECT_CORRESPONDANCE": {
+            "properties": ['distance', 'duration']
+        }
+    }
 
     try:
         gds.graph.drop(gds.graph.get('com_graph_0'))
     except:
         pass
 
-    # project the graph
-    all_com = df['nodeId'].tolist()
-    all_com.append(5737)
-    result = query_graph(f"""
-    MATCH (source) WHERE ID(source) IN {df['nodeId'].tolist()} OR source:Station or source:StationLine
-    MATCH (source)-[r]-(target)
-    WHERE ID(target) IN {df['nodeId'].tolist()} OR target:Station or target:StationLine 
-    WITH gds.graph.project(
-          'com_graph_0',
-          source,
-          target,
-          {{
-                relationshipProperties: {{
-                    cost: r.duration
-                }}
-            }}
-        ) AS g
-        RETURN g.graphName AS graph, g.nodeCount AS nodes, g.relationshipCount AS rels
-    """)
+    g_tmp, res = gds.graph.project('com_graph_0', node_config, relationship_config)
 
-    # run the shortest path algorithm
-    result = query_graph(
-        """
-        CALL gds.beta.graph.relationships.stream(
-  'com_graph_0'                  
-)
-YIELD
-  sourceNodeId, targetNodeId, relationshipType
-RETURN
-  gds.util.asNode(sourceNodeId).name as source, gds.util.asNode(targetNodeId).name as target, relationshipType
-ORDER BY source ASC, target ASC
-        """
-    )
+    print(
+        f"Graph projected. {res.nodeCount} nodes and {res.relationshipCount} relationships projected in {res.projectMillis} ms.")
 
-    f"""
-        CALL gds.alpha.allShortestPaths.stream('com_graph_0', {{
-            relationshipWeightProperty: 'cost'
-        }})
-        YIELD sourceNodeId, targetNodeId, distance
-        WITH sourceNodeId, targetNodeId, distance
-        WHERE gds.util.isFinite(distance) = true
-        MATCH (source:POI) WHERE id(source) = sourceNodeId
-        MATCH (target:POI) WHERE id(target) = targetNodeId
-        WITH source, target, distance WHERE source <> target and ID(source) = 5737
-        RETURN source.name AS source, target.name AS target, distance as distance_in_kms
+    return res
 
-        """
+def get_shortest_path(df, hotel_poi, index):
+    gds = connect_gds()
 
-    # return the result
-    print(result)
+    # use the projected graph to find the shortest path
+    query = f"""
+    MATCH (source) WHERE source.id = "{hotel_poi}"
+    CALL gds.allShortestPaths.dijkstra.stream('com_graph_0', {{
+    sourceNode: source,
+    relationshipWeightProperty: 'duration'
+    }})
+    YIELD index, sourceNode, targetNode, totalCost, nodeIds, costs, path
+    WITH targetNode, sourceNode, totalCost, nodeIds, costs, path
+    where gds.util.asNode(targetNode).id in {df['poi_id'].tolist()}
+    RETURN
+    gds.util.asNode(sourceNode).name AS sourceNodeName,
+    gds.util.asNode(targetNode).name AS targetNodeName,
+    totalCost,
+    [nodeId IN nodeIds | gds.util.asNode(nodeId).name] AS nodeNames,
+    costs,
+    nodes(path) as path
+    order by totalCost asc
+    limit 1
+    """
 
-
+    result = query_graph(query)
 
     return result
 
@@ -262,10 +287,19 @@ ORDER BY source ASC, target ASC
 def get_nodes_by_ids(node_ids):
     query = (
         f"MATCH (n:POI) WHERE ID(n) IN {node_ids} "
-        "RETURN ID(n) as nodeId, n.mustseen as mustseen, n.remarkable as remarkable"
+        "RETURN ID(n) as nodeId, n.id as poi_id, n.mustseen as mustseen, n.remarkable as remarkable"
     )
     summary = query_graph(query)
     return summary
+
+def get_nodes_by_poi_ids(poi_ids):
+    query = (
+        f"MATCH (n:POI) WHERE n.id IN {poi_ids} "
+        "RETURN n"
+    )
+    summary = query_graph(query)
+    return summary
+
 
 def sort_order(row):
     if row['remarkable'] is not None:
