@@ -4,7 +4,7 @@ import csv
 
 load_dotenv()  # take environment variables from .env.
 
-from source.databases import connect_db, reset_graph, create_graph
+from source.databases import connect_db, reset_graph, create_graph, connect_gds
 from source.utils import get_project_root
 
 
@@ -177,6 +177,182 @@ class LoadObjects:
         ))
 
         return summary
+
+    @staticmethod
+    def drop_all_indexes():
+        summary = create_graph("CALL apoc.schema.assert({},{},true) YIELD label, key RETURN * ")
+        print("Dropping all indexes")
+        return summary
+
+    @staticmethod
+    def create_graph_index():
+        create_graph("CREATE INDEX poi_id_index FOR (n:POI) ON (n.id)")
+        summary = create_graph("CREATE INDEX coord_index FOR (n:POI) ON (n.coordinates)")
+        print("Creation of index on POI(id) and POI(coordinates)")
+        return summary
+
+    @staticmethod
+    def extend_remarkable_pois():
+        # create a new label RemarkablePOI
+        # create a new index on RemarkablePO
+
+        query = """
+        LOAD CSV WITH HEADERS FROM 'file:///mustseen.csv' AS row
+        MATCH (poi:POI {id: row.id})
+        SET poi.mustseen = true
+        SET poi.remarkable = CASE WHEN row.remarkable = '1' THEN true ELSE false END
+        """
+        summary = create_graph(query)
+        return summary
+
+    @staticmethod
+    def generate_mustseen_labels():
+        query = """
+        MATCH(p:POI)
+        where p.locality = 'Paris' and
+        ANY(category IN ['Museum', 'RemarkableBuilding'] WHERE category in p.listOfClass)
+        SET p:MustSeen
+        """
+        summary = create_graph(query)
+        print("generate_mustseen_labels : created {labels_added} labels in {time} ms.".format(
+            labels_added=summary.counters.labels_added,
+            time=summary.result_available_after
+        ))
+        return summary
+
+    @staticmethod
+    def generate_hotels_labels():
+        reset_graph('Hotel')
+        query = """
+        MATCH(p:POI)
+        where p.locality = 'Paris' and
+        ANY(category IN ['Hotel', 'Accomodation'] WHERE category in p.listOfClass)
+        SET p:Hotel
+        """
+        summary = create_graph(query)
+        print("generate_hotels_labels : created {labels_added} labels in {time} ms.".format(
+            labels_added=summary.counters.labels_added,
+            time=summary.result_available_after
+        ))
+        return summary
+
+    @staticmethod
+    def create_poi_relationships():
+        query = '''
+        CALL apoc.periodic.iterate("MATCH (n1:POI)
+        RETURN n1", "
+        WITH n1
+        MATCH (n2:POI)
+        WHERE id(n1) <> id(n2)
+        WITH n1, n2, point.distance(n1.coordinates,n2.coordinates) as dist, 
+        point.distance(n1.coordinates,n2.coordinates) / 1.11111 as duration 
+        ORDER BY dist LIMIT 1
+        CREATE (n1)-[r:DISTANCE{distance:dist, duration: duration}]->(n2)
+        CREATE (n2)-[r2:DISTANCE{distance:dist, duration: duration}]->(n1)", {batchSize:1, parallel:true, concurrency:10})
+        '''
+        summary = create_graph(query)
+        print("create_poi_relationships : created {relationships_created} relationships in {time} ms.".format(
+            relationships_created=summary.counters.relationships_created,
+            time=summary.result_available_after
+        ))
+        return summary
+
+    @staticmethod
+    def project_gds_model():
+        gds = connect_gds()
+        node_config = {
+            "MustSeen": {
+                "properties": {
+                    "coord": {
+                        'property': 'model_coordinates'
+                    }
+                }
+            }
+        }
+        relationship_config = {
+            "DISTANCE": {
+                "properties": {
+                    "distance": {
+                        'property': 'distance'
+                    }
+                }
+            }
+        }
+
+        try:
+            gds.graph.drop(gds.graph.get('knn_graph'))
+        except:
+            pass
+
+        g_tmp, res = gds.graph.project('knn_graph', node_config, relationship_config)
+
+        print(
+            f"Graph projected. {res.nodeCount} nodes and {res.relationshipCount} relationships projected in {res.projectMillis} ms.")
+
+        return res
+
+        # with gds.graph.project('knn_graph', node_config, relationship_config) as res:
+        #     g_tmp, project_result = res
+        #
+        #     print(g_tmp)
+        #     print(project_result)
+        #     km_result = gds.kmeans.stream(g_tmp, {
+        #         "nodeProperties": ["coord"],
+        #         "k": 7,
+        #         "maxIterations": 10
+        #     })
+        #     print(km_result)
+
+    @staticmethod
+    def project_gds_model_mustseen_and_hotels():
+        gds = connect_gds()
+        node_config = {
+            "MustSeen": {
+                "properties": ['latitude', 'longitude']
+            },
+            "Hotel": {
+                "properties": ['latitude', 'longitude']
+            },
+            "Station": {
+                "properties": ['latitude', 'longitude']
+            },
+            "StationLine": {}
+        }
+        relationship_config = {
+            "DISTANCE": {
+                "properties": ['distance', 'duration']
+            },
+            "IS_LINE": {
+                "properties": ['distance', 'duration']
+            },
+            "HAS_LINE": {
+                "properties": ['distance', 'duration']
+            },
+            "WALKING_TO_STATION": {
+                "properties": ['distance', 'duration']
+            },
+            "WALKING_FROM_STATION": {
+                "properties": ['distance', 'duration']
+            },
+            "WALKING_CORRESPONDANCE": {
+                "properties": ['distance', 'duration']
+            },
+            "DIRECT_CORRESPONDANCE": {
+                "properties": ['distance', 'duration']
+            }
+        }
+
+        try:
+            gds.graph.drop(gds.graph.get('shortest_path_graph'))
+        except:
+            pass
+
+        g_tmp, res = gds.graph.project('shortest_path_graph', node_config, relationship_config)
+
+        print(
+            f"Graph projected. {res.nodeCount} nodes and {res.relationshipCount} relationships projected in {res.projectMillis} ms.")
+
+        return res
 
 
 if __name__ == "__main__":
