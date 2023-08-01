@@ -3,7 +3,8 @@ import dateutil.parser
 
 from .context import process_data
 from .context import databases
-from .context import places_processing
+from source.data_processing import places_processing
+
 
 class TestProcessData:
     @pytest.fixture

@@ -17,13 +17,15 @@ create table public.places
 alter table public.places
     owner to itinary;
 
+CREATE INDEX idx_places_gin_trgm ON places USING gin (name gin_trgm_ops);
+
 create table public.places_to_classes
 (
     id         bigserial        constraint places_to_classes_pk
             primary key,
     poi_id  varchar not null
         constraint places_fk
-            references public.places(poi_id),
+            references public.places(poi_id) ON DELETE CASCADE,
     classes_id integer not null
         constraint classes_fk
             references public.classes,
@@ -42,7 +44,7 @@ create table public.contacts
             primary key,
     poi_id  varchar not null
         constraint contacts_places_id_fk
-            references public.places(poi_id),
+            references public.places(poi_id) ON DELETE CASCADE,
     schema_url varchar,
     type       varchar,
     phone      varchar,
@@ -62,7 +64,7 @@ create table public.descriptions
             primary key,
     poi_id  varchar not null
         constraint descriptions_places_id_fk
-            references public.places(poi_id),
+            references public.places(poi_id) ON DELETE CASCADE,
     content text,
     schema_url varchar,
     created_at timestamp with time zone      default now() not null,
@@ -81,7 +83,7 @@ create table public.addresses
             primary key,
     poi_id  varchar not null
         constraint addresses_places_id_fk
-            references public.places(poi_id),
+            references public.places(poi_id) ON DELETE CASCADE,
     schema_url varchar not null,
     locality   varchar,
     zipcode    integer,
@@ -100,7 +102,7 @@ create table public.openings
             primary key,
     poi_id varchar not null
         constraint openings_places_id_fk
-            references public.places(poi_id),
+            references public.places(poi_id) ON DELETE CASCADE,
     start_date    date,
     end_date   date,
     opens     time with time zone,

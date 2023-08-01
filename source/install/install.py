@@ -32,6 +32,7 @@ if not exists:
     # If database does not exist, create it
     cur.execute(sql.SQL("CREATE DATABASE {}").format(sql.Identifier(dbname)))
 
+
 # Close the cursor and the connection
 cur.close()
 conn.close()
@@ -53,6 +54,7 @@ def execute_sql_file(filename):
         cur.execute(sql.SQL(f.read()))
 
 
+cur.execute(sql.SQL("CREATE EXTENSION IF NOT EXISTS pg_trgm;"))
 # Execute the sql files
 execute_sql_file('artifacts/sql/classes.sql')
 execute_sql_file('artifacts/sql/places.sql')

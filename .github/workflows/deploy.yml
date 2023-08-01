@@ -15,7 +15,7 @@ permissions:
     pages: write
 
 env:
-    PRODUCT: itineraire-touristique/i
+    PRODUCT: Writerside/i
     DOC_ARTIFACT: webHelpI2-all.zip
 
 jobs:
