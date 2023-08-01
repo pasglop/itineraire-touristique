@@ -24,7 +24,7 @@ def get_poi(poi_id: str):
 def get_poi_for_class(classname: str):
     poi = poi_list.get_poi_by_class(poi_list.InputPoiClass(classname=classname))
     if poi is None:
-        raise HTTPException(status_code=404, detail="Poi not found")
+        raise HTTPException(status_code=404, detail="Class not exists or no poi found")
     return poi
 
 @app.post("/itinary/")
