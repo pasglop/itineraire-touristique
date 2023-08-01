@@ -128,3 +128,18 @@ class ItinaryStepEatSchema(ItinaryStepGenericSchema):
 
 class ItinarySchema(BaseModel):
     steps: list[ItinaryStepGenericSchema]
+
+class ItinaryCreationSchema(BaseModel):
+    hotel_poi: str
+    days: int
+
+    class Config:
+        json_extra_schema = {
+            "example": {
+                "hotel_poi": "ChIJMVd4Mymu5kcRrZ0YgYgurpM",
+                "days": 2
+            }
+        }
+
+class ItinaryCreationResponseSchema(BaseModel):
+    itinary_id: int

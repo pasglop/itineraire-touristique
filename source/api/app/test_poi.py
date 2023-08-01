@@ -1,10 +1,10 @@
 import pytest
 from fastapi.testclient import TestClient
 
-from ..app import app
-from ..v1.poi.poi_detail_model import get_poi_detail, PoiDetailSchema, poi_detail_example
-from ..v1.poi.poi_list import get_poi_by_class, InputPoiClass
-from ..v1.utils.db import connect_db
+from .app import app
+from .v1.poi.poi_detail_model import get_poi_detail, PoiDetailSchema, poi_detail_example
+from .v1.poi.poi_list import get_poi_by_class, InputPoiClass
+from .v1.utils.db import connect_db
 
 parsedPoiDetailModel = {'id': {'title': 'Id', 'type': 'string'}, 'name': {'title': 'Name', 'type': 'string'},
                         'website': {'anyOf': [{'type': 'string'}, {'type': 'null'}], 'title': 'Website'},

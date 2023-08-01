@@ -2,8 +2,10 @@ from typing import Union
 
 from fastapi import FastAPI, HTTPException
 
-from v1.poi import InputPoiClass, get_poi_by_class, PoiListSchema
-from v1.poi.poi_detail_model import get_poi_detail, PoiDetailSchema
+from .v1.itinary.itinary_gen import ItinaryGenerator
+from .v1.itinary.itinary_models import ItinaryCreationSchema, ItinaryCreationResponseSchema
+from .v1.poi import InputPoiClass, get_poi_by_class, PoiListSchema
+from .v1.poi.poi_detail_model import get_poi_detail, PoiDetailSchema
 
 app = FastAPI()
 
@@ -25,3 +27,13 @@ def get_poi_for_class(classname: str):
     if poi is None:
         raise HTTPException(status_code=404, detail="Poi not found")
     return poi
+
+@app.post("/itinary/")
+def create_itinary(payload: ItinaryCreationSchema) -> ItinaryCreationResponseSchema:
+    igen = ItinaryGenerator()
+    return igen.create_itinary(payload)
+
+@app.get("/itinary/{itinary_id}")
+def get_itinary(itinary_id: int):
+    res = get_itinary(itinary_id)
+    return res
