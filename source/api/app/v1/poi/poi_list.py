@@ -24,7 +24,7 @@ class InputPoiClass(BaseModel):
 
 def get_poi_by_class(classname: InputPoiClass) -> PoiListSchema:
     conn, cursor = connect_db()
-    cursor.execute(get_poi_sql('c.type = %s', 10), (classname.classname,))
+    cursor.execute(get_poi_sql("c.type = %s and a.locality = 'Paris'"), (classname.classname,))
     poi = cursor.fetchall()
     for i in range(len(poi)):
         poi[i] = dict(poi[i])

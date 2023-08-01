@@ -28,6 +28,7 @@ services:
   postgres:
     image: "postgres:15.3-alpine3.18"
     container_name: ${PG_CONTAINER}
+    hostname: ${PG_CONTAINER}
     restart: always
     environment:
       POSTGRES_USER: ${PG_USER}
@@ -38,8 +39,6 @@ services:
        - postgres:/data/postgres
     ports:
       - "${PG_PORT}:${PG_PORT}"
-    networks:
-      - postgres
   neo4j:
       container_name: ${NEO4J_CONTAINER}
       image: neo4j:5.10-community
@@ -62,10 +61,6 @@ services:
         NEO4J_PLUGINS: '["graph-data-science", "apoc"]'
         NEO4J_dbms_security_procedures_allowlist: gds.*, apoc.*
         NEO4J_dbms_security_procedures_unrestricted: gds.*, apoc.*
-networks:
-  postgres:
-    driver: bridge
-
 volumes:
     postgres:
     neo4j5:
