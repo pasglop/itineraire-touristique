@@ -24,13 +24,8 @@ cur = conn.cursor()
 # Name of the database
 dbname = os.getenv("PG_DB")
 
-# Check if the database exists
-cur.execute(sql.SQL("SELECT 1 FROM pg_catalog.pg_database WHERE datname = %s"), [dbname])
-
-exists = cur.fetchone()
-if not exists:
-    # If database does not exist, create it
-    cur.execute(sql.SQL("CREATE DATABASE {}").format(sql.Identifier(dbname)))
+cur.execute(sql.SQL("DROP DATABASE {}").format(sql.Identifier(dbname)))
+cur.execute(sql.SQL("CREATE DATABASE {}").format(sql.Identifier(dbname)))
 
 
 # Close the cursor and the connection

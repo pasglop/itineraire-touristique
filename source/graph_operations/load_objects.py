@@ -25,6 +25,7 @@ class LoadObjects:
         left join places_to_classes ptc using(poi_id)
         left join classes c on ptc.classes_id = c.id 
         where c.type in ('CulturalSite', 'SportsAndLeisurePlaces', 'NaturalSite', 'Restaurant', 'Shopping', 'EntertainmentAndEvent', 'ParkAndGarden', 'Museum','BistroOrWineBar', 'Church', 'ArtGalleryOrExhibitionGallery', 'RemarkableBuilding', 'Castle', 'NightClub', 'SightseeingBoat', 'ZooAnimalPark', 'Hotel')
+        and p.poi_id not in ('4602110', '5167994', '5167966', '697946', '4720806')
         group by p.poi_id, p.name, latitude, longitude, a.street, a.zipcode, a.locality
         """
         if limit is not None:

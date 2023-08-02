@@ -6,6 +6,7 @@ import re
 from dotenv import load_dotenv
 
 from source.data_loading.load_data import LoadData
+from source.data_processing.cleanup_data import CleanData
 from source.databases import connect_db, disconnect_db
 from source.data_processing.places_processing import PlacesProcessing
 from source.data_processing.table_processing import ProcessError
@@ -132,3 +133,5 @@ if __name__ == "__main__":
     processing = ProcessData()
     toc = processing.read_toc()
     processing.process_files_in_parallel()
+    cleaning = CleanData()
+    cleaning.search_similarities()
