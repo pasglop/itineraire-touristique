@@ -136,7 +136,7 @@ class ItinaryGenerator:
             gds.util.asNode(sourceNode).id AS sourceNodePoiId,
             gds.util.asNode(targetNode).name AS targetNodeName,
             gds.util.asNode(targetNode).id AS targetNodePoiId,
-            totalCost,
+            totalCost * (1+(size(nodes(path)) / 100)) as totalCost,
             [nodeId IN nodeIds | gds.util.asNode(nodeId).name] AS nodeNames,
             [nodeId IN nodeIds | labels(gds.util.asNode(nodeId))] AS nodeLabels,
             costs,
