@@ -33,11 +33,13 @@ class ItinaryGenerator:
     """
 
     def __init__(self):
+        self.day_count = 0
         self.db, self.cursor = connect_db()
         self.knn_model = None
         self.days_df = None
         self.poi_remarkable = None
         self.list_steps = []
+        self.step_count = 0
 
     def load_poi_remakable(self):
         self.poi_remarkable = pd.read_csv(StringIO(self.csv_remarkable), sep=",", dtype=str)
@@ -268,27 +270,36 @@ class ItinaryGenerator:
 
         return path_combined
 
+    def _increment_step_count(self):
+        self.step_count += 1
+        return self.step_count
+
     def _map_step(self, step_path: dict) -> list[ItinaryStepWalkSchema | ItinaryStepSubwaySchema | ItinaryStepEatSchema | ItinaryStepVisitSchema]:
         # private method
         # map the step to a dict ready for step_details
         results = []
         path = self._combine_paths(step_path['path'], step_path['costs'], step_path['nodeLabels'])
 
+
         for i in range(len(path) - 1):
             result = None
             label = path[i]['labels']
             if 'POI' in label or ('Station' in label and 'POI' in path[i+1]['labels']):
+                if 'MustSeen' in label:
+                    stepdetail = self._map_to_visit(path[i])
+                    result = ItinaryStepVisitSchema(step=self._increment_step_count(), name=path[i]['name'],
+                                                    step_detail=stepdetail.model_dump(), instruction=' ')
+                    results.append(result)
+
                 stepdetail = self._map_to_walk(path[i], path[i+1])
-                result = ItinaryStepWalkSchema(step=(i+1), name=path[i]['name'], step_detail=stepdetail.model_dump(), instruction=' ')
+                result = ItinaryStepWalkSchema(step=self._increment_step_count(), name=path[i]['name'], step_detail=stepdetail.model_dump(), instruction=' ')
+                results.append(result)
             elif 'Station' in label:
                 stepdetail = self._map_to_subway(path[i:], path[i-1])
-                result = ItinaryStepSubwaySchema(step=(i+1), name=path[i]['name'], step_detail=stepdetail.model_dump(), instruction=' ')
-            elif 'MustSeen' in label:
-                stepdetail = self._map_to_visit(path[i])
-                result = ItinaryStepVisitSchema(step=(i+1), name=path[i]['name'], step_detail=stepdetail.model_dump(), instruction=' ')
+                result = ItinaryStepSubwaySchema(step=self._increment_step_count(), name=path[i]['name'], step_detail=stepdetail.model_dump(), instruction=' ')
+                results.append(result)
             else:
                 continue
-            results.append(result)
         return results
 
     def generate_itinary(self, nb_days: int, hotel_poi_id: str) -> ItinarySchemaDays:
@@ -306,6 +317,8 @@ class ItinaryGenerator:
             steps = self.list_steps[day_index]['steps']
             itinary_steps = []
 
+            self.step_count = 0
+            self.day_count = day_index + 1
             for step in steps:
                 try:
                     step_detail = self._map_step(step)
