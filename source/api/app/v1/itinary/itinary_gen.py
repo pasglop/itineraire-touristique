@@ -227,7 +227,7 @@ class ItinaryGenerator:
         next_step = all_steps[1]
         future_steps = all_steps[1:]
         line = next_step['name'].split(' - ')[1]
-        nb_stations = 1
+        nb_stations = 0
         list_station = []
         msg = ''
         duration = 0
@@ -235,12 +235,12 @@ class ItinaryGenerator:
         dir = 'toto' # TODO find the direction with neo4j
 
         j = 0
-        while j < len(future_steps) and 'StationLine' in future_steps[j]['labels'][0]:
-            j += 1
+        while j < len(future_steps) and 'StationLine' in future_steps[j]['labels']:
             nb_stations += 1
             final_station = future_steps[j]['station']
             duration = future_steps[j]['cost'] - current_step['cost']
             list_station.append(future_steps[j]['station'])
+            j += 1
 
         if previous_step['labels'][0] == 'StationLine':
             # Correspondance entre deux lignes
@@ -256,7 +256,8 @@ class ItinaryGenerator:
             line=line,
             direction=dir,
             nb_stations=nb_stations,
-            final_station=final_station
+            final_station=final_station,
+            list_station=list_station
         )
 
     def _map_to_visit(self, step_detail) -> VisitDetailSchema:
@@ -286,11 +287,24 @@ class ItinaryGenerator:
         results = []
         path = self._combine_paths(step_path['path'], step_path['costs'], step_path['nodeLabels'])
 
-
-        for i in range(len(path) - 1):
+        i = 0
+        while i < (len(path) - 1):
             result = None
             label = path[i]['labels']
-            if 'POI' in label or ('Station' in label and 'POI' in path[i+1]['labels']):
+            # cas particulier. POI-Station-POI
+            if 'POI' in label and 'Station' in path[i+1]['labels'] and 'POI' in path[i+2]['labels']:
+                if 'MustSeen' in label:
+                    stepdetail = self._map_to_visit(path[i])
+                    result = ItinaryStepVisitSchema(step=self._increment_step_count(), name=path[i]['name'],
+                                                    step_detail=stepdetail.model_dump(), instruction=' ')
+                    results.append(result)
+
+                stepdetail = self._map_to_walk(path[i], path[i+2])
+                result = ItinaryStepWalkSchema(step=self._increment_step_count(), name=path[i]['name'], step_detail=stepdetail.model_dump(), instruction=' ')
+                results.append(result)
+                i += 2
+                continue
+            elif 'POI' in label or ('Station' in label and 'POI' in path[i+1]['labels']):
                 if 'MustSeen' in label:
                     stepdetail = self._map_to_visit(path[i])
                     result = ItinaryStepVisitSchema(step=self._increment_step_count(), name=path[i]['name'],
@@ -304,8 +318,8 @@ class ItinaryGenerator:
                 stepdetail = self._map_to_subway(path[i:], path[i-1])
                 result = ItinaryStepSubwaySchema(step=self._increment_step_count(), name=path[i]['name'], step_detail=stepdetail.model_dump(), instruction=' ')
                 results.append(result)
-            else:
-                continue
+
+            i += 1  # increment i
         return results
 
     def generate_itinary(self, nb_days: int, hotel_poi_id: str) -> ItinarySchemaDays:

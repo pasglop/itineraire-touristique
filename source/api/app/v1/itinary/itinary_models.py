@@ -48,6 +48,7 @@ class SubwayDetailSchema(BaseModel):
     direction: str
     nb_stations: int
     final_station: str
+    list_station: list[str]
 
     class Config:
         json_schema_extra = {
