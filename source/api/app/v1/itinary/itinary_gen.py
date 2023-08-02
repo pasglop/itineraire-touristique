@@ -1,7 +1,16 @@
+from typing import List, Union
+
 import pandas as pd
+import haversine as hs
+import logging
 from io import StringIO
 
-from .itinary_models import ItinaryCreationSchema, ItinarySchema, ItinaryCreationResponseSchema
+from pydantic import ValidationError
+
+from .itinary_models import ItinaryCreationSchema, ItinarySchema, ItinaryCreationResponseSchema, WalkDetailSchema, \
+    SubwayDetailSchema, VisitDetailSchema, ItinarySchemaDays, ItinaryStepGenericSchema, ItinaryStepWalkSchema, \
+    ItinaryStepSubwaySchema, ItinaryStepVisitSchema, ItinaryStepEatSchema
+from ..poi import PoiDetailSchema, get_poi_detail
 from ..utils.db import connect_db
 from ..utils.graph import connect_gds, query_graph
 
@@ -36,23 +45,17 @@ class ItinaryGenerator:
     def create_itinary(self, payload: ItinaryCreationSchema) -> ItinaryCreationResponseSchema:
         # public method
         # first create the KNN model
-        self._create_knn_model(days=payload.days)
-
-        # then generate each steps with path
-
-        # Map to step classes
-
-        # save the itinary
+        result = self.generate_itinary(payload.days, payload.hotel_poi)
         itinary_id = self._save_itinary()
 
-        return ItinaryCreationResponseSchema(itinary_id=itinary_id)
+        return ItinaryCreationResponseSchema(itinary_id=itinary_id, itinary=result)
 
     def _save_itinary(self):
         # private method
-        # save the itinary in the db
+        # save the itinary in the db TODO
         return 1234
 
-    def _create_knn_model(self, days: int = 7):
+    def _create_knn_model(self, days: int = 7, hotel_poi_id: str = None):
         # private method
         # create the knn model
         gds = connect_gds()
@@ -114,8 +117,7 @@ class ItinaryGenerator:
         summary = query_graph(query)
         return summary
 
-    def _find_next_step(self, day_index, poi_id):
-        daily_df = self.days_df[day_index]
+    def _find_next_step(self, list_poi: list, poi_id: str):
 
         # get the shortest path POI walking or taking the subway
         query = f"""
@@ -126,7 +128,7 @@ class ItinaryGenerator:
             }})
             YIELD index, sourceNode, targetNode, totalCost, nodeIds, costs, path
             WITH targetNode, sourceNode, totalCost, nodeIds, costs, path
-            where gds.util.asNode(targetNode).id in {daily_df['poi_id'].tolist()}
+            where gds.util.asNode(targetNode).id in {list_poi}
             RETURN
             gds.util.asNode(sourceNode).name AS sourceNodeName,
             gds.util.asNode(sourceNode).id AS sourceNodePoiId,
@@ -134,12 +136,19 @@ class ItinaryGenerator:
             gds.util.asNode(targetNode).id AS targetNodePoiId,
             totalCost,
             [nodeId IN nodeIds | gds.util.asNode(nodeId).name] AS nodeNames,
+            [nodeId IN nodeIds | labels(gds.util.asNode(nodeId))] AS nodeLabels,
             costs,
             nodes(path) as path
             order by totalCost asc
             limit 1
             """
-        return query_graph(query)[0]
+        result = None
+        try:
+            result = query_graph(query)[0]
+        except Exception as e:
+            print(e, query)
+
+        return result
 
     def _add_to_steps(self, day_index, step):
         # private method
@@ -153,7 +162,7 @@ class ItinaryGenerator:
         self.list_steps = [{'Day': x + 1, 'day_index': x, 'steps': []} for x in self.days_df.keys()]
         return True
 
-    def _compute_itinary(self, days, hotel_poi_id):
+    def _compute_itinary(self, days: int, hotel_poi_id: str):
         # private method
 
         # init the steps
@@ -161,28 +170,151 @@ class ItinaryGenerator:
 
         # for each day from range 0 to days
         poi_id = None
-        for day_index in range(days):
+        for day_index in range(0, days):
             # get list of POIs
             df_pois = self.days_df[day_index]
             nb_steps = len(df_pois)
 
-            for step_index in range(nb_steps):
+            step = None
+            for step_index in range(0, nb_steps):
                 if step_index == 0:
                     # generate the first step from the hotel to the first POI
-                    step = self._find_next_step(day_index=day_index, poi_id=hotel_poi_id)
+                    step = self._find_next_step(list_poi=df_pois['poi_id'].tolist(), poi_id=hotel_poi_id)
                     self._add_to_steps(day_index=day_index, step=step)
+                    logging.info(f"Day {day_index + 1} - start - {step['sourceNodeName']} -> {step['targetNodeName']}")
+
                 # find the target poi in step
                 poi_id = step['targetNodePoiId']
-
-                # generate the next step
-                step = self._find_next_step(day_index=day_index, poi_id=poi_id)
-                self._add_to_steps(day_index=day_index, step=step)
-
                 # remove the target poi from the list of pois
                 df_pois = df_pois[df_pois['poi_id'] != poi_id]
 
-                print(f"Day {day_index + 1} - {step['sourceNodeName']} -> {step['targetNodeName']}")
+                if len(df_pois) > 0:
+                    # generate the next step
+                    step = self._find_next_step(df_pois['poi_id'].tolist(), poi_id=poi_id)
+                    self._add_to_steps(day_index=day_index, step=step)
+                    logging.info(
+                        f"Day {day_index + 1} - {step_index} - {step['sourceNodeName']} -> {step['targetNodeName']}")
 
-        # generate the first step
-        #self._find_next_step(day_index=0, poi_id=hotel_poi_id)
+            # generate the last step
+            step = self._find_next_step(list_poi=[hotel_poi_id], poi_id=poi_id)
+            self._add_to_steps(day_index=day_index, step=step)
+            logging.info(f"Day {day_index + 1} - Final - {step['sourceNodeName']} -> {step['targetNodeName']}")
 
+    def _map_to_walk(self, current_step, next_step) -> WalkDetailSchema:
+        result = None
+        loc1 = (current_step.get('latitude'), current_step.get('longitude'))
+        loc2 = (current_step.get('latitude'), current_step.get('longitude'))
+        distance = hs.haversine(loc1, loc2)
+        duration = next_step.get('cost') - current_step.get('cost')
+        return WalkDetailSchema(
+            name=f'Marcher de {"la station " + current_step["station"] if "Station" in current_step["labels"]  else current_step["name"]} à {"la station" + next_step["station"] if "Station" in next_step["labels"] else next_step["name"]} pendant {duration} minutes',
+            distance=distance,  # compute this from lat/lon if available
+            duration=duration,
+            start_latitude=current_step.get('latitude'),
+            start_longitude=current_step.get('longitude'),
+            end_latitude=next_step.get('latitude'),
+            end_longitude=next_step.get('longitude'),
+        )
+
+    def _map_to_subway(self, all_steps, previous_step) -> SubwayDetailSchema:
+        current_step = all_steps[0]
+        next_step = all_steps[1]
+        future_steps = all_steps[1:]
+        line = next_step['name'].split(' - ')[1]
+        nb_stations = 1
+        msg = ''
+        duration = 0
+        final_station = None
+        dir = 'toto' # TODO find the direction with neo4j
+
+        j = 0
+        while j < len(future_steps) and 'StationLine' in future_steps[j]['labels'][0]:
+            j += 1
+            nb_stations += 1
+            final_station = future_steps[j]['name']
+            duration = future_steps[j]['cost'] - current_step['cost']
+
+        if previous_step['labels'][0] == 'StationLine':
+            # Correspondance entre deux lignes
+            prev_line = previous_step['name'].split(' - ')[1]
+            msg = f'A la station {current_step["station"]}, prenez la correspondance entre la ligne {prev_line} et la ligne {line} en direction de {dir} jusqu\'à {final_station}'
+        else:
+            # prendre le métro jusqu'à la prochaine station
+            msg = f'Prendre le métro ligne {line} en direction de {dir} jusqu\'à {final_station}'
+
+        return SubwayDetailSchema(
+            name=msg,
+            duration=duration,
+            line=line,
+            direction=dir,
+            nb_stations=nb_stations,
+            final_station=final_station
+        )
+
+    def _map_to_visit(self, step_detail) -> VisitDetailSchema:
+        poi_detail = get_poi_detail(step_detail['id'])
+
+        return VisitDetailSchema(**poi_detail.model_dump())
+
+    def _combine_paths(self, paths: List[dict], costs: List[float], labels: List[List[str]]) -> List[dict]:
+        # private method
+        # combine the paths to a single path
+        path_combined = []
+
+        for dict_elem, cost_elem, labels_elem in zip(paths, costs, labels):
+            dict_elem['cost'] = cost_elem
+            dict_elem['labels'] = labels_elem
+            path_combined.append(dict_elem)
+
+        return path_combined
+
+    def _map_step(self, step_path: dict) -> list[ItinaryStepWalkSchema | ItinaryStepSubwaySchema | ItinaryStepEatSchema | ItinaryStepVisitSchema]:
+        # private method
+        # map the step to a dict ready for step_details
+        results = []
+        path = self._combine_paths(step_path['path'], step_path['costs'], step_path['nodeLabels'])
+
+        for i in range(len(path) - 1):
+            result = None
+            label = path[i]['labels']
+            if 'POI' in label or ('Station' in label and 'POI' in path[i+1]['labels']):
+                stepdetail = self._map_to_walk(path[i], path[i+1])
+                result = ItinaryStepWalkSchema(step=(i+1), name=path[i]['name'], step_detail=stepdetail.model_dump(), instruction=' ')
+            elif 'Station' in label:
+                stepdetail = self._map_to_subway(path[i:], path[i-1])
+                result = ItinaryStepSubwaySchema(step=(i+1), name=path[i]['name'], step_detail=stepdetail.model_dump(), instruction=' ')
+            elif 'MustSeen' in label:
+                stepdetail = self._map_to_visit(path[i])
+                result = ItinaryStepVisitSchema(step=(i+1), name=path[i]['name'], step_detail=stepdetail.model_dump(), instruction=' ')
+            else:
+                continue
+            results.append(result)
+        return results
+
+    def generate_itinary(self, nb_days: int, hotel_poi_id: str) -> ItinarySchemaDays:
+        # generate the itinary
+
+        # first generate knn_model
+        self._create_knn_model(nb_days, hotel_poi_id)
+
+        # run the itinary generation
+        self._compute_itinary(nb_days, hotel_poi_id)
+
+        # return a list of itinary
+        itinary = []
+        for day_index in range(nb_days):
+            steps = self.list_steps[day_index]['steps']
+            itinary_steps = []
+
+            for step in steps:
+                try:
+                    step_detail = self._map_step(step)
+                    itinary_steps += step_detail
+                except ValidationError as e:
+                    logging.error(e)
+                    raise e
+
+            # Create a single ItinarySchema instance with all the steps
+            itinary_day = ItinarySchema(steps=itinary_steps)
+            itinary.append(itinary_day)
+        return ItinarySchemaDays(days=itinary)

@@ -47,6 +47,7 @@ class SubwayDetailSchema(BaseModel):
     line: str
     direction: str
     nb_stations: int
+    final_station: str
 
     class Config:
         json_schema_extra = {
@@ -127,7 +128,10 @@ class ItinaryStepEatSchema(ItinaryStepGenericSchema):
 
 
 class ItinarySchema(BaseModel):
-    steps: list[ItinaryStepGenericSchema]
+    steps: list[ItinaryStepEatSchema | ItinaryStepSubwaySchema | ItinaryStepVisitSchema | ItinaryStepWalkSchema]
+
+class ItinarySchemaDays(BaseModel):
+    days: list[ItinarySchema]
 
 class ItinaryCreationSchema(BaseModel):
     hotel_poi: str
@@ -143,3 +147,4 @@ class ItinaryCreationSchema(BaseModel):
 
 class ItinaryCreationResponseSchema(BaseModel):
     itinary_id: int
+    itinary: ItinarySchemaDays

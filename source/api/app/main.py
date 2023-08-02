@@ -1,7 +1,9 @@
 from typing import Union
+import dotenv
 
 from fastapi import FastAPI, HTTPException
 
+dotenv.load_dotenv()
 from .v1.itinary import itinary_gen
 from .v1.itinary import itinary_models
 from .v1.poi import poi_list, poi_detail_model

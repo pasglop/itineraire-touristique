@@ -1,4 +1,5 @@
 import os
+import logging
 from neo4j import GraphDatabase
 from graphdatascience import GraphDataScience
 
@@ -37,7 +38,7 @@ def query_graph(query):
     records, summary, keys = db.execute_query(query)
     disconnect_neo4j(db)
     # Summary information
-    print("The query `{query}` returned {records_count} records in {time} ms.".format(
+    logging.info("The query `{query}` returned {records_count} records in {time} ms.".format(
         query=summary.query, records_count=len(records),
         time=summary.result_available_after
     ))

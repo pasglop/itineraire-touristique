@@ -73,7 +73,10 @@ class LoadObjects:
         reset_graph("StationLine")
         query = '''
         LOAD CSV WITH HEADERS FROM 'file:///stations.csv' AS row
-        CREATE (sl:StationLine {name: row.nom_clean + ' - ' + row.ligne, station:row.nom_gare, station_name: row.nom_clean, city:row.Ville, stats: toInteger(row.Trafic)})
+        CREATE (sl:StationLine {name: row.nom_clean + ' - ' + row.ligne, station:row.nom_gare, 
+        station_name: row.nom_clean, city:row.Ville, 
+        stats: toInteger(row.Trafic), 
+        latitude: toFloat(row.x), longitude: toFloat(row.y)})
         SET sl.coordinates = point({ latitude: toFloat(row.x), longitude: toFloat(row.y), height: 0 });
         '''
 
@@ -90,7 +93,8 @@ class LoadObjects:
         reset_graph("Station")
         query = '''
         MATCH (sl1:StationLine)
-        MERGE (s1:Station {name: sl1.station_name, station: sl1.station, city: sl1.city, stats: sl1.stats, coordinates: sl1.coordinates})
+        MERGE (s1:Station {name: sl1.station_name, station: sl1.station, city: sl1.city, stats: sl1.stats, 
+        coordinates: sl1.coordinates, latitude: sl1.latitude, longitude: sl1.longitude})
         MERGE (s1)-[:HAS_LINE {duration:0}]->(sl1)
         MERGE (sl1)-[:HAS_LINE {duration:0}]->(s1)
         '''
@@ -208,7 +212,7 @@ class LoadObjects:
     @staticmethod
     def generate_mustseen_labels():
         query = """
-        MATCH(p:POI)
+        MATCH(p:POI)-[:WALKING_TO_STATION]->(s:Station)
         where p.locality = 'Paris' and
         ANY(category IN ['Museum', 'RemarkableBuilding'] WHERE category in p.listOfClass)
         SET p:MustSeen
@@ -224,7 +228,7 @@ class LoadObjects:
     def generate_hotels_labels():
         reset_graph('Hotel')
         query = """
-        MATCH(p:POI)
+        MATCH(p:POI)-[:WALKING_TO_STATION]->(s:Station)
         where p.locality = 'Paris' and
         ANY(category IN ['Hotel', 'Accomodation'] WHERE category in p.listOfClass)
         SET p:Hotel
@@ -316,7 +320,9 @@ class LoadObjects:
             "Station": {
                 "properties": ['latitude', 'longitude']
             },
-            "StationLine": {}
+            "StationLine": {
+                "properties": ['latitude', 'longitude']
+            }
         }
         relationship_config = {
             "DISTANCE": {
@@ -356,4 +362,22 @@ class LoadObjects:
 
 
 if __name__ == "__main__":
-    pass
+    load_objects = LoadObjects()
+    load_objects.drop_all_indexes()
+    load_objects.generate_csv_file_with_poi()
+    load_objects.copy_csv_file_to_neo4j()
+    load_objects.create_node_in_neo4j()
+    load_objects.load_stations()
+    load_objects.create_stations()
+    load_objects.create_direct_correspondance()
+    load_objects.create_walk_correspondance()
+    load_objects.create_lines()
+    load_objects.create_walk_to_station()
+
+    load_objects.create_graph_index()
+    load_objects.extend_remarkable_pois()
+    load_objects.generate_mustseen_labels()
+    load_objects.generate_hotels_labels()
+    load_objects.create_poi_relationships()
+    load_objects.project_gds_model()
+    load_objects.project_gds_model_mustseen_and_hotels()

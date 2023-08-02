@@ -7,4 +7,5 @@ uvicorn==0.23.2
 psycopg2-binary
 neo4j==5.11.0
 graphdatascience==1.7.0
+haversine
 
