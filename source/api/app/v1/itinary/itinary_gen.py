@@ -202,14 +202,18 @@ class ItinaryGenerator:
             self._add_to_steps(day_index=day_index, step=step)
             logging.info(f"Day {day_index + 1} - Final - {step['sourceNodeName']} -> {step['targetNodeName']}")
 
+    def _calculate_distance(self, loc1, loc2):
+        return hs.haversine(loc1, loc2)
+    def _format_duration(self, seconds):
+        h, m, s = map(lambda x: int(x), [seconds / 3600, seconds % 3600 / 60, seconds % 60])
+        return f'{h}:{m:02d}:{s:02d}'
+
     def _map_to_walk(self, current_step, next_step) -> WalkDetailSchema:
         result = None
-        loc1 = (current_step.get('latitude'), current_step.get('longitude'))
-        loc2 = (current_step.get('latitude'), current_step.get('longitude'))
-        distance = hs.haversine(loc1, loc2)
+        distance = self._calculate_distance((current_step.get('latitude'), current_step.get('longitude')), (current_step.get('latitude'), current_step.get('longitude')))
         duration = next_step.get('cost') - current_step.get('cost')
         return WalkDetailSchema(
-            name=f'Marcher de {"la station " + current_step["station"] if "Station" in current_step["labels"]  else current_step["name"]} à {"la station" + next_step["station"] if "Station" in next_step["labels"] else next_step["name"]} pendant {duration} minutes',
+            name=f'Marcher de {"la station " + current_step["station"] if "Station" in current_step["labels"]  else current_step["name"]} à {"la station " + next_step["station"] if "Station" in next_step["labels"] else next_step["name"]} pendant {self._format_duration(duration)}',
             distance=distance,  # compute this from lat/lon if available
             duration=duration,
             start_latitude=current_step.get('latitude'),
@@ -224,6 +228,7 @@ class ItinaryGenerator:
         future_steps = all_steps[1:]
         line = next_step['name'].split(' - ')[1]
         nb_stations = 1
+        list_station = []
         msg = ''
         duration = 0
         final_station = None
@@ -233,8 +238,9 @@ class ItinaryGenerator:
         while j < len(future_steps) and 'StationLine' in future_steps[j]['labels'][0]:
             j += 1
             nb_stations += 1
-            final_station = future_steps[j]['name']
+            final_station = future_steps[j]['station']
             duration = future_steps[j]['cost'] - current_step['cost']
+            list_station.append(future_steps[j]['station'])
 
         if previous_step['labels'][0] == 'StationLine':
             # Correspondance entre deux lignes
