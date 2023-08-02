@@ -204,16 +204,18 @@ class ItinaryGenerator:
 
     def _calculate_distance(self, loc1, loc2):
         return hs.haversine(loc1, loc2)
+
     def _format_duration(self, seconds):
         h, m, s = map(lambda x: int(x), [seconds / 3600, seconds % 3600 / 60, seconds % 60])
         return f'{h}:{m:02d}:{s:02d}'
 
     def _map_to_walk(self, current_step, next_step) -> WalkDetailSchema:
         result = None
-        distance = self._calculate_distance((current_step.get('latitude'), current_step.get('longitude')), (current_step.get('latitude'), current_step.get('longitude')))
+        distance = self._calculate_distance((current_step.get('latitude'), current_step.get('longitude')),
+                                            (current_step.get('latitude'), current_step.get('longitude')))
         duration = next_step.get('cost') - current_step.get('cost')
         return WalkDetailSchema(
-            name=f'Marcher de {"la station " + current_step["station"] if "Station" in current_step["labels"]  else current_step["name"]} à {"la station " + next_step["station"] if "Station" in next_step["labels"] else next_step["name"]} pendant {self._format_duration(duration)}',
+            name=f'Marcher de {"la station " + current_step["station"] if "Station" in current_step["labels"] else current_step["name"]} à {"la station " + next_step["station"] if "Station" in next_step["labels"] else next_step["name"]} pendant {self._format_duration(duration)}',
             distance=distance,  # compute this from lat/lon if available
             duration=duration,
             start_latitude=current_step.get('latitude'),
@@ -221,6 +223,27 @@ class ItinaryGenerator:
             end_latitude=next_step.get('latitude'),
             end_longitude=next_step.get('longitude'),
         )
+
+    def _find_terminal_station(self, stations: list) -> str:
+        if stations[0]['terminus']:
+            query = f"""
+            MATCH (sl1:StationLine {{name: '{stations[0]['name']}'}})-[r:IS_LINE*..40]->(last:StationLine {{terminus: true}})
+            WHERE last.name <> '{stations[0]['name']}'
+            RETURN distinct last.station as terminus
+            """
+        else:
+            query = f"""
+            MATCH p=((sl1:StationLine {{name: '{stations[0]['name']}'}})-[r:IS_LINE*..40]->(last:StationLine {{terminus: true}}))
+            WITH nodes(p)[1] as first, last 
+              where first.name = '{stations[1]['name']}'
+            RETURN last.station as terminus
+            """
+        result = None
+        try:
+            result = query_graph(query)[0]['terminus']
+        except Exception as e:
+            print(e, query)
+        return result
 
     def _map_to_subway(self, all_steps, previous_step) -> SubwayDetailSchema:
         current_step = all_steps[0]
@@ -232,7 +255,6 @@ class ItinaryGenerator:
         msg = ''
         duration = 0
         final_station = None
-        dir = 'toto' # TODO find the direction with neo4j
 
         j = 0
         while j < len(future_steps) and 'StationLine' in future_steps[j]['labels']:
@@ -242,6 +264,7 @@ class ItinaryGenerator:
             list_station.append(future_steps[j]['station'])
             j += 1
 
+        dir = self._find_terminal_station([future_steps[0], future_steps[1]])
         if previous_step['labels'][0] == 'StationLine':
             # Correspondance entre deux lignes
             prev_line = previous_step['name'].split(' - ')[1]
@@ -281,7 +304,8 @@ class ItinaryGenerator:
         self.step_count += 1
         return self.step_count
 
-    def _map_step(self, step_path: dict) -> list[ItinaryStepWalkSchema | ItinaryStepSubwaySchema | ItinaryStepEatSchema | ItinaryStepVisitSchema]:
+    def _map_step(self, step_path: dict) -> list[
+        ItinaryStepWalkSchema | ItinaryStepSubwaySchema | ItinaryStepEatSchema | ItinaryStepVisitSchema]:
         # private method
         # map the step to a dict ready for step_details
         results = []
@@ -292,31 +316,34 @@ class ItinaryGenerator:
             result = None
             label = path[i]['labels']
             # cas particulier. POI-Station-POI
-            if 'POI' in label and 'Station' in path[i+1]['labels'] and 'POI' in path[i+2]['labels']:
+            if 'POI' in label and 'Station' in path[i + 1]['labels'] and 'POI' in path[i + 2]['labels']:
                 if 'MustSeen' in label:
                     stepdetail = self._map_to_visit(path[i])
                     result = ItinaryStepVisitSchema(step=self._increment_step_count(), name=path[i]['name'],
-                                                    step_detail=stepdetail.model_dump(), instruction=' ')
+                                                    step_detail=stepdetail.model_dump(), instruction=stepdetail.name)
                     results.append(result)
 
-                stepdetail = self._map_to_walk(path[i], path[i+2])
-                result = ItinaryStepWalkSchema(step=self._increment_step_count(), name=path[i]['name'], step_detail=stepdetail.model_dump(), instruction=' ')
+                stepdetail = self._map_to_walk(path[i], path[i + 2])
+                result = ItinaryStepWalkSchema(step=self._increment_step_count(), name=path[i]['name'],
+                                               step_detail=stepdetail.model_dump(), instruction=stepdetail.name)
                 results.append(result)
                 i += 2
                 continue
-            elif 'POI' in label or ('Station' in label and 'POI' in path[i+1]['labels']):
+            elif 'POI' in label or ('Station' in label and 'POI' in path[i + 1]['labels']):
                 if 'MustSeen' in label:
                     stepdetail = self._map_to_visit(path[i])
                     result = ItinaryStepVisitSchema(step=self._increment_step_count(), name=path[i]['name'],
-                                                    step_detail=stepdetail.model_dump(), instruction=' ')
+                                                    step_detail=stepdetail.model_dump(), instruction=stepdetail.name)
                     results.append(result)
 
-                stepdetail = self._map_to_walk(path[i], path[i+1])
-                result = ItinaryStepWalkSchema(step=self._increment_step_count(), name=path[i]['name'], step_detail=stepdetail.model_dump(), instruction=' ')
+                stepdetail = self._map_to_walk(path[i], path[i + 1])
+                result = ItinaryStepWalkSchema(step=self._increment_step_count(), name=path[i]['name'],
+                                               step_detail=stepdetail.model_dump(), instruction=stepdetail.name)
                 results.append(result)
             elif 'Station' in label:
-                stepdetail = self._map_to_subway(path[i:], path[i-1])
-                result = ItinaryStepSubwaySchema(step=self._increment_step_count(), name=path[i]['name'], step_detail=stepdetail.model_dump(), instruction=' ')
+                stepdetail = self._map_to_subway(path[i:], path[i - 1])
+                result = ItinaryStepSubwaySchema(step=self._increment_step_count(), name=path[i]['name'],
+                                                 step_detail=stepdetail.model_dump(), instruction=stepdetail.name)
                 results.append(result)
 
             i += 1  # increment i

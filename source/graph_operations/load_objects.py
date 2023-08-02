@@ -154,8 +154,7 @@ class LoadObjects:
          (sl2:StationLine {name: row.stop + ' - ' + row.ligne})
         MERGE (sl1)-[r:IS_LINE {ligne: row.ligne}]->(sl2)
         SET r.distance = point.distance(sl1.coordinates, sl2.coordinates), r.duration = point.distance(sl1.coordinates, sl2.coordinates) / 11.11111111111111 // 11.11111111111111 m/s for 40 km/h
-        MERGE (sl2)-[r2:IS_LINE {ligne: row.ligne}]->(sl1)
-        SET r2.distance = point.distance(sl2.coordinates, sl1.coordinates), r2.duration = point.distance(sl2.coordinates, sl1.coordinates) / 11.11111111111111
+        SET sl1.terminus = CASE WHEN row.terminus = 'true' THEN true ELSE false END
         '''
         summary = create_graph(query)
         print("Create_lines : created {relationships_created} relationships in {time} ms.".format(

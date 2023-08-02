@@ -323,6 +323,14 @@ def test_should_map_steps_return_itinary_without_error():
 
     assert True
 
+def test_should_find_terminal_station():
+    igen = ItinaryGenerator()
+    path = igen._combine_paths(step_example['path'], step_example['costs'], step_example['nodeLabels'])
+    result = igen._find_terminal_station([path[2], path[3]])
+    print(path[2])
+    print(path[3])
+    assert result == 'Châtelet'
+
 
 
 # walking_step_detail = WalkDetailSchema({})
