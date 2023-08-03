@@ -1,0 +1,2994 @@
+{
+  "itinary_id": 1234,
+  "itinary": {
+    "days": [
+      {
+        "steps": [
+          {
+            "step": 1,
+            "name": "Park Hyatt Paris-Vendôme",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Park Hyatt Paris-Vendôme à la station Opéra pendant 0:03:50",
+              "distance": 0,
+              "duration": 230.14373826644083,
+              "start_latitude": 48.8686535,
+              "start_longitude": 2.330588900000066,
+              "end_latitude": 48.870636,
+              "end_longitude": 2.332353
+            },
+            "instruction": "Marcher de Park Hyatt Paris-Vendôme à la station Opéra pendant 0:03:50",
+            "comment": null
+          },
+          {
+            "step": 2,
+            "name": "OPERA",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 8 en direction de Pointe du Lac jusqu'à Madeleine",
+              "duration": 53.123643927843034,
+              "line": "8",
+              "direction": "Pointe du Lac",
+              "nb_stations": 2,
+              "final_station": "Madeleine",
+              "list_station": [
+                "Opéra",
+                "Madeleine"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 8 en direction de Pointe du Lac jusqu'à Madeleine",
+            "comment": null
+          },
+          {
+            "step": 3,
+            "name": "MADELEINE",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Madeleine, prenez la correspondance entre la ligne 8 et la ligne 12 en direction de Mairie d'Aubervilliers jusqu'à Concorde",
+              "duration": 48.766988992968436,
+              "line": "12",
+              "direction": "Mairie d'Aubervilliers",
+              "nb_stations": 2,
+              "final_station": "Concorde",
+              "list_station": [
+                "Madeleine",
+                "Concorde"
+              ]
+            },
+            "instruction": "A la station Madeleine, prenez la correspondance entre la ligne 8 et la ligne 12 en direction de Mairie d'Aubervilliers jusqu'à Concorde",
+            "comment": null
+          },
+          {
+            "step": 4,
+            "name": "CONCORDE",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Concorde, prenez la correspondance entre la ligne 12 et la ligne 1 en direction de Château de Vincennes jusqu'à Franklin D. Roosevelt",
+              "duration": 82.366754806784,
+              "line": "1",
+              "direction": "Château de Vincennes",
+              "nb_stations": 3,
+              "final_station": "Franklin D. Roosevelt",
+              "list_station": [
+                "Concorde",
+                "Champs-Élysées—Clemenceau",
+                "Franklin D. Roosevelt"
+              ]
+            },
+            "instruction": "A la station Concorde, prenez la correspondance entre la ligne 12 et la ligne 1 en direction de Château de Vincennes jusqu'à Franklin D. Roosevelt",
+            "comment": null
+          },
+          {
+            "step": 5,
+            "name": "FRANKLINDROOSEVELT",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Franklin D. Roosevelt, prenez la correspondance entre la ligne 1 et la ligne 9 en direction de Pont de Sèvres jusqu'à Trocadéro",
+              "duration": 164.23443551636376,
+              "line": "9",
+              "direction": "Pont de Sèvres",
+              "nb_stations": 4,
+              "final_station": "Trocadéro",
+              "list_station": [
+                "Franklin D. Roosevelt",
+                "Alma—Marceau",
+                "Iéna",
+                "Trocadéro"
+              ]
+            },
+            "instruction": "A la station Franklin D. Roosevelt, prenez la correspondance entre la ligne 1 et la ligne 9 en direction de Pont de Sèvres jusqu'à Trocadéro",
+            "comment": null
+          },
+          {
+            "step": 6,
+            "name": "TROCADERO",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Trocadéro à Cité de l’architecture & du patrimoine pendant 0:01:02",
+              "distance": 0,
+              "duration": 62.74819187536468,
+              "start_latitude": 48.863301,
+              "start_longitude": 2.287061,
+              "end_latitude": 48.86291929999999,
+              "end_longitude": 2.2878157999999758
+            },
+            "instruction": "Marcher de la station Trocadéro à Cité de l’architecture & du patrimoine pendant 0:01:02",
+            "comment": null
+          },
+          {
+            "step": 7,
+            "name": "Cité de l’architecture & du patrimoine",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "53dff4ec-c1c6-ddad-b70f-501ba3b4989b",
+              "name": "Cité de l’architecture & du patrimoine",
+              "website": "https://www.citedelarchitecture.fr/fr",
+              "latitude": 48.86291929999999,
+              "longitude": 2.2878157999999758,
+              "address": "Cité de l’architecture & du patrimoine\nPalais de Chaillot - 1 place du Trocadéro et du 11 novembre\n75116 Paris",
+              "phone": "+33 1 58 51 52 00",
+              "description": "Située sur la place du Trocadéro, au sein du palais de Chaillot, la cité-musée retrace 1 000 ans d’histoire architecturale et patrimoniale, du Moyen Âge à nos jours. Les visiteurs peuvent y admirer une reproduction du portail de la cathédrale de Chartres et celle d’un appartement de la Cité radieuse de Le Corbusier. Des maquettes, des vidéos et des dessins viennent agrémenter le parcours et proposent des pistes de réflexion sur l'urbanisme du passé, du présent et du futur. Le site accueille également des expositions temporaires.",
+              "classname": [
+                "CulturalSite",
+                "Museum"
+              ],
+              "duration": 60
+            },
+            "instruction": "Cité de l’architecture & du patrimoine",
+            "comment": null
+          },
+          {
+            "step": 8,
+            "name": "Cité de l’architecture & du patrimoine",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Cité de l’architecture & du patrimoine à Musée de l’Homme - Muséum national d'histoire naturelle pendant 0:02:50",
+              "distance": 0,
+              "duration": 170.11272484610663,
+              "start_latitude": 48.86291929999999,
+              "start_longitude": 2.2878157999999758,
+              "end_latitude": 48.8622808,
+              "end_longitude": 2.2875596000000087
+            },
+            "instruction": "Marcher de Cité de l’architecture & du patrimoine à Musée de l’Homme - Muséum national d'histoire naturelle pendant 0:02:50",
+            "comment": null
+          },
+          {
+            "step": 9,
+            "name": "Musée de l’Homme - Muséum national d'histoire naturelle",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "e472c611-64c2-dd99-532e-501ba368e86f",
+              "name": "Musée de l’Homme - Muséum national d'histoire naturelle",
+              "website": "http://www.museedelhomme.fr/",
+              "latitude": 48.8622808,
+              "longitude": 2.2875596000000087,
+              "address": "Musée de l’Homme - Muséum national d'histoire naturelle\nPalais de Chaillot - 17 place du Trocadéro et du 11 Novembre\n75116 Paris",
+              "phone": "+33 1 44 05 72 72",
+              "description": "Inauguré en 1938 dans l’aile Passy du palais de Chaillot, ce musée-laboratoire présente l’évolution de l’Homme et des sociétés, à travers le prisme de la biologique, de la philosophie, de l'anthropologie et de l'histoire. Le parcours est installé dans l'impressionnante galerie de l'Homme et s'articule en trois temps, respectivement intitulés : \"Qui sommes-nous ?\", \"D’où venons-nous ?\" et \"Où allons-nous ?\". Parmi les trésors de ce musée : des fossiles d'hommes de Cro-Magnon ou la statuette paléolithique dite Vénus de Lespugue.",
+              "classname": [
+                "CulturalSite",
+                "Museum"
+              ],
+              "duration": 60
+            },
+            "instruction": "Musée de l’Homme - Muséum national d'histoire naturelle",
+            "comment": null
+          },
+          {
+            "step": 10,
+            "name": "Musée de l’Homme - Muséum national d'histoire naturelle",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Musée de l’Homme - Muséum national d'histoire naturelle à Palais de Chaillot pendant 0:03:44",
+              "distance": 0,
+              "duration": 224.16171347551517,
+              "start_latitude": 48.8622808,
+              "start_longitude": 2.2875596000000087,
+              "end_latitude": 48.862358347020525,
+              "end_longitude": 2.2881036148829175
+            },
+            "instruction": "Marcher de Musée de l’Homme - Muséum national d'histoire naturelle à Palais de Chaillot pendant 0:03:44",
+            "comment": null
+          },
+          {
+            "step": 11,
+            "name": "Palais de Chaillot",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "d78f39fb-bf44-0083-72e0-53faeab8745c",
+              "name": "Palais de Chaillot",
+              "website": "https://www.parisinfo.com/musee-monument-paris/118358/Palais-de-Chaillot",
+              "latitude": 48.862358347020525,
+              "longitude": 2.2881036148829175,
+              "address": "Palais de Chaillot\n1 place du Trocadéro et du 11 novembre\n75116 Paris",
+              "phone": null,
+              "description": null,
+              "classname": [
+                "CulturalSite",
+                "RemarkableBuilding"
+              ],
+              "duration": 60
+            },
+            "instruction": "Palais de Chaillot",
+            "comment": null
+          },
+          {
+            "step": 12,
+            "name": "Palais de Chaillot",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Palais de Chaillot à la station Trocadéro pendant 0:01:56",
+              "distance": 0,
+              "duration": 116.7971805047732,
+              "start_latitude": 48.862358347020525,
+              "start_longitude": 2.2881036148829175,
+              "end_latitude": 48.863301,
+              "end_longitude": 2.287061
+            },
+            "instruction": "Marcher de Palais de Chaillot à la station Trocadéro pendant 0:01:56",
+            "comment": null
+          },
+          {
+            "step": 13,
+            "name": "TROCADERO",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 9 en direction de Pont de Sèvres jusqu'à Rue de la Pompe",
+              "duration": 53.14010168136414,
+              "line": "9",
+              "direction": "Pont de Sèvres",
+              "nb_stations": 2,
+              "final_station": "Rue de la Pompe",
+              "list_station": [
+                "Trocadéro",
+                "Rue de la Pompe"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 9 en direction de Pont de Sèvres jusqu'à Rue de la Pompe",
+            "comment": null
+          },
+          {
+            "step": 14,
+            "name": "RUEDELAPOMPE",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Rue de la Pompe à Hôtel de Polignac pendant 0:03:04",
+              "distance": 0,
+              "duration": 184.077837711261,
+              "start_latitude": 48.863912,
+              "start_longitude": 2.279052,
+              "end_latitude": 48.86318965,
+              "end_longitude": 2.2816200087702394
+            },
+            "instruction": "Marcher de la station Rue de la Pompe à Hôtel de Polignac pendant 0:03:04",
+            "comment": null
+          },
+          {
+            "step": 15,
+            "name": "Hôtel de Polignac",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "6a122f78-a43b-11eb-ba73-0050569afc27",
+              "name": "Hôtel de Polignac",
+              "website": "https://www.parisinfo.com/musee-monument-paris/256587/H%C3%B4tel-de-Polignac",
+              "latitude": 48.86318965,
+              "longitude": 2.2816200087702394,
+              "address": "Hôtel de Polignac\n1 rue du Pasteur Marc Boegner\n75116 Paris",
+              "phone": null,
+              "description": null,
+              "classname": [
+                "CulturalSite",
+                "RemarkableBuilding"
+              ],
+              "duration": 60
+            },
+            "instruction": "Hôtel de Polignac",
+            "comment": null
+          },
+          {
+            "step": 16,
+            "name": "Hôtel de Polignac",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Hôtel de Polignac à la station Rue de la Pompe pendant 0:03:04",
+              "distance": 0,
+              "duration": 184.07783771126097,
+              "start_latitude": 48.86318965,
+              "start_longitude": 2.2816200087702394,
+              "end_latitude": 48.863912,
+              "end_longitude": 2.279052
+            },
+            "instruction": "Marcher de Hôtel de Polignac à la station Rue de la Pompe pendant 0:03:04",
+            "comment": null
+          },
+          {
+            "step": 17,
+            "name": "RUEDELAPOMPE",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 9 en direction de Pont de Sèvres jusqu'à Trocadéro",
+              "duration": 53.14010168136414,
+              "line": "9",
+              "direction": "Pont de Sèvres",
+              "nb_stations": 2,
+              "final_station": "Trocadéro",
+              "list_station": [
+                "Rue de la Pompe",
+                "Trocadéro"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 9 en direction de Pont de Sèvres jusqu'à Trocadéro",
+            "comment": null
+          },
+          {
+            "step": 18,
+            "name": "TROCADERO",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Trocadéro, prenez la correspondance entre la ligne 9 et la ligne 6 en direction de Nation jusqu'à Charles de Gaulle—Étoile",
+              "duration": 118.32873725807394,
+              "line": "6",
+              "direction": "Nation",
+              "nb_stations": 4,
+              "final_station": "Charles de Gaulle—Étoile",
+              "list_station": [
+                "Trocadéro",
+                "Boissière",
+                "Kléber",
+                "Charles de Gaulle—Étoile"
+              ]
+            },
+            "instruction": "A la station Trocadéro, prenez la correspondance entre la ligne 9 et la ligne 6 en direction de Nation jusqu'à Charles de Gaulle—Étoile",
+            "comment": null
+          },
+          {
+            "step": 19,
+            "name": "CHARLESDEGAULLEETOILE",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Charles de Gaulle—Étoile, prenez la correspondance entre la ligne 6 et la ligne 2 en direction de Porte Dauphine jusqu'à Porte Dauphine",
+              "duration": 135.40760239237676,
+              "line": "2",
+              "direction": "Porte Dauphine",
+              "nb_stations": 3,
+              "final_station": "Porte Dauphine",
+              "list_station": [
+                "Charles de Gaulle—Étoile",
+                "Victor Hugo",
+                "Porte Dauphine"
+              ]
+            },
+            "instruction": "A la station Charles de Gaulle—Étoile, prenez la correspondance entre la ligne 6 et la ligne 2 en direction de Porte Dauphine jusqu'à Porte Dauphine",
+            "comment": null
+          },
+          {
+            "step": 20,
+            "name": "PORTEDAUPHINE",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Porte Dauphine à Musée de la Contrefaçon pendant 0:02:02",
+              "distance": 0,
+              "duration": 122.7677989632337,
+              "start_latitude": 48.87139,
+              "start_longitude": 2.27667,
+              "end_latitude": 48.8701673,
+              "end_longitude": 2.2767930999999635
+            },
+            "instruction": "Marcher de la station Porte Dauphine à Musée de la Contrefaçon pendant 0:02:02",
+            "comment": null
+          },
+          {
+            "step": 21,
+            "name": "Musée de la Contrefaçon",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "7ea8684e-8792-5784-d399-501ba375b806",
+              "name": "Musée de la Contrefaçon",
+              "website": "https://musee-contrefacon.com/",
+              "latitude": 48.8701673,
+              "longitude": 2.2767930999999635,
+              "address": "Musée de la Contrefaçon\n16 rue de la Faisanderie\n75116 Paris",
+              "phone": "+33 1 56 26 14 03",
+              "description": null,
+              "classname": [
+                "CulturalSite",
+                "Museum"
+              ],
+              "duration": 60
+            },
+            "instruction": "Musée de la Contrefaçon",
+            "comment": null
+          },
+          {
+            "step": 22,
+            "name": "Musée de la Contrefaçon",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Musée de la Contrefaçon à la station Porte Dauphine pendant 0:02:02",
+              "distance": 0,
+              "duration": 122.76779896323373,
+              "start_latitude": 48.8701673,
+              "start_longitude": 2.2767930999999635,
+              "end_latitude": 48.87139,
+              "end_longitude": 2.27667
+            },
+            "instruction": "Marcher de Musée de la Contrefaçon à la station Porte Dauphine pendant 0:02:02",
+            "comment": null
+          },
+          {
+            "step": 23,
+            "name": "PORTEDAUPHINE",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 2 en direction de Nation jusqu'à Charles de Gaulle—Étoile",
+              "duration": 135.40760239237684,
+              "line": "2",
+              "direction": "Nation",
+              "nb_stations": 3,
+              "final_station": "Charles de Gaulle—Étoile",
+              "list_station": [
+                "Porte Dauphine",
+                "Victor Hugo",
+                "Charles de Gaulle—Étoile"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 2 en direction de Nation jusqu'à Charles de Gaulle—Étoile",
+            "comment": null
+          },
+          {
+            "step": 24,
+            "name": "CHARLESDEGAULLEETOILE",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Charles de Gaulle—Étoile, prenez la correspondance entre la ligne 2 et la ligne 6 en direction de Nation jusqu'à Passy",
+              "duration": 177.6039843039498,
+              "line": "6",
+              "direction": "Nation",
+              "nb_stations": 5,
+              "final_station": "Passy",
+              "list_station": [
+                "Charles de Gaulle—Étoile",
+                "Kléber",
+                "Boissière",
+                "Trocadéro",
+                "Passy"
+              ]
+            },
+            "instruction": "A la station Charles de Gaulle—Étoile, prenez la correspondance entre la ligne 2 et la ligne 6 en direction de Nation jusqu'à Passy",
+            "comment": null
+          },
+          {
+            "step": 25,
+            "name": "PASSY",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Passy à Maison de Balzac pendant 0:06:22",
+              "distance": 0,
+              "duration": 382.26424434586863,
+              "start_latitude": 48.857445,
+              "start_longitude": 2.285779,
+              "end_latitude": 48.8554071,
+              "end_longitude": 2.280876400000011
+            },
+            "instruction": "Marcher de la station Passy à Maison de Balzac pendant 0:06:22",
+            "comment": null
+          },
+          {
+            "step": 26,
+            "name": "Maison de Balzac",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "4d22086f-33e9-5f83-b109-501ba319889d",
+              "name": "Maison de Balzac",
+              "website": "https://www.maisondebalzac.paris.fr/",
+              "latitude": 48.8554071,
+              "longitude": 2.280876400000011,
+              "address": "Maison de Balzac\n47 rue Raynouard\n75016 Paris",
+              "phone": "+33 1 55 74 41 80",
+              "description": "Située sur les hauteurs de Passy, la Maison de Balzac est la seule demeure parisienne du romancier qui subsiste. Balzac s’y installera de 1840 à 1847 pour échapper à ses créanciers. C'est notamment derrière ces murs que l'écrivain corrige La Comédie humaine et rédige La Cousine Bette. La maison regorge de trésors : le cabinet de travail, la bibliothèque, des objets et des manuscrits originaux ayant appartenu au dramaturge... L'une des pièces est consacrée à son grand amour, Madame Hanska.",
+              "classname": [
+                "CulturalSite",
+                "Museum"
+              ],
+              "duration": 60
+            },
+            "instruction": "Maison de Balzac",
+            "comment": null
+          },
+          {
+            "step": 27,
+            "name": "Maison de Balzac",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Maison de Balzac à la station Passy pendant 0:06:22",
+              "distance": 0,
+              "duration": 382.26424434586863,
+              "start_latitude": 48.8554071,
+              "start_longitude": 2.280876400000011,
+              "end_latitude": 48.857445,
+              "end_longitude": 2.285779
+            },
+            "instruction": "Marcher de Maison de Balzac à la station Passy pendant 0:06:22",
+            "comment": null
+          },
+          {
+            "step": 28,
+            "name": "PASSY",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 6 en direction de Nation jusqu'à Charles de Gaulle—Étoile",
+              "duration": 177.6039843039498,
+              "line": "6",
+              "direction": "Nation",
+              "nb_stations": 5,
+              "final_station": "Charles de Gaulle—Étoile",
+              "list_station": [
+                "Passy",
+                "Trocadéro",
+                "Boissière",
+                "Kléber",
+                "Charles de Gaulle—Étoile"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 6 en direction de Nation jusqu'à Charles de Gaulle—Étoile",
+            "comment": null
+          },
+          {
+            "step": 29,
+            "name": "CHARLESDEGAULLEETOILE",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Charles de Gaulle—Étoile, prenez la correspondance entre la ligne 6 et la ligne 1 en direction de Château de Vincennes jusqu'à Les Sablons",
+              "duration": 165.53921101751007,
+              "line": "1",
+              "direction": "Château de Vincennes",
+              "nb_stations": 4,
+              "final_station": "Les Sablons",
+              "list_station": [
+                "Charles de Gaulle—Étoile",
+                "Argentine",
+                "Porte Maillot",
+                "Les Sablons"
+              ]
+            },
+            "instruction": "A la station Charles de Gaulle—Étoile, prenez la correspondance entre la ligne 6 et la ligne 1 en direction de Château de Vincennes jusqu'à Les Sablons",
+            "comment": null
+          },
+          {
+            "step": 30,
+            "name": "LESSABLONS",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Les Sablons à Fondation Louis Vuitton pendant 0:09:38",
+              "distance": 0,
+              "duration": 578.9568760639296,
+              "start_latitude": 48.880833,
+              "start_longitude": 2.272222,
+              "end_latitude": 48.8785986,
+              "end_longitude": 2.2641184000000294
+            },
+            "instruction": "Marcher de la station Les Sablons à Fondation Louis Vuitton pendant 0:09:38",
+            "comment": null
+          },
+          {
+            "step": 31,
+            "name": "Fondation Louis Vuitton",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "8cfee202-3519-10d1-d25d-501ba3befe1d",
+              "name": "Fondation Louis Vuitton",
+              "website": "https://www.fondationlouisvuitton.fr/",
+              "latitude": 48.8785986,
+              "longitude": 2.2641184000000294,
+              "address": "Fondation Louis Vuitton\nBois de Boulogne - 8 avenue du Mahatma Gandhi\n75116 Paris",
+              "phone": "+33 1 40 69 96 00",
+              "description": "Situé dans le bois de Boulogne, à deux pas du Jardin d’acclimatation, la Fondation Louis Vuitton est un lieu incontournable de l’art contemporain à Paris. Ce géant de verre et d'acier conçu par l’américain Frank O. Gehry abrite une collection exceptionnelle d’œuvres d'art datant de 1960 à nos jours. On y retrouve les créations de grands noms tels que Jean-Michel Basquiat ou Jeff Koons. Il propose également des expositions temporaires et abrite une boutique-librairie, un restaurant et un auditorium. À ne pas manquer : le superbe panorama depuis ses terrasses.",
+              "classname": [
+                "CulturalSite",
+                "Museum"
+              ],
+              "duration": 60
+            },
+            "instruction": "Fondation Louis Vuitton",
+            "comment": null
+          },
+          {
+            "step": 32,
+            "name": "Fondation Louis Vuitton",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Fondation Louis Vuitton à la station Les Sablons pendant 0:09:38",
+              "distance": 0,
+              "duration": 578.9568760639297,
+              "start_latitude": 48.8785986,
+              "start_longitude": 2.2641184000000294,
+              "end_latitude": 48.880833,
+              "end_longitude": 2.272222
+            },
+            "instruction": "Marcher de Fondation Louis Vuitton à la station Les Sablons pendant 0:09:38",
+            "comment": null
+          },
+          {
+            "step": 33,
+            "name": "LESSABLONS",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 1 en direction de La Défense jusqu'à Charles de Gaulle—Étoile",
+              "duration": 165.53921101751007,
+              "line": "1",
+              "direction": "La Défense",
+              "nb_stations": 4,
+              "final_station": "Charles de Gaulle—Étoile",
+              "list_station": [
+                "Les Sablons",
+                "Porte Maillot",
+                "Argentine",
+                "Charles de Gaulle—Étoile"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 1 en direction de La Défense jusqu'à Charles de Gaulle—Étoile",
+            "comment": null
+          },
+          {
+            "step": 34,
+            "name": "CHARLESDEGAULLEETOILE",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Charles de Gaulle—Étoile, prenez la correspondance entre la ligne 1 et la ligne 6 en direction de Nation jusqu'à Pasteur",
+              "duration": 415.2987430710559,
+              "line": "6",
+              "direction": "Nation",
+              "nb_stations": 11,
+              "final_station": "Pasteur",
+              "list_station": [
+                "Charles de Gaulle—Étoile",
+                "Kléber",
+                "Boissière",
+                "Trocadéro",
+                "Passy",
+                "Bir-Hakeim",
+                "Dupleix",
+                "La Motte-Picquet—Grenelle",
+                "Cambronne",
+                "Sèvres—Lecourbe",
+                "Pasteur"
+              ]
+            },
+            "instruction": "A la station Charles de Gaulle—Étoile, prenez la correspondance entre la ligne 1 et la ligne 6 en direction de Nation jusqu'à Pasteur",
+            "comment": null
+          },
+          {
+            "step": 35,
+            "name": "PASTEUR",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Pasteur, prenez la correspondance entre la ligne 6 et la ligne 12 en direction de Mairie d'Aubervilliers jusqu'à Porte de Versailles",
+              "duration": 196.6101961512279,
+              "line": "12",
+              "direction": "Mairie d'Aubervilliers",
+              "nb_stations": 5,
+              "final_station": "Porte de Versailles",
+              "list_station": [
+                "Pasteur",
+                "Volontaires",
+                "Vaugirard",
+                "Convention",
+                "Porte de Versailles"
+              ]
+            },
+            "instruction": "A la station Pasteur, prenez la correspondance entre la ligne 6 et la ligne 12 en direction de Mairie d'Aubervilliers jusqu'à Porte de Versailles",
+            "comment": null
+          },
+          {
+            "step": 36,
+            "name": "PORTEDEVERSAILLES",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Porte de Versailles à Fondation Jérome Seydoux-Pathé pendant 0:09:46",
+              "distance": 0,
+              "duration": 586.3067373303445,
+              "start_latitude": 48.832328,
+              "start_longitude": 2.287841,
+              "end_latitude": 48.827835,
+              "end_longitude": 2.293537
+            },
+            "instruction": "Marcher de la station Porte de Versailles à Fondation Jérome Seydoux-Pathé pendant 0:09:46",
+            "comment": null
+          },
+          {
+            "step": 37,
+            "name": "Fondation Jérome Seydoux-Pathé",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "786215",
+              "name": "Fondation Jérome Seydoux-Pathé",
+              "website": "http://www.fondation-jeromeseydoux-pathe.com/",
+              "latitude": 48.827835,
+              "longitude": 2.293537,
+              "address": "Fondation Jérome Seydoux-Pathé\n73, avenue des Gobelins\n75013 Paris",
+              "phone": "+33 1 83 79 18 96",
+              "description": "Pour tous les amoureux du 7ème art !",
+              "classname": [
+                "CulturalSite",
+                "Museum"
+              ],
+              "duration": 60
+            },
+            "instruction": "Fondation Jérome Seydoux-Pathé",
+            "comment": null
+          },
+          {
+            "step": 38,
+            "name": "Fondation Jérome Seydoux-Pathé",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Fondation Jérome Seydoux-Pathé à la station Porte de Versailles pendant 0:09:46",
+              "distance": 0,
+              "duration": 586.3067373303444,
+              "start_latitude": 48.827835,
+              "start_longitude": 2.293537,
+              "end_latitude": 48.832328,
+              "end_longitude": 2.287841
+            },
+            "instruction": "Marcher de Fondation Jérome Seydoux-Pathé à la station Porte de Versailles pendant 0:09:46",
+            "comment": null
+          },
+          {
+            "step": 39,
+            "name": "PORTEDEVERSAILLES",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 12 en direction de Mairie d'Issy jusqu'à Pasteur",
+              "duration": 196.61019615122757,
+              "line": "12",
+              "direction": "Mairie d'Issy",
+              "nb_stations": 5,
+              "final_station": "Pasteur",
+              "list_station": [
+                "Porte de Versailles",
+                "Convention",
+                "Vaugirard",
+                "Volontaires",
+                "Pasteur"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 12 en direction de Mairie d'Issy jusqu'à Pasteur",
+            "comment": null
+          },
+          {
+            "step": 40,
+            "name": "PASTEUR",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Pasteur, prenez la correspondance entre la ligne 12 et la ligne 6 en direction de Charles de Gaulle—Étoile jusqu'à Montparnasse—Bienvenüe",
+              "duration": 68.80392700105074,
+              "line": "6",
+              "direction": "Charles de Gaulle—Étoile",
+              "nb_stations": 2,
+              "final_station": "Montparnasse—Bienvenüe",
+              "list_station": [
+                "Pasteur",
+                "Montparnasse—Bienvenüe"
+              ]
+            },
+            "instruction": "A la station Pasteur, prenez la correspondance entre la ligne 12 et la ligne 6 en direction de Charles de Gaulle—Étoile jusqu'à Montparnasse—Bienvenüe",
+            "comment": null
+          },
+          {
+            "step": 41,
+            "name": "MONTPARNASSEBIENVENUE",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Montparnasse—Bienvenüe, prenez la correspondance entre la ligne 6 et la ligne 12 en direction de Mairie d'Issy jusqu'à Concorde",
+              "duration": 258.16725226633855,
+              "line": "12",
+              "direction": "Mairie d'Issy",
+              "nb_stations": 8,
+              "final_station": "Concorde",
+              "list_station": [
+                "Montparnasse—Bienvenüe",
+                "Notre-Dame-des-Champs",
+                "Rennes",
+                "Sèvres—Babylone",
+                "Rue du Bac",
+                "Solférino",
+                "Assemblée Nationale",
+                "Concorde"
+              ]
+            },
+            "instruction": "A la station Montparnasse—Bienvenüe, prenez la correspondance entre la ligne 6 et la ligne 12 en direction de Mairie d'Issy jusqu'à Concorde",
+            "comment": null
+          },
+          {
+            "step": 42,
+            "name": "CONCORDE",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Concorde, prenez la correspondance entre la ligne 12 et la ligne 8 en direction de Balard jusqu'à Opéra",
+              "duration": 101.89063292081141,
+              "line": "8",
+              "direction": "Balard",
+              "nb_stations": 3,
+              "final_station": "Opéra",
+              "list_station": [
+                "Concorde",
+                "Madeleine",
+                "Opéra"
+              ]
+            },
+            "instruction": "A la station Concorde, prenez la correspondance entre la ligne 12 et la ligne 8 en direction de Balard jusqu'à Opéra",
+            "comment": null
+          },
+          {
+            "step": 43,
+            "name": "OPERA",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Opéra à Park Hyatt Paris-Vendôme pendant 0:03:50",
+              "distance": 0,
+              "duration": 230.14373826644078,
+              "start_latitude": 48.870636,
+              "start_longitude": 2.332353,
+              "end_latitude": 48.8686535,
+              "end_longitude": 2.330588900000066
+            },
+            "instruction": "Marcher de la station Opéra à Park Hyatt Paris-Vendôme pendant 0:03:50",
+            "comment": null
+          }
+        ]
+      },
+      {
+        "steps": [
+          {
+            "step": 1,
+            "name": "Park Hyatt Paris-Vendôme",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Park Hyatt Paris-Vendôme à Palais Garnier pendant 0:05:37",
+              "distance": 0,
+              "duration": 337.9646185127404,
+              "start_latitude": 48.8686535,
+              "start_longitude": 2.330588900000066,
+              "end_latitude": 48.871663,
+              "end_longitude": 2.331864
+            },
+            "instruction": "Marcher de Park Hyatt Paris-Vendôme à Palais Garnier pendant 0:05:37",
+            "comment": null
+          },
+          {
+            "step": 2,
+            "name": "Palais Garnier",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "696931",
+              "name": "Palais Garnier",
+              "website": "http://www.operadeparis.fr/",
+              "latitude": 48.871663,
+              "longitude": 2.331864,
+              "address": "Palais Garnier\nEntrée du Palais Garnier : Angle rues Scribe et Auber\n75009 Paris",
+              "phone": "+33 892 89 90 90",
+              "description": "Le célèbre temple parisien de l’art lyrique est aussi un chef d’œuvre de l’architecture du Second Empire qui peut se visiter en journée.",
+              "classname": [
+                "CulturalSite",
+                "Palace",
+                "RemarkableBuilding"
+              ],
+              "duration": 60
+            },
+            "instruction": "Palais Garnier",
+            "comment": null
+          },
+          {
+            "step": 3,
+            "name": "Palais Garnier",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Palais Garnier à la station Opéra pendant 0:01:47",
+              "distance": 0,
+              "duration": 107.82088024629955,
+              "start_latitude": 48.871663,
+              "start_longitude": 2.331864,
+              "end_latitude": 48.870636,
+              "end_longitude": 2.332353
+            },
+            "instruction": "Marcher de Palais Garnier à la station Opéra pendant 0:01:47",
+            "comment": null
+          },
+          {
+            "step": 4,
+            "name": "OPERA",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 8 en direction de Balard jusqu'à Grands Boulevards",
+              "duration": 81.55360312055824,
+              "line": "8",
+              "direction": "Balard",
+              "nb_stations": 3,
+              "final_station": "Grands Boulevards",
+              "list_station": [
+                "Opéra",
+                "Richelieu—Drouot",
+                "Grands Boulevards"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 8 en direction de Balard jusqu'à Grands Boulevards",
+            "comment": null
+          },
+          {
+            "step": 5,
+            "name": "GRANDSBOULEVARDS",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Grands Boulevards à Grévin Paris pendant 0:02:24",
+              "distance": 0,
+              "duration": 144.05414829318224,
+              "start_latitude": 48.871426,
+              "start_longitude": 2.344342,
+              "end_latitude": 48.871792,
+              "end_longitude": 2.342228
+            },
+            "instruction": "Marcher de la station Grands Boulevards à Grévin Paris pendant 0:02:24",
+            "comment": null
+          },
+          {
+            "step": 6,
+            "name": "Grévin Paris",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "681546",
+              "name": "Grévin Paris",
+              "website": "https://www.grevin-paris.com/",
+              "latitude": 48.871792,
+              "longitude": 2.342228,
+              "address": "Grévin Paris\n10, Boulevard Montmartre\n75009 Paris",
+              "phone": "+33 1 47 70 85 05",
+              "description": "Du 21ème siècle au Moyen-âge, le visiteur part à la rencontre de 300 personnalités d’hier et d’aujourd’hui au fil d’impertinentes et audacieuses mises en scène.",
+              "classname": [
+                "CulturalSite",
+                "Museum"
+              ],
+              "duration": 60
+            },
+            "instruction": "Grévin Paris",
+            "comment": null
+          },
+          {
+            "step": 7,
+            "name": "Grévin Paris",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Grévin Paris à la station Grands Boulevards pendant 0:02:24",
+              "distance": 0,
+              "duration": 144.05414829318224,
+              "start_latitude": 48.871792,
+              "start_longitude": 2.342228,
+              "end_latitude": 48.871426,
+              "end_longitude": 2.344342
+            },
+            "instruction": "Marcher de Grévin Paris à la station Grands Boulevards pendant 0:02:24",
+            "comment": null
+          },
+          {
+            "step": 8,
+            "name": "GRANDSBOULEVARDS",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 8 en direction de Pointe du Lac jusqu'à Opéra",
+              "duration": 81.55360312055825,
+              "line": "8",
+              "direction": "Pointe du Lac",
+              "nb_stations": 3,
+              "final_station": "Opéra",
+              "list_station": [
+                "Grands Boulevards",
+                "Richelieu—Drouot",
+                "Opéra"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 8 en direction de Pointe du Lac jusqu'à Opéra",
+            "comment": null
+          },
+          {
+            "step": 9,
+            "name": "OPERA",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Opéra, prenez la correspondance entre la ligne 8 et la ligne 7 en direction de La Courneuve—8 Mai 1945 jusqu'à Palais Royal–Musée du Louvre",
+              "duration": 84.81222333766326,
+              "line": "7",
+              "direction": "La Courneuve—8 Mai 1945",
+              "nb_stations": 3,
+              "final_station": "Palais Royal–Musée du Louvre",
+              "list_station": [
+                "Opéra",
+                "Pyramides",
+                "Palais Royal–Musée du Louvre"
+              ]
+            },
+            "instruction": "A la station Opéra, prenez la correspondance entre la ligne 8 et la ligne 7 en direction de La Courneuve—8 Mai 1945 jusqu'à Palais Royal–Musée du Louvre",
+            "comment": null
+          },
+          {
+            "step": 10,
+            "name": "PALAISROYALMUSEEDULOUVRE",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Palais Royal–Musée du Louvre à Musée du Louvre pendant 0:02:29",
+              "distance": 0,
+              "duration": 149.48065386387293,
+              "start_latitude": 48.862644,
+              "start_longitude": 2.336578,
+              "end_latitude": 48.861347,
+              "end_longitude": 2.335457
+            },
+            "instruction": "Marcher de la station Palais Royal–Musée du Louvre à Musée du Louvre pendant 0:02:29",
+            "comment": null
+          },
+          {
+            "step": 11,
+            "name": "Musée du Louvre",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "700946",
+              "name": "Musée du Louvre",
+              "website": "http://www.louvre.fr/",
+              "latitude": 48.861347,
+              "longitude": 2.335457,
+              "address": "Musée du Louvre\nMusée du Louvre\n75058 Paris",
+              "phone": "+33 1 40 20 53 17",
+              "description": "Partez à la découverte ou la redécouverte du musée du Louvre, le musée le plus célèbre du monde.",
+              "classname": [
+                "CulturalSite",
+                "Museum"
+              ],
+              "duration": 60
+            },
+            "instruction": "Musée du Louvre",
+            "comment": null
+          },
+          {
+            "step": 12,
+            "name": "Musée du Louvre",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Musée du Louvre à la station Palais Royal–Musée du Louvre pendant 0:02:29",
+              "distance": 0,
+              "duration": 149.48065386387296,
+              "start_latitude": 48.861347,
+              "start_longitude": 2.335457,
+              "end_latitude": 48.862644,
+              "end_longitude": 2.336578
+            },
+            "instruction": "Marcher de Musée du Louvre à la station Palais Royal–Musée du Louvre pendant 0:02:29",
+            "comment": null
+          },
+          {
+            "step": 13,
+            "name": "PALAISROYALMUSEEDULOUVRE",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 1 en direction de Château de Vincennes jusqu'à Concorde",
+              "duration": 106.37612622535215,
+              "line": "1",
+              "direction": "Château de Vincennes",
+              "nb_stations": 3,
+              "final_station": "Concorde",
+              "list_station": [
+                "Palais Royal–Musée du Louvre",
+                "Tuileries",
+                "Concorde"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 1 en direction de Château de Vincennes jusqu'à Concorde",
+            "comment": null
+          },
+          {
+            "step": 14,
+            "name": "CONCORDE",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Concorde à Musée de l'Orangerie pendant 0:02:59",
+              "distance": 0,
+              "duration": 179.17529931895447,
+              "start_latitude": 48.86541,
+              "start_longitude": 2.32111,
+              "end_latitude": 48.863915,
+              "end_longitude": 2.322602
+            },
+            "instruction": "Marcher de la station Concorde à Musée de l'Orangerie pendant 0:02:59",
+            "comment": null
+          },
+          {
+            "step": 15,
+            "name": "Musée de l'Orangerie",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "704323",
+              "name": "Musée de l'Orangerie",
+              "website": "http://www.musee-orangerie.fr/",
+              "latitude": 48.863915,
+              "longitude": 2.322602,
+              "address": "Musée de l'Orangerie\nJardin des Tuileries\n75001 Paris",
+              "phone": "+33 1 44 50 43 00",
+              "description": "Venez admirer les « Nymphéas » de Monet et la collection d'un amoureux de l'art, amateur de Cézanne, Renoir, Matisse, Picasso...",
+              "classname": [
+                "CulturalSite",
+                "Museum"
+              ],
+              "duration": 60
+            },
+            "instruction": "Musée de l'Orangerie",
+            "comment": null
+          },
+          {
+            "step": 16,
+            "name": "Musée de l'Orangerie",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Musée de l'Orangerie à la station Concorde pendant 0:02:59",
+              "distance": 0,
+              "duration": 179.17529931895444,
+              "start_latitude": 48.863915,
+              "start_longitude": 2.322602,
+              "end_latitude": 48.86541,
+              "end_longitude": 2.32111
+            },
+            "instruction": "Marcher de Musée de l'Orangerie à la station Concorde pendant 0:02:59",
+            "comment": null
+          },
+          {
+            "step": 17,
+            "name": "CONCORDE",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 12 en direction de Mairie d'Aubervilliers jusqu'à Rue du Bac",
+              "duration": 105.48374729440468,
+              "line": "12",
+              "direction": "Mairie d'Aubervilliers",
+              "nb_stations": 4,
+              "final_station": "Rue du Bac",
+              "list_station": [
+                "Concorde",
+                "Assemblée Nationale",
+                "Solférino",
+                "Rue du Bac"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 12 en direction de Mairie d'Aubervilliers jusqu'à Rue du Bac",
+            "comment": null
+          },
+          {
+            "step": 18,
+            "name": "RUEDUBAC",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Rue du Bac à Musée Maillol pendant 0:01:48",
+              "distance": 0,
+              "duration": 108.1860746143538,
+              "start_latitude": 48.85569,
+              "start_longitude": 2.325607,
+              "end_latitude": 48.854735,
+              "end_longitude": 2.324841
+            },
+            "instruction": "Marcher de la station Rue du Bac à Musée Maillol pendant 0:01:48",
+            "comment": null
+          },
+          {
+            "step": 19,
+            "name": "Musée Maillol",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "869676",
+              "name": "Musée Maillol",
+              "website": "http://www.museemaillol.com/",
+              "latitude": 48.854735,
+              "longitude": 2.324841,
+              "address": "Musée Maillol\n61 rue de Grenelle\n75007 Paris",
+              "phone": "+33 1 42 22 59 58",
+              "description": "Le Musée Maillol réouvre ses portes au public en septembre 2016",
+              "classname": [
+                "CulturalSite",
+                "Museum"
+              ],
+              "duration": 60
+            },
+            "instruction": "Musée Maillol",
+            "comment": null
+          },
+          {
+            "step": 20,
+            "name": "Musée Maillol",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Musée Maillol à la station Rue du Bac pendant 0:01:48",
+              "distance": 0,
+              "duration": 108.18607461435381,
+              "start_latitude": 48.854735,
+              "start_longitude": 2.324841,
+              "end_latitude": 48.85569,
+              "end_longitude": 2.325607
+            },
+            "instruction": "Marcher de Musée Maillol à la station Rue du Bac pendant 0:01:48",
+            "comment": null
+          },
+          {
+            "step": 21,
+            "name": "RUEDUBAC",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 12 en direction de Mairie d'Issy jusqu'à Solférino",
+              "duration": 30.064032400048305,
+              "line": "12",
+              "direction": "Mairie d'Issy",
+              "nb_stations": 2,
+              "final_station": "Solférino",
+              "list_station": [
+                "Rue du Bac",
+                "Solférino"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 12 en direction de Mairie d'Issy jusqu'à Solférino",
+            "comment": null
+          },
+          {
+            "step": 22,
+            "name": "SOLFERINO",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Solférino à Musée de la Légion d'honneur et des ordres de chevalerie pendant 0:03:47",
+              "distance": 0,
+              "duration": 227.01239915718403,
+              "start_latitude": 48.858249,
+              "start_longitude": 2.323225,
+              "end_latitude": 48.860323,
+              "end_longitude": 2.324612
+            },
+            "instruction": "Marcher de la station Solférino à Musée de la Légion d'honneur et des ordres de chevalerie pendant 0:03:47",
+            "comment": null
+          },
+          {
+            "step": 23,
+            "name": "Musée de la Légion d'honneur et des ordres de chevalerie",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "711567",
+              "name": "Musée de la Légion d'honneur et des ordres de chevalerie",
+              "website": "http://www.legiondhonneur.fr/",
+              "latitude": 48.860323,
+              "longitude": 2.324612,
+              "address": "Musée de la Légion d'honneur et des ordres de chevalerie\n2 rue de la Légion d'Honneur\n75007 Paris",
+              "phone": "+33 1 40 62 84 00",
+              "description": "Musée d'art et d'histoire consacré aux ordres de chevalerie et de mérite, décorations et médailles, tant en France qu'à l'étranger",
+              "classname": [
+                "CulturalSite",
+                "DefenceSite",
+                "Museum"
+              ],
+              "duration": 60
+            },
+            "instruction": "Musée de la Légion d'honneur et des ordres de chevalerie",
+            "comment": null
+          },
+          {
+            "step": 24,
+            "name": "Musée de la Légion d'honneur et des ordres de chevalerie",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Musée de la Légion d'honneur et des ordres de chevalerie à Musée d'Orsay pendant 0:08:25",
+              "distance": 0,
+              "duration": 505.9340128013904,
+              "start_latitude": 48.860323,
+              "start_longitude": 2.324612,
+              "end_latitude": 48.8599614,
+              "end_longitude": 2.326561399999946
+            },
+            "instruction": "Marcher de Musée de la Légion d'honneur et des ordres de chevalerie à Musée d'Orsay pendant 0:08:25",
+            "comment": null
+          },
+          {
+            "step": 25,
+            "name": "Musée d'Orsay",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "42b30f00-cd05-b419-72c8-501ba3ac5918",
+              "name": "Musée d'Orsay",
+              "website": "https://www.musee-orsay.fr/",
+              "latitude": 48.8599614,
+              "longitude": 2.326561399999946,
+              "address": "Musée d'Orsay\nEsplanade Valéry Giscard d'Estaing\n75007 Paris",
+              "phone": "+33 1 40 49 48 14",
+              "description": "Construite en 1900 à l’occasion de l’Exposition universelle, la gare d’Orsay est transformée en musée en 1986. Son architecture et la richesse de sa collection font de cet édifice l'un des plus beaux musées du monde. Sur plusieurs niveaux, le musée d'Orsay s'intéresse à l’ensemble de la création artistique occidentale (peinture, sculpture, arts décoratifs, photographie, architecture…) de 1848 à 1914. Le rez-de-chaussée abrite la collection de sculptures, le 2e niveau expose les grandes œuvres de Gauguin et de Van Gogh et le 5e niveau se consacre au mouvement impressionniste.",
+              "classname": [
+                "CulturalSite",
+                "Museum"
+              ],
+              "duration": 60
+            },
+            "instruction": "Musée d'Orsay",
+            "comment": null
+          },
+          {
+            "step": 26,
+            "name": "Musée d'Orsay",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Musée d'Orsay à la station Solférino pendant 0:04:38",
+              "distance": 0,
+              "duration": 278.92161364420633,
+              "start_latitude": 48.8599614,
+              "start_longitude": 2.326561399999946,
+              "end_latitude": 48.858249,
+              "end_longitude": 2.323225
+            },
+            "instruction": "Marcher de Musée d'Orsay à la station Solférino pendant 0:04:38",
+            "comment": null
+          },
+          {
+            "step": 27,
+            "name": "SOLFERINO",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 12 en direction de Mairie d'Aubervilliers jusqu'à Rue du Bac",
+              "duration": 30.06403240004829,
+              "line": "12",
+              "direction": "Mairie d'Aubervilliers",
+              "nb_stations": 2,
+              "final_station": "Rue du Bac",
+              "list_station": [
+                "Solférino",
+                "Rue du Bac"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 12 en direction de Mairie d'Aubervilliers jusqu'à Rue du Bac",
+            "comment": null
+          },
+          {
+            "step": 28,
+            "name": "RUEDUBAC",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Rue du Bac à Maison Gainsbourg pendant 0:06:43",
+              "distance": 0,
+              "duration": 403.53176892779277,
+              "start_latitude": 48.85569,
+              "start_longitude": 2.325607,
+              "end_latitude": 48.8574245,
+              "end_longitude": 2.331132
+            },
+            "instruction": "Marcher de la station Rue du Bac à Maison Gainsbourg pendant 0:06:43",
+            "comment": null
+          },
+          {
+            "step": 29,
+            "name": "Maison Gainsbourg",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "0e0578fe-7b85-11eb-bf74-0050569afc27",
+              "name": "Maison Gainsbourg",
+              "website": "https://www.maisongainsbourg.fr/",
+              "latitude": 48.8574245,
+              "longitude": 2.331132,
+              "address": "Maison Gainsbourg\n14 rue de Verneuil\n75007 Paris",
+              "phone": null,
+              "description": null,
+              "classname": [
+                "CulturalSite",
+                "Museum"
+              ],
+              "duration": 60
+            },
+            "instruction": "Maison Gainsbourg",
+            "comment": null
+          },
+          {
+            "step": 30,
+            "name": "Maison Gainsbourg",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Maison Gainsbourg à la station Rue du Bac pendant 0:06:43",
+              "distance": 0,
+              "duration": 403.5317689277928,
+              "start_latitude": 48.8574245,
+              "start_longitude": 2.331132,
+              "end_latitude": 48.85569,
+              "end_longitude": 2.325607
+            },
+            "instruction": "Marcher de Maison Gainsbourg à la station Rue du Bac pendant 0:06:43",
+            "comment": null
+          },
+          {
+            "step": 31,
+            "name": "RUEDUBAC",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 12 en direction de Mairie d'Issy jusqu'à Concorde",
+              "duration": 105.48374729440468,
+              "line": "12",
+              "direction": "Mairie d'Issy",
+              "nb_stations": 4,
+              "final_station": "Concorde",
+              "list_station": [
+                "Rue du Bac",
+                "Solférino",
+                "Assemblée Nationale",
+                "Concorde"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 12 en direction de Mairie d'Issy jusqu'à Concorde",
+            "comment": null
+          },
+          {
+            "step": 32,
+            "name": "CONCORDE",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Concorde, prenez la correspondance entre la ligne 12 et la ligne 8 en direction de Balard jusqu'à Opéra",
+              "duration": 101.89063292081136,
+              "line": "8",
+              "direction": "Balard",
+              "nb_stations": 3,
+              "final_station": "Opéra",
+              "list_station": [
+                "Concorde",
+                "Madeleine",
+                "Opéra"
+              ]
+            },
+            "instruction": "A la station Concorde, prenez la correspondance entre la ligne 12 et la ligne 8 en direction de Balard jusqu'à Opéra",
+            "comment": null
+          },
+          {
+            "step": 33,
+            "name": "OPERA",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Opéra à Park Hyatt Paris-Vendôme pendant 0:03:50",
+              "distance": 0,
+              "duration": 230.14373826644078,
+              "start_latitude": 48.870636,
+              "start_longitude": 2.332353,
+              "end_latitude": 48.8686535,
+              "end_longitude": 2.330588900000066
+            },
+            "instruction": "Marcher de la station Opéra à Park Hyatt Paris-Vendôme pendant 0:03:50",
+            "comment": null
+          }
+        ]
+      },
+      {
+        "steps": [
+          {
+            "step": 1,
+            "name": "Park Hyatt Paris-Vendôme",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Park Hyatt Paris-Vendôme à la station Opéra pendant 0:03:50",
+              "distance": 0,
+              "duration": 230.14373826644083,
+              "start_latitude": 48.8686535,
+              "start_longitude": 2.330588900000066,
+              "end_latitude": 48.870636,
+              "end_longitude": 2.332353
+            },
+            "instruction": "Marcher de Park Hyatt Paris-Vendôme à la station Opéra pendant 0:03:50",
+            "comment": null
+          },
+          {
+            "step": 2,
+            "name": "OPERA",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 8 en direction de Pointe du Lac jusqu'à Madeleine",
+              "duration": 53.123643927843034,
+              "line": "8",
+              "direction": "Pointe du Lac",
+              "nb_stations": 2,
+              "final_station": "Madeleine",
+              "list_station": [
+                "Opéra",
+                "Madeleine"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 8 en direction de Pointe du Lac jusqu'à Madeleine",
+            "comment": null
+          },
+          {
+            "step": 3,
+            "name": "MADELEINE",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Madeleine, prenez la correspondance entre la ligne 8 et la ligne 12 en direction de Mairie d'Aubervilliers jusqu'à Concorde",
+              "duration": 48.766988992968436,
+              "line": "12",
+              "direction": "Mairie d'Aubervilliers",
+              "nb_stations": 2,
+              "final_station": "Concorde",
+              "list_station": [
+                "Madeleine",
+                "Concorde"
+              ]
+            },
+            "instruction": "A la station Madeleine, prenez la correspondance entre la ligne 8 et la ligne 12 en direction de Mairie d'Aubervilliers jusqu'à Concorde",
+            "comment": null
+          },
+          {
+            "step": 4,
+            "name": "CONCORDE",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Concorde, prenez la correspondance entre la ligne 12 et la ligne 1 en direction de Château de Vincennes jusqu'à Charles de Gaulle—Étoile",
+              "duration": 192.15856908784178,
+              "line": "1",
+              "direction": "Château de Vincennes",
+              "nb_stations": 5,
+              "final_station": "Charles de Gaulle—Étoile",
+              "list_station": [
+                "Concorde",
+                "Champs-Élysées—Clemenceau",
+                "Franklin D. Roosevelt",
+                "George V",
+                "Charles de Gaulle—Étoile"
+              ]
+            },
+            "instruction": "A la station Concorde, prenez la correspondance entre la ligne 12 et la ligne 1 en direction de Château de Vincennes jusqu'à Charles de Gaulle—Étoile",
+            "comment": null
+          },
+          {
+            "step": 5,
+            "name": "CHARLESDEGAULLEETOILE",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Charles de Gaulle—Étoile à Arc de Triomphe pendant 0:00:06",
+              "distance": 0,
+              "duration": 6.071457055558199,
+              "start_latitude": 48.873889,
+              "start_longitude": 2.295,
+              "end_latitude": 48.8738311,
+              "end_longitude": 2.2950272000000496
+            },
+            "instruction": "Marcher de la station Charles de Gaulle—Étoile à Arc de Triomphe pendant 0:00:06",
+            "comment": null
+          },
+          {
+            "step": 6,
+            "name": "Arc de Triomphe",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "cf6ef334-a136-8b96-5a4e-501ba358ecaa",
+              "name": "Arc de Triomphe",
+              "website": "http://www.paris-arc-de-triomphe.fr/",
+              "latitude": 48.8738311,
+              "longitude": 2.2950272000000496,
+              "address": "Arc de Triomphe\nPlace Charles de Gaulle\n75008 Paris",
+              "phone": null,
+              "description": "Commandé par Napoléon Ier pour célébrer le triomphe de ses armées à la bataille d'Austerlitz, le plus grand arc du monde est érigé entre 1806 et 1836. Depuis 1921, il abrite la tombe du Soldat Inconnu, dont la flamme du souvenir est ravivée tous les soirs. La vue panoramique de la capitale depuis son toit-terrasse est à couper le souffle.",
+              "classname": [
+                "CulturalSite",
+                "RemarkableBuilding"
+              ],
+              "duration": 60
+            },
+            "instruction": "Arc de Triomphe",
+            "comment": null
+          },
+          {
+            "step": 7,
+            "name": "Arc de Triomphe",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Arc de Triomphe à la station Charles de Gaulle—Étoile pendant 0:00:06",
+              "distance": 0,
+              "duration": 6.07145705555824,
+              "start_latitude": 48.8738311,
+              "start_longitude": 2.2950272000000496,
+              "end_latitude": 48.873889,
+              "end_longitude": 2.295
+            },
+            "instruction": "Marcher de Arc de Triomphe à la station Charles de Gaulle—Étoile pendant 0:00:06",
+            "comment": null
+          },
+          {
+            "step": 8,
+            "name": "CHARLESDEGAULLEETOILE",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 6 en direction de Nation jusqu'à Trocadéro",
+              "duration": 118.32873725807396,
+              "line": "6",
+              "direction": "Nation",
+              "nb_stations": 4,
+              "final_station": "Trocadéro",
+              "list_station": [
+                "Charles de Gaulle—Étoile",
+                "Kléber",
+                "Boissière",
+                "Trocadéro"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 6 en direction de Nation jusqu'à Trocadéro",
+            "comment": null
+          },
+          {
+            "step": 9,
+            "name": "TROCADERO",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Trocadéro, prenez la correspondance entre la ligne 6 et la ligne 9 en direction de Pont de Sèvres jusqu'à Iéna",
+              "duration": 43.25215450464057,
+              "line": "9",
+              "direction": "Pont de Sèvres",
+              "nb_stations": 2,
+              "final_station": "Iéna",
+              "list_station": [
+                "Trocadéro",
+                "Iéna"
+              ]
+            },
+            "instruction": "A la station Trocadéro, prenez la correspondance entre la ligne 6 et la ligne 9 en direction de Pont de Sèvres jusqu'à Iéna",
+            "comment": null
+          },
+          {
+            "step": 10,
+            "name": "IENA",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Iéna à Palais de Tokyo pendant 0:00:27",
+              "distance": 0,
+              "duration": 27.187004518332458,
+              "start_latitude": 48.864466,
+              "start_longitude": 2.29338,
+              "end_latitude": 48.8643979,
+              "end_longitude": 2.2929807000000437
+            },
+            "instruction": "Marcher de la station Iéna à Palais de Tokyo pendant 0:00:27",
+            "comment": null
+          },
+          {
+            "step": 11,
+            "name": "Palais de Tokyo",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "cb5a7e86-d32b-3a04-3e27-501ba3939cae",
+              "name": "Palais de Tokyo",
+              "website": "https://www.palaisdetokyo.com/",
+              "latitude": 48.8643979,
+              "longitude": 2.2929807000000437,
+              "address": "Palais de Tokyo\n13 avenue du Président Wilson\n75116 Paris",
+              "phone": "+33 1 81 97 35 88",
+              "description": null,
+              "classname": [
+                "CulturalSite",
+                "Museum"
+              ],
+              "duration": 60
+            },
+            "instruction": "Palais de Tokyo",
+            "comment": null
+          },
+          {
+            "step": 12,
+            "name": "Palais de Tokyo",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Palais de Tokyo à la station Iéna pendant 0:00:27",
+              "distance": 0,
+              "duration": 27.187004518332458,
+              "start_latitude": 48.8643979,
+              "start_longitude": 2.2929807000000437,
+              "end_latitude": 48.864466,
+              "end_longitude": 2.29338
+            },
+            "instruction": "Marcher de Palais de Tokyo à la station Iéna pendant 0:00:27",
+            "comment": null
+          },
+          {
+            "step": 13,
+            "name": "IENA",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 9 en direction de Pont de Sèvres jusqu'à Franklin D. Roosevelt",
+              "duration": 120.98228101172316,
+              "line": "9",
+              "direction": "Pont de Sèvres",
+              "nb_stations": 3,
+              "final_station": "Franklin D. Roosevelt",
+              "list_station": [
+                "Iéna",
+                "Alma—Marceau",
+                "Franklin D. Roosevelt"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 9 en direction de Pont de Sèvres jusqu'à Franklin D. Roosevelt",
+            "comment": null
+          },
+          {
+            "step": 14,
+            "name": "FRANKLINDROOSEVELT",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Franklin D. Roosevelt, prenez la correspondance entre la ligne 9 et la ligne 1 en direction de La Défense jusqu'à Champs-Élysées—Clemenceau",
+              "duration": 28.01745069891561,
+              "line": "1",
+              "direction": "La Défense",
+              "nb_stations": 2,
+              "final_station": "Champs-Élysées—Clemenceau",
+              "list_station": [
+                "Franklin D. Roosevelt",
+                "Champs-Élysées—Clemenceau"
+              ]
+            },
+            "instruction": "A la station Franklin D. Roosevelt, prenez la correspondance entre la ligne 9 et la ligne 1 en direction de La Défense jusqu'à Champs-Élysées—Clemenceau",
+            "comment": null
+          },
+          {
+            "step": 15,
+            "name": "CHAMPSELYSEESCLEMENCEAU",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Champs-Élysées—Clemenceau à Petit Palais - Musée des Beaux Arts de la Ville de Paris pendant 0:02:42",
+              "distance": 0,
+              "duration": 162.05273077423792,
+              "start_latitude": 48.8675,
+              "start_longitude": 2.3135,
+              "end_latitude": 48.865895,
+              "end_longitude": 2.313805
+            },
+            "instruction": "Marcher de la station Champs-Élysées—Clemenceau à Petit Palais - Musée des Beaux Arts de la Ville de Paris pendant 0:02:42",
+            "comment": null
+          },
+          {
+            "step": 16,
+            "name": "Petit Palais - Musée des Beaux Arts de la Ville de Paris",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "697984",
+              "name": "Petit Palais - Musée des Beaux Arts de la Ville de Paris",
+              "website": "http://www.parismusees.paris.fr/",
+              "latitude": 48.865895,
+              "longitude": 2.313805,
+              "address": "Petit Palais - Musée des Beaux Arts de la Ville de Paris\nAvenue Winston Churchill\n75008 Paris",
+              "phone": "+33 1 53 43 40 00",
+              "description": "Véritable joyau architectural du 19ème siècle, le Petit Palais, Musée des Beaux-Arts de la Ville de Paris, vous propose une visite chronologique dans un espace remarquablement rénové",
+              "classname": [
+                "CulturalSite",
+                "Museum"
+              ],
+              "duration": 60
+            },
+            "instruction": "Petit Palais - Musée des Beaux Arts de la Ville de Paris",
+            "comment": null
+          },
+          {
+            "step": 17,
+            "name": "Petit Palais - Musée des Beaux Arts de la Ville de Paris",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Petit Palais - Musée des Beaux Arts de la Ville de Paris à Grand Palais pendant 0:05:51",
+              "distance": 0,
+              "duration": 351.12252061306884,
+              "start_latitude": 48.865895,
+              "start_longitude": 2.313805,
+              "end_latitude": 48.8669,
+              "end_longitude": 2.3107800000000225
+            },
+            "instruction": "Marcher de Petit Palais - Musée des Beaux Arts de la Ville de Paris à Grand Palais pendant 0:05:51",
+            "comment": null
+          },
+          {
+            "step": 18,
+            "name": "Grand Palais",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "4fd10c53-1706-963f-0fe2-501ba397c917",
+              "name": "Grand Palais",
+              "website": "https://www.grandpalais.fr/",
+              "latitude": 48.8669,
+              "longitude": 2.3107800000000225,
+              "address": "Grand Palais\n3 avenue du Général Eisenhower\n75008 Paris",
+              "phone": "+33 1 44 13 17 17",
+              "description": "En bordure des Champs-Élysées se dresse l'un des monuments les plus emblématiques de la capitale : le Grand Palais. Reconnaissable à sa grande coupole en verre, l'édifice créé pour l’Exposition universelle de 1900 impressionne par son architecture et ses volumes. Ce géant de pierre, de verre et d'acier abrite trois espaces : la Nef, les Galeries nationales et le palais de la Découverte. Depuis son ouverture, le lieu accueille de nombreux événements culturels : salons, défilés, expositions, concerts...",
+              "classname": [
+                "CulturalSite",
+                "Museum"
+              ],
+              "duration": 60
+            },
+            "instruction": "Grand Palais",
+            "comment": null
+          },
+          {
+            "step": 19,
+            "name": "Grand Palais",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Grand Palais à Palais de la découverte pendant 0:01:09",
+              "distance": 0,
+              "duration": 69.06357028264237,
+              "start_latitude": 48.8669,
+              "start_longitude": 2.3107800000000225,
+              "end_latitude": 48.866211,
+              "end_longitude": 2.310813
+            },
+            "instruction": "Marcher de Grand Palais à Palais de la découverte pendant 0:01:09",
+            "comment": null
+          },
+          {
+            "step": 20,
+            "name": "Palais de la découverte",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "677951",
+              "name": "Palais de la découverte",
+              "website": "https://www.palais-decouverte.fr/",
+              "latitude": 48.866211,
+              "longitude": 2.310813,
+              "address": "Palais de la découverte\nAvenue Franklin-D.-Roosevelt\n75008 Paris",
+              "phone": "+33 1 56 43 20 20",
+              "description": "« Faire vivre la science au cœur de Paris » par le biais d’expériences, d’expositions et de démonstrations spectaculaires.",
+              "classname": [
+                "CulturalSite",
+                "Museum"
+              ],
+              "duration": 60
+            },
+            "instruction": "Palais de la découverte",
+            "comment": null
+          },
+          {
+            "step": 21,
+            "name": "Palais de la découverte",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Palais de la découverte à la station Champs-Élysées—Clemenceau pendant 0:03:39",
+              "distance": 0,
+              "duration": 219.17331170841058,
+              "start_latitude": 48.866211,
+              "start_longitude": 2.310813,
+              "end_latitude": 48.8675,
+              "end_longitude": 2.3135
+            },
+            "instruction": "Marcher de Palais de la découverte à la station Champs-Élysées—Clemenceau pendant 0:03:39",
+            "comment": null
+          },
+          {
+            "step": 22,
+            "name": "CHAMPSELYSEESCLEMENCEAU",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 13 en direction de La Fourche jusqu'à Miromesnil",
+              "duration": 62.13862597977649,
+              "line": "13",
+              "direction": "La Fourche",
+              "nb_stations": 2,
+              "final_station": "Miromesnil",
+              "list_station": [
+                "Champs-Élysées—Clemenceau",
+                "Miromesnil"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 13 en direction de La Fourche jusqu'à Miromesnil",
+            "comment": null
+          },
+          {
+            "step": 23,
+            "name": "MIROMESNIL",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Miromesnil à Musée Jacquemart-André pendant 0:04:40",
+              "distance": 0,
+              "duration": 280.71880114130045,
+              "start_latitude": 48.87367,
+              "start_longitude": 2.31446,
+              "end_latitude": 48.875026,
+              "end_longitude": 2.310732
+            },
+            "instruction": "Marcher de la station Miromesnil à Musée Jacquemart-André pendant 0:04:40",
+            "comment": null
+          },
+          {
+            "step": 24,
+            "name": "Musée Jacquemart-André",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "699592",
+              "name": "Musée Jacquemart-André",
+              "website": "http://www.musee-jacquemart-andre.com/",
+              "latitude": 48.875026,
+              "longitude": 2.310732,
+              "address": "Musée Jacquemart-André\n158 boulevard Haussmann\n75008 Paris",
+              "phone": "+33 1 45 62 11 59",
+              "description": "Découvrez les trésors d'un couple de collectionneurs : des oeuvres de Fragonard, Rembrandt, Botticelli... exposées dans un somptueux hôtel particulier.",
+              "classname": [
+                "CulturalSite",
+                "Museum"
+              ],
+              "duration": 60
+            },
+            "instruction": "Musée Jacquemart-André",
+            "comment": null
+          },
+          {
+            "step": 25,
+            "name": "Musée Jacquemart-André",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Musée Jacquemart-André à la station Miromesnil pendant 0:04:40",
+              "distance": 0,
+              "duration": 280.7188011413005,
+              "start_latitude": 48.875026,
+              "start_longitude": 2.310732,
+              "end_latitude": 48.87367,
+              "end_longitude": 2.31446
+            },
+            "instruction": "Marcher de Musée Jacquemart-André à la station Miromesnil pendant 0:04:40",
+            "comment": null
+          },
+          {
+            "step": 26,
+            "name": "MIROMESNIL",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 13 en direction de La Fourche jusqu'à Montparnasse—Bienvenüe",
+              "duration": 326.83083801668255,
+              "line": "13",
+              "direction": "La Fourche",
+              "nb_stations": 7,
+              "final_station": "Montparnasse—Bienvenüe",
+              "list_station": [
+                "Miromesnil",
+                "Champs-Élysées—Clemenceau",
+                "Invalides",
+                "Varenne",
+                "Saint-François-Xavier",
+                "Duroc",
+                "Montparnasse—Bienvenüe"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 13 en direction de La Fourche jusqu'à Montparnasse—Bienvenüe",
+            "comment": null
+          },
+          {
+            "step": 27,
+            "name": "MONTPARNASSEBIENVENUE",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Montparnasse—Bienvenüe à Paris Montparnasse - Top of the City pendant 0:02:18",
+              "distance": 0,
+              "duration": 138.32962707300896,
+              "start_latitude": 48.843466,
+              "start_longitude": 2.323072,
+              "end_latitude": 48.84239880000001,
+              "end_longitude": 2.321740900000009
+            },
+            "instruction": "Marcher de la station Montparnasse—Bienvenüe à Paris Montparnasse - Top of the City pendant 0:02:18",
+            "comment": null
+          },
+          {
+            "step": 28,
+            "name": "Paris Montparnasse - Top of the City",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "c0fa60bc-cc2a-f932-026f-501ba3c2f919",
+              "name": "Paris Montparnasse - Top of the City",
+              "website": "https://www.tourmontparnasse56.com/",
+              "latitude": 48.84239880000001,
+              "longitude": 2.321740900000009,
+              "address": "Paris Montparnasse - Top of the City\nRue de l'Arrivée\n75015 Paris",
+              "phone": "+33 1 45 38 52 56",
+              "description": "210 mètres de haut et 56 étages : voici le plus grand gratte-ciel de Paris intra-muros ! La vue depuis son toit-terrasse est l'une des plus belles de la capitale. Derrière de larges baies vitrées, le visteur contemple la ville et ses monuments... Le point de vue vaut le détour. La nuit tombée, la tour se pare d’un éclairage dynamique qui souligne ses arêtes, les fameuses pulsations lumineuses.",
+              "classname": [
+                "CulturalSite",
+                "RemarkableBuilding"
+              ],
+              "duration": 60
+            },
+            "instruction": "Paris Montparnasse - Top of the City",
+            "comment": null
+          },
+          {
+            "step": 29,
+            "name": "Paris Montparnasse - Top of the City",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Paris Montparnasse - Top of the City à la station Montparnasse—Bienvenüe pendant 0:02:18",
+              "distance": 0,
+              "duration": 138.3296270730089,
+              "start_latitude": 48.84239880000001,
+              "start_longitude": 2.321740900000009,
+              "end_latitude": 48.843466,
+              "end_longitude": 2.323072
+            },
+            "instruction": "Marcher de Paris Montparnasse - Top of the City à la station Montparnasse—Bienvenüe pendant 0:02:18",
+            "comment": null
+          },
+          {
+            "step": 30,
+            "name": "MONTPARNASSEBIENVENUE",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 13 en direction de La Fourche jusqu'à Duroc",
+              "duration": 54.99852367046907,
+              "line": "13",
+              "direction": "La Fourche",
+              "nb_stations": 2,
+              "final_station": "Duroc",
+              "list_station": [
+                "Montparnasse—Bienvenüe",
+                "Duroc"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 13 en direction de La Fourche jusqu'à Duroc",
+            "comment": null
+          },
+          {
+            "step": 31,
+            "name": "DUROC",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Duroc, prenez la correspondance entre la ligne 13 et la ligne 10 en direction de Gare d'Austerlitz jusqu'à La Motte-Picquet—Grenelle",
+              "duration": 124.0108118674296,
+              "line": "10",
+              "direction": "Gare d'Austerlitz",
+              "nb_stations": 3,
+              "final_station": "La Motte-Picquet—Grenelle",
+              "list_station": [
+                "Duroc",
+                "Ségur",
+                "La Motte-Picquet—Grenelle"
+              ]
+            },
+            "instruction": "A la station Duroc, prenez la correspondance entre la ligne 13 et la ligne 10 en direction de Gare d'Austerlitz jusqu'à La Motte-Picquet—Grenelle",
+            "comment": null
+          },
+          {
+            "step": 32,
+            "name": "LAMOTTEPICQUETGRENELLE",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station La Motte-Picquet—Grenelle, prenez la correspondance entre la ligne 10 et la ligne 6 en direction de Nation jusqu'à Bir-Hakeim",
+              "duration": 77.26989386105066,
+              "line": "6",
+              "direction": "Nation",
+              "nb_stations": 3,
+              "final_station": "Bir-Hakeim",
+              "list_station": [
+                "La Motte-Picquet—Grenelle",
+                "Dupleix",
+                "Bir-Hakeim"
+              ]
+            },
+            "instruction": "A la station La Motte-Picquet—Grenelle, prenez la correspondance entre la ligne 10 et la ligne 6 en direction de Nation jusqu'à Bir-Hakeim",
+            "comment": null
+          },
+          {
+            "step": 33,
+            "name": "BIRHAKEIM",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Bir-Hakeim à Tour Eiffel pendant 0:09:22",
+              "distance": 0,
+              "duration": 562.2614973513956,
+              "start_latitude": 48.853917,
+              "start_longitude": 2.289332,
+              "end_latitude": 48.85836,
+              "end_longitude": 2.294543
+            },
+            "instruction": "Marcher de la station Bir-Hakeim à Tour Eiffel pendant 0:09:22",
+            "comment": null
+          },
+          {
+            "step": 34,
+            "name": "Tour Eiffel",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "678296",
+              "name": "Tour Eiffel",
+              "website": "https://www.toureiffel.paris/fr",
+              "latitude": 48.85836,
+              "longitude": 2.294543,
+              "address": "Tour Eiffel\n5 avenue Anatole France\n75007 Paris",
+              "phone": "+33 892 70 12 39",
+              "description": "Symbole de la France dans le monde, la Tour Eiffel fut construite par Gustave Eiffel pour l’Exposition universelle de 1889, célébrant le centenaire de la Révolution française.",
+              "classname": [
+                "CulturalSite",
+                "RemarkableBuilding",
+                "Tower"
+              ],
+              "duration": 60
+            },
+            "instruction": "Tour Eiffel",
+            "comment": null
+          },
+          {
+            "step": 35,
+            "name": "Tour Eiffel",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Tour Eiffel à la station Iéna pendant 0:10:16",
+              "distance": 0,
+              "duration": 616.5300049084843,
+              "start_latitude": 48.85836,
+              "start_longitude": 2.294543,
+              "end_latitude": 48.864466,
+              "end_longitude": 2.29338
+            },
+            "instruction": "Marcher de Tour Eiffel à la station Iéna pendant 0:10:16",
+            "comment": null
+          },
+          {
+            "step": 36,
+            "name": "IENA",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 9 en direction de Pont de Sèvres jusqu'à Franklin D. Roosevelt",
+              "duration": 120.98228101172322,
+              "line": "9",
+              "direction": "Pont de Sèvres",
+              "nb_stations": 3,
+              "final_station": "Franklin D. Roosevelt",
+              "list_station": [
+                "Iéna",
+                "Alma—Marceau",
+                "Franklin D. Roosevelt"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 9 en direction de Pont de Sèvres jusqu'à Franklin D. Roosevelt",
+            "comment": null
+          },
+          {
+            "step": 37,
+            "name": "FRANKLINDROOSEVELT",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Franklin D. Roosevelt, prenez la correspondance entre la ligne 9 et la ligne 1 en direction de La Défense jusqu'à Concorde",
+              "duration": 82.366754806784,
+              "line": "1",
+              "direction": "La Défense",
+              "nb_stations": 3,
+              "final_station": "Concorde",
+              "list_station": [
+                "Franklin D. Roosevelt",
+                "Champs-Élysées—Clemenceau",
+                "Concorde"
+              ]
+            },
+            "instruction": "A la station Franklin D. Roosevelt, prenez la correspondance entre la ligne 9 et la ligne 1 en direction de La Défense jusqu'à Concorde",
+            "comment": null
+          },
+          {
+            "step": 38,
+            "name": "CONCORDE",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Concorde, prenez la correspondance entre la ligne 1 et la ligne 8 en direction de Balard jusqu'à Opéra",
+              "duration": 101.89063292081141,
+              "line": "8",
+              "direction": "Balard",
+              "nb_stations": 3,
+              "final_station": "Opéra",
+              "list_station": [
+                "Concorde",
+                "Madeleine",
+                "Opéra"
+              ]
+            },
+            "instruction": "A la station Concorde, prenez la correspondance entre la ligne 1 et la ligne 8 en direction de Balard jusqu'à Opéra",
+            "comment": null
+          },
+          {
+            "step": 39,
+            "name": "OPERA",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Opéra à Park Hyatt Paris-Vendôme pendant 0:03:50",
+              "distance": 0,
+              "duration": 230.1437382664409,
+              "start_latitude": 48.870636,
+              "start_longitude": 2.332353,
+              "end_latitude": 48.8686535,
+              "end_longitude": 2.330588900000066
+            },
+            "instruction": "Marcher de la station Opéra à Park Hyatt Paris-Vendôme pendant 0:03:50",
+            "comment": null
+          }
+        ]
+      },
+      {
+        "steps": [
+          {
+            "step": 1,
+            "name": "Park Hyatt Paris-Vendôme",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Park Hyatt Paris-Vendôme à la station Opéra pendant 0:03:50",
+              "distance": 0,
+              "duration": 230.14373826644083,
+              "start_latitude": 48.8686535,
+              "start_longitude": 2.330588900000066,
+              "end_latitude": 48.870636,
+              "end_longitude": 2.332353
+            },
+            "instruction": "Marcher de Park Hyatt Paris-Vendôme à la station Opéra pendant 0:03:50",
+            "comment": null
+          },
+          {
+            "step": 2,
+            "name": "OPERA",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 3 en direction de Pont de Levallois—Bécon jusqu'à Arts et Métiers",
+              "duration": 164.9054736137083,
+              "line": "3",
+              "direction": "Pont de Levallois—Bécon",
+              "nb_stations": 6,
+              "final_station": "Arts et Métiers",
+              "list_station": [
+                "Opéra",
+                "Quatre-Septembre",
+                "Bourse",
+                "Sentier",
+                "Réaumur—Sébastopol",
+                "Arts et Métiers"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 3 en direction de Pont de Levallois—Bécon jusqu'à Arts et Métiers",
+            "comment": null
+          },
+          {
+            "step": 3,
+            "name": "ARTSETMETIERS",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Arts et Métiers à Musée des Arts et Métiers pendant 0:00:53",
+              "distance": 0,
+              "duration": 53.276070435040026,
+              "start_latitude": 48.8655,
+              "start_longitude": 2.3561,
+              "end_latitude": 48.865842,
+              "end_longitude": 2.3554810000000543
+            },
+            "instruction": "Marcher de la station Arts et Métiers à Musée des Arts et Métiers pendant 0:00:53",
+            "comment": null
+          },
+          {
+            "step": 4,
+            "name": "Musée des Arts et Métiers",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "c7120f2e-4151-61a9-925b-501ba3afa678",
+              "name": "Musée des Arts et Métiers",
+              "website": "https://www.arts-et-metiers.net/",
+              "latitude": 48.865842,
+              "longitude": 2.3554810000000543,
+              "address": "Musée des Arts et Métiers\n60 rue Réaumur\n75003 Paris",
+              "phone": "+33 1 53 01 82 63",
+              "description": "Le musée des arts et métiers rend hommage à l’ingéniosité humaine et aux pionniers de l’ère industrielle. Créé en 1794 dans l’ancien prieuré de Saint-Martin-des-Champs, ce temple de la technique abrite une remarquable collection d'objets et de dessins, organisés en 7 collections thématiques : instruments scientifiques, matériaux, construction, communication, énergie, mécanique et transports. Parmi les trésors exposés : l’avion de Louis Blériot, le premier à avoir traversé la Manche ou encore le pendule de Foucault, mis au point vers 1850, et qui servit à démontrer la rotation de la Terre.",
+              "classname": [
+                "CulturalSite",
+                "Museum"
+              ],
+              "duration": 60
+            },
+            "instruction": "Musée des Arts et Métiers",
+            "comment": null
+          },
+          {
+            "step": 5,
+            "name": "Musée des Arts et Métiers",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Musée des Arts et Métiers à la station Arts et Métiers pendant 0:00:53",
+              "distance": 0,
+              "duration": 53.27607043504005,
+              "start_latitude": 48.865842,
+              "start_longitude": 2.3554810000000543,
+              "end_latitude": 48.8655,
+              "end_longitude": 2.3561
+            },
+            "instruction": "Marcher de Musée des Arts et Métiers à la station Arts et Métiers pendant 0:00:53",
+            "comment": null
+          },
+          {
+            "step": 6,
+            "name": "ARTSETMETIERS",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 11 en direction de Mairie des Lilas jusqu'à Rambuteau",
+              "duration": 46.62902764202415,
+              "line": "11",
+              "direction": "Mairie des Lilas",
+              "nb_stations": 2,
+              "final_station": "Rambuteau",
+              "list_station": [
+                "Arts et Métiers",
+                "Rambuteau"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 11 en direction de Mairie des Lilas jusqu'à Rambuteau",
+            "comment": null
+          },
+          {
+            "step": 7,
+            "name": "RAMBUTEAU",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Rambuteau à Centre Pompidou pendant 0:01:45",
+              "distance": 0,
+              "duration": 105.76280274792433,
+              "start_latitude": 48.86119,
+              "start_longitude": 2.35343,
+              "end_latitude": 48.8603649,
+              "end_longitude": 2.352429099999995
+            },
+            "instruction": "Marcher de la station Rambuteau à Centre Pompidou pendant 0:01:45",
+            "comment": null
+          },
+          {
+            "step": 8,
+            "name": "Centre Pompidou",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "5d5a02f4-e535-31f8-a4b0-501ba30f99ac",
+              "name": "Centre Pompidou",
+              "website": "https://www.centrepompidou.fr/fr",
+              "latitude": 48.8603649,
+              "longitude": 2.352429099999995,
+              "address": "Centre Pompidou\nPlace Georges Pompidou\n75004 Paris",
+              "phone": "+33 1 44 78 12 33",
+              "description": "Imaginé par Renzo Piano et Richard Rogers, le Centre Pompidou est reconnaissable à ses escalators extérieurs et à ses gigantesques tuyaux colorés. Depuis son inauguration en 1977, il abrite l'une des plus riches collections d'art moderne et contemporain du monde. Les œuvres sont réparties chronologiquement, sur deux espaces : la période moderne (de 1905 à 1960) et la période contemporaine (de 1960 à nos jours). Des expositions de renommée internationale sont également organisées toute l’année.",
+              "classname": [
+                "CulturalSite",
+                "Museum"
+              ],
+              "duration": 60
+            },
+            "instruction": "Centre Pompidou",
+            "comment": null
+          },
+          {
+            "step": 9,
+            "name": "Centre Pompidou",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Centre Pompidou à Atelier Brancusi - Centre Georges Pompidou pendant 0:03:47",
+              "distance": 0,
+              "duration": 227.35613346486753,
+              "start_latitude": 48.8603649,
+              "start_longitude": 2.352429099999995,
+              "end_latitude": 48.8608333,
+              "end_longitude": 2.3516667000000098
+            },
+            "instruction": "Marcher de Centre Pompidou à Atelier Brancusi - Centre Georges Pompidou pendant 0:03:47",
+            "comment": null
+          },
+          {
+            "step": 10,
+            "name": "Atelier Brancusi - Centre Georges Pompidou",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "80f1030e-c06e-bd00-c932-501ba3c3787b",
+              "name": "Atelier Brancusi - Centre Georges Pompidou",
+              "website": "https://www.centrepompidou.fr/",
+              "latitude": 48.8608333,
+              "longitude": 2.3516667000000098,
+              "address": "Atelier Brancusi - Centre Georges Pompidou\nPlace Georges Pompidou\n75004 Paris",
+              "phone": "+33 1 44 78 12 33",
+              "description": "Au pied du Centre Pompidou, sur la Piazza, l’atelier Brancusi rassemble la plus importante collection d'œuvres de Constantin Brancusi, figure majeure de la sculpture moderne. L'étonnant édifice conçu par l'architecte Renzo Piano en 1997 est - conformément aux dernières volontés de l'artiste - une reconstitution de son atelier du 11 impasse Ronsin dans le 15e arrondissement. On y découvre des sculptures, des dessins, des peintures et certaines œuvres majeures telles que L'Oiselet en marbre veiné.",
+              "classname": [
+                "CulturalSite",
+                "Museum"
+              ],
+              "duration": 60
+            },
+            "instruction": "Atelier Brancusi - Centre Georges Pompidou",
+            "comment": null
+          },
+          {
+            "step": 11,
+            "name": "Atelier Brancusi - Centre Georges Pompidou",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Atelier Brancusi - Centre Georges Pompidou à la station Rambuteau pendant 0:02:01",
+              "distance": 0,
+              "duration": 121.59333071694321,
+              "start_latitude": 48.8608333,
+              "start_longitude": 2.3516667000000098,
+              "end_latitude": 48.86119,
+              "end_longitude": 2.35343
+            },
+            "instruction": "Marcher de Atelier Brancusi - Centre Georges Pompidou à la station Rambuteau pendant 0:02:01",
+            "comment": null
+          },
+          {
+            "step": 12,
+            "name": "RAMBUTEAU",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 11 en direction de Châtelet jusqu'à Châtelet",
+              "duration": 68.18266553068766,
+              "line": "11",
+              "direction": "Châtelet",
+              "nb_stations": 3,
+              "final_station": "Châtelet",
+              "list_station": [
+                "Rambuteau",
+                "Hôtel de Ville",
+                "Châtelet"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 11 en direction de Châtelet jusqu'à Châtelet",
+            "comment": null
+          },
+          {
+            "step": 13,
+            "name": "CHATELET",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Châtelet, prenez la correspondance entre la ligne 11 et la ligne 4 en direction de Porte de Clignancourt jusqu'à Cité",
+              "duration": 31.408319213635565,
+              "line": "4",
+              "direction": "Porte de Clignancourt",
+              "nb_stations": 2,
+              "final_station": "Cité",
+              "list_station": [
+                "Châtelet",
+                "Cité"
+              ]
+            },
+            "instruction": "A la station Châtelet, prenez la correspondance entre la ligne 11 et la ligne 4 en direction de Porte de Clignancourt jusqu'à Cité",
+            "comment": null
+          },
+          {
+            "step": 14,
+            "name": "CITE",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Cité à Conciergerie pendant 0:00:49",
+              "distance": 0,
+              "duration": 49.61806986166172,
+              "start_latitude": 48.855278,
+              "start_longitude": 2.346389,
+              "end_latitude": 48.855675,
+              "end_longitude": 2.345939
+            },
+            "instruction": "Marcher de la station Cité à Conciergerie pendant 0:00:49",
+            "comment": null
+          },
+          {
+            "step": 15,
+            "name": "Conciergerie",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "697113",
+              "name": "Conciergerie",
+              "website": "http://www.paris-conciergerie.fr/",
+              "latitude": 48.855675,
+              "longitude": 2.345939,
+              "address": "Conciergerie\n2 boulevard du Palais\n75001 Paris",
+              "phone": "+33 1 53 40 61 04",
+              "description": "Au cœur de Paris, au bord de la Seine, visitez la Conciergerie, le plus ancien témoignage du Palais de la Cité, première demeure royale de la capitale et prison lors de la Révolution française. Une véritable plongée dans l'Histoire de France !",
+              "classname": [
+                "CulturalSite",
+                "Palace",
+                "RemarkableBuilding"
+              ],
+              "duration": 60
+            },
+            "instruction": "Conciergerie",
+            "comment": null
+          },
+          {
+            "step": 16,
+            "name": "Conciergerie",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Conciergerie à la station Cité pendant 0:00:49",
+              "distance": 0,
+              "duration": 49.6180698616617,
+              "start_latitude": 48.855675,
+              "start_longitude": 2.345939,
+              "end_latitude": 48.855278,
+              "end_longitude": 2.346389
+            },
+            "instruction": "Marcher de Conciergerie à la station Cité pendant 0:00:49",
+            "comment": null
+          },
+          {
+            "step": 17,
+            "name": "CITE",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 4 en direction de Bagneux—Lucie Aubrac jusqu'à Châtelet",
+              "duration": 31.408319213635558,
+              "line": "4",
+              "direction": "Bagneux—Lucie Aubrac",
+              "nb_stations": 2,
+              "final_station": "Châtelet",
+              "list_station": [
+                "Cité",
+                "Châtelet"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 4 en direction de Bagneux—Lucie Aubrac jusqu'à Châtelet",
+            "comment": null
+          },
+          {
+            "step": 18,
+            "name": "CHATELET",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Châtelet, prenez la correspondance entre la ligne 4 et la ligne 1 en direction de La Défense jusqu'à Bastille",
+              "duration": 152.85604674567196,
+              "line": "1",
+              "direction": "La Défense",
+              "nb_stations": 4,
+              "final_station": "Bastille",
+              "list_station": [
+                "Châtelet",
+                "Hôtel de Ville",
+                "Saint-Paul",
+                "Bastille"
+              ]
+            },
+            "instruction": "A la station Châtelet, prenez la correspondance entre la ligne 4 et la ligne 1 en direction de La Défense jusqu'à Bastille",
+            "comment": null
+          },
+          {
+            "step": 19,
+            "name": "BASTILLE",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Bastille à Opéra national de Paris - Opéra Bastille pendant 0:00:38",
+              "distance": 0,
+              "duration": 38.67277519154666,
+              "start_latitude": 48.853082,
+              "start_longitude": 2.369077,
+              "end_latitude": 48.8533605,
+              "end_longitude": 2.3694831999999906
+            },
+            "instruction": "Marcher de la station Bastille à Opéra national de Paris - Opéra Bastille pendant 0:00:38",
+            "comment": null
+          },
+          {
+            "step": 20,
+            "name": "Opéra national de Paris - Opéra Bastille",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "cc4b0d1a-fd1d-4b15-0ceb-501ba3642eb0",
+              "name": "Opéra national de Paris - Opéra Bastille",
+              "website": "https://www.operadeparis.fr/visites/opera-bastille",
+              "latitude": 48.8533605,
+              "longitude": 2.3694831999999906,
+              "address": "Opéra national de Paris - Opéra Bastille\nPlace de la Bastille\n75012 Paris",
+              "phone": "+33 892 89 90 90",
+              "description": "Cet opéra moderne et populaire voulu par François Mitterrand est l'œuvre de Carlos Ott, architecte urugayo-canadien. Il constitue avec le palais Garnier une seule et même institution : l’Opéra National de Paris. Inauguré en 1989, son architecture se veut sobre et lumineuse. L'édifice est également réputé pour abriter la plus grande salle d’opéra d’Europe (2 700 places assises). Opéras, concerts de musique classique, ballets contemporains... Le lieu affiche une programmation éclectique et propose des visites guidées.",
+              "classname": [
+                "CulturalSite",
+                "RemarkableBuilding"
+              ],
+              "duration": 60
+            },
+            "instruction": "Opéra national de Paris - Opéra Bastille",
+            "comment": null
+          },
+          {
+            "step": 21,
+            "name": "Opéra national de Paris - Opéra Bastille",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Opéra national de Paris - Opéra Bastille à la station Bastille pendant 0:00:38",
+              "distance": 0,
+              "duration": 38.67277519154666,
+              "start_latitude": 48.8533605,
+              "start_longitude": 2.3694831999999906,
+              "end_latitude": 48.853082,
+              "end_longitude": 2.369077
+            },
+            "instruction": "Marcher de Opéra national de Paris - Opéra Bastille à la station Bastille pendant 0:00:38",
+            "comment": null
+          },
+          {
+            "step": 22,
+            "name": "BASTILLE",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 1 en direction de La Défense jusqu'à Gare de Lyon",
+              "duration": 89.5637055381159,
+              "line": "1",
+              "direction": "La Défense",
+              "nb_stations": 2,
+              "final_station": "Gare de Lyon",
+              "list_station": [
+                "Bastille",
+                "Gare de Lyon"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 1 en direction de La Défense jusqu'à Gare de Lyon",
+            "comment": null
+          },
+          {
+            "step": 23,
+            "name": "GAREDELYON",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Gare de Lyon, prenez la correspondance entre la ligne 1 et la ligne 14 en direction de Mairie de Saint-Ouen jusqu'à Cour Saint-Émilion",
+              "duration": 134.37495806878496,
+              "line": "14",
+              "direction": "Mairie de Saint-Ouen",
+              "nb_stations": 3,
+              "final_station": "Cour Saint-Émilion",
+              "list_station": [
+                "Gare de Lyon",
+                "Bercy",
+                "Cour Saint-Émilion"
+              ]
+            },
+            "instruction": "A la station Gare de Lyon, prenez la correspondance entre la ligne 1 et la ligne 14 en direction de Mairie de Saint-Ouen jusqu'à Cour Saint-Émilion",
+            "comment": null
+          },
+          {
+            "step": 24,
+            "name": "COURSTEMILION",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Cour Saint-Émilion à Musée des arts forains pendant 0:04:14",
+              "distance": 0,
+              "duration": 254.66124996217758,
+              "start_latitude": 48.834,
+              "start_longitude": 2.386,
+              "end_latitude": 48.832605,
+              "end_longitude": 2.389228
+            },
+            "instruction": "Marcher de la station Cour Saint-Émilion à Musée des arts forains pendant 0:04:14",
+            "comment": null
+          },
+          {
+            "step": 25,
+            "name": "Musée des arts forains",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "835198",
+              "name": "Musée des arts forains",
+              "website": "http://www.arts-forains.com/",
+              "latitude": 48.832605,
+              "longitude": 2.389228,
+              "address": "Musée des arts forains\n53 Avenue des Terroirs de France\n75012 Paris",
+              "phone": "+33 1 43 40 16 22",
+              "description": "Le Musée des arts forains vous plonge dans l'univers des manèges et des automates. En visite guidée, entrez dans l'histoire du monde des attractions.",
+              "classname": [
+                "CulturalSite",
+                "Museum"
+              ],
+              "duration": 60
+            },
+            "instruction": "Musée des arts forains",
+            "comment": null
+          },
+          {
+            "step": 26,
+            "name": "Musée des arts forains",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Musée des arts forains à la station Cour Saint-Émilion pendant 0:04:14",
+              "distance": 0,
+              "duration": 254.6612499621776,
+              "start_latitude": 48.832605,
+              "start_longitude": 2.389228,
+              "end_latitude": 48.834,
+              "end_longitude": 2.386
+            },
+            "instruction": "Marcher de Musée des arts forains à la station Cour Saint-Émilion pendant 0:04:14",
+            "comment": null
+          },
+          {
+            "step": 27,
+            "name": "COURSTEMILION",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 14 en direction de Olympiades jusqu'à Gare de Lyon",
+              "duration": 134.37495806878493,
+              "line": "14",
+              "direction": "Olympiades",
+              "nb_stations": 3,
+              "final_station": "Gare de Lyon",
+              "list_station": [
+                "Cour Saint-Émilion",
+                "Bercy",
+                "Gare de Lyon"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 14 en direction de Olympiades jusqu'à Gare de Lyon",
+            "comment": null
+          },
+          {
+            "step": 28,
+            "name": "GAREDELYON",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Gare de Lyon, prenez la correspondance entre la ligne 14 et la ligne 1 en direction de Château de Vincennes jusqu'à Bastille",
+              "duration": 89.56370553811593,
+              "line": "1",
+              "direction": "Château de Vincennes",
+              "nb_stations": 2,
+              "final_station": "Bastille",
+              "list_station": [
+                "Gare de Lyon",
+                "Bastille"
+              ]
+            },
+            "instruction": "A la station Gare de Lyon, prenez la correspondance entre la ligne 14 et la ligne 1 en direction de Château de Vincennes jusqu'à Bastille",
+            "comment": null
+          },
+          {
+            "step": 29,
+            "name": "BASTILLE",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Bastille, prenez la correspondance entre la ligne 1 et la ligne 5 en direction de Bobigny—Pablo Picasso jusqu'à Gare d'Austerlitz",
+              "duration": 108.27325087047473,
+              "line": "5",
+              "direction": "Bobigny—Pablo Picasso",
+              "nb_stations": 3,
+              "final_station": "Gare d'Austerlitz",
+              "list_station": [
+                "Bastille",
+                "Quai de la Rapée",
+                "Gare d'Austerlitz"
+              ]
+            },
+            "instruction": "A la station Bastille, prenez la correspondance entre la ligne 1 et la ligne 5 en direction de Bobigny—Pablo Picasso jusqu'à Gare d'Austerlitz",
+            "comment": null
+          },
+          {
+            "step": 30,
+            "name": "GAREDAUSTERLITZ",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Gare d'Austerlitz, prenez la correspondance entre la ligne 5 et la ligne 10 en direction de Boulogne—Pont de Saint-Cloud jusqu'à Cardinal Lemoine",
+              "duration": 101.70814802516315,
+              "line": "10",
+              "direction": "Boulogne—Pont de Saint-Cloud",
+              "nb_stations": 3,
+              "final_station": "Cardinal Lemoine",
+              "list_station": [
+                "Gare d'Austerlitz",
+                "Jussieu",
+                "Cardinal Lemoine"
+              ]
+            },
+            "instruction": "A la station Gare d'Austerlitz, prenez la correspondance entre la ligne 5 et la ligne 10 en direction de Boulogne—Pont de Saint-Cloud jusqu'à Cardinal Lemoine",
+            "comment": null
+          },
+          {
+            "step": 31,
+            "name": "CARDINALLEMOINE",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Cardinal Lemoine à Panthéon pendant 0:06:01",
+              "distance": 0,
+              "duration": 361.796606083891,
+              "start_latitude": 48.847139,
+              "start_longitude": 2.351203,
+              "end_latitude": 48.846207776662936,
+              "end_longitude": 2.345901099999992
+            },
+            "instruction": "Marcher de la station Cardinal Lemoine à Panthéon pendant 0:06:01",
+            "comment": null
+          },
+          {
+            "step": 32,
+            "name": "Panthéon",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "4317b881-89a8-f937-383a-501ba30eb553",
+              "name": "Panthéon",
+              "website": "http://www.paris-pantheon.fr/",
+              "latitude": 48.846207776662936,
+              "longitude": 2.345901099999992,
+              "address": "Panthéon\nPlace du Panthéon\n75005 Paris",
+              "phone": "+33 1 44 32 18 00",
+              "description": "Sa silhouette et son dôme se détachent sur la montagne Sainte-Geneviève, colline historique du Quartier latin. Cette ancienne église dédiée à la sainte patronne de Paris abrite dans sa crypte, depuis la Révolution française, une nécropole de grands personnages de la république - dont Voltaire, Rousseau, Victor Hugo, Alexandre Dumas, Zola, Pierre et Marie Curie et Simone Veil. Sur son fronton est inscrit \"Aux grands hommes la patrie reconnaissante\".",
+              "classname": [
+                "CulturalSite",
+                "RemarkableBuilding"
+              ],
+              "duration": 60
+            },
+            "instruction": "Panthéon",
+            "comment": null
+          },
+          {
+            "step": 33,
+            "name": "Panthéon",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Panthéon à la station Cardinal Lemoine pendant 0:06:01",
+              "distance": 0,
+              "duration": 361.79660608389105,
+              "start_latitude": 48.846207776662936,
+              "start_longitude": 2.345901099999992,
+              "end_latitude": 48.847139,
+              "end_longitude": 2.351203
+            },
+            "instruction": "Marcher de Panthéon à la station Cardinal Lemoine pendant 0:06:01",
+            "comment": null
+          },
+          {
+            "step": 34,
+            "name": "CARDINALLEMOINE",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 10 en direction de Gare d'Austerlitz jusqu'à Odéon",
+              "duration": 99.68595563207248,
+              "line": "10",
+              "direction": "Gare d'Austerlitz",
+              "nb_stations": 4,
+              "final_station": "Odéon",
+              "list_station": [
+                "Cardinal Lemoine",
+                "Maubert—Mutualité",
+                "Cluny—La Sorbonne",
+                "Odéon"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 10 en direction de Gare d'Austerlitz jusqu'à Odéon",
+            "comment": null
+          },
+          {
+            "step": 35,
+            "name": "ODEON",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Odéon, prenez la correspondance entre la ligne 10 et la ligne 4 en direction de Bagneux—Lucie Aubrac jusqu'à Gare de l'Est",
+              "duration": 298.9033797167015,
+              "line": "4",
+              "direction": "Bagneux—Lucie Aubrac",
+              "nb_stations": 10,
+              "final_station": "Gare de l'Est",
+              "list_station": [
+                "Odéon",
+                "Saint-Michel",
+                "Cité",
+                "Châtelet",
+                "Les Halles",
+                "Étienne Marcel",
+                "Réaumur—Sébastopol",
+                "Strasbourg—Saint-Denis",
+                "Château d'Eau",
+                "Gare de l'Est"
+              ]
+            },
+            "instruction": "A la station Odéon, prenez la correspondance entre la ligne 10 et la ligne 4 en direction de Bagneux—Lucie Aubrac jusqu'à Gare de l'Est",
+            "comment": null
+          },
+          {
+            "step": 36,
+            "name": "GAREDELEST",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "A la station Gare de l'Est, prenez la correspondance entre la ligne 4 et la ligne 7 en direction de Le Kremlin—Bicêtre jusqu'à Porte de la Villette",
+              "duration": 284.83310336664067,
+              "line": "7",
+              "direction": "Le Kremlin—Bicêtre",
+              "nb_stations": 8,
+              "final_station": "Porte de la Villette",
+              "list_station": [
+                "Gare de l'Est",
+                "Château-Landon",
+                "Louis Blanc",
+                "Stalingrad",
+                "Riquet",
+                "Crimée",
+                "Corentin Cariou",
+                "Porte de la Villette"
+              ]
+            },
+            "instruction": "A la station Gare de l'Est, prenez la correspondance entre la ligne 4 et la ligne 7 en direction de Le Kremlin—Bicêtre jusqu'à Porte de la Villette",
+            "comment": null
+          },
+          {
+            "step": 37,
+            "name": "PORTEDELAVILLETTE",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Porte de la Villette à Cité des Sciences et de l'Industrie pendant 0:03:27",
+              "distance": 0,
+              "duration": 207.8963839502694,
+              "start_latitude": 48.89709,
+              "start_longitude": 2.38588,
+              "end_latitude": 48.895724,
+              "end_longitude": 2.388256
+            },
+            "instruction": "Marcher de la station Porte de la Villette à Cité des Sciences et de l'Industrie pendant 0:03:27",
+            "comment": null
+          },
+          {
+            "step": 38,
+            "name": "Cité des Sciences et de l'Industrie",
+            "step_type": "Visiter",
+            "step_detail": {
+              "id": "678511",
+              "name": "Cité des Sciences et de l'Industrie",
+              "website": "http://www.cite-sciences.fr/",
+              "latitude": 48.895724,
+              "longitude": 2.388256,
+              "address": "Cité des Sciences et de l'Industrie\n30 avenue Corentin Cariou\n75019 Paris",
+              "phone": "+33 1 85 53 99 74",
+              "description": "Cette étonnante réalisation architecturale, située dans le parc de la Villette, s’est donnée une mission : faire de la science un jeu pour les enfants, tout en intéressant leurs parents.",
+              "classname": [
+                "CulturalSite",
+                "Museum"
+              ],
+              "duration": 60
+            },
+            "instruction": "Cité des Sciences et de l'Industrie",
+            "comment": null
+          },
+          {
+            "step": 39,
+            "name": "Cité des Sciences et de l'Industrie",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de Cité des Sciences et de l'Industrie à la station Porte de la Villette pendant 0:03:27",
+              "distance": 0,
+              "duration": 207.89638395026935,
+              "start_latitude": 48.895724,
+              "start_longitude": 2.388256,
+              "end_latitude": 48.89709,
+              "end_longitude": 2.38588
+            },
+            "instruction": "Marcher de Cité des Sciences et de l'Industrie à la station Porte de la Villette pendant 0:03:27",
+            "comment": null
+          },
+          {
+            "step": 40,
+            "name": "PORTEDELAVILLETTE",
+            "step_type": "Prendre le métro",
+            "step_detail": {
+              "name": "Prendre le métro ligne 7 en direction de La Courneuve—8 Mai 1945 jusqu'à Opéra",
+              "duration": 480.9678612905962,
+              "line": "7",
+              "direction": "La Courneuve—8 Mai 1945",
+              "nb_stations": 13,
+              "final_station": "Opéra",
+              "list_station": [
+                "Porte de la Villette",
+                "Corentin Cariou",
+                "Crimée",
+                "Riquet",
+                "Stalingrad",
+                "Louis Blanc",
+                "Château-Landon",
+                "Gare de l'Est",
+                "Poissonnière",
+                "Cadet",
+                "Le Peletier",
+                "Chaussée d'Antin—La Fayette",
+                "Opéra"
+              ]
+            },
+            "instruction": "Prendre le métro ligne 7 en direction de La Courneuve—8 Mai 1945 jusqu'à Opéra",
+            "comment": null
+          },
+          {
+            "step": 41,
+            "name": "OPERA",
+            "step_type": "Marcher",
+            "step_detail": {
+              "name": "Marcher de la station Opéra à Park Hyatt Paris-Vendôme pendant 0:03:50",
+              "distance": 0,
+              "duration": 230.14373826644078,
+              "start_latitude": 48.870636,
+              "start_longitude": 2.332353,
+              "end_latitude": 48.8686535,
+              "end_longitude": 2.330588900000066
+            },
+            "instruction": "Marcher de la station Opéra à Park Hyatt Paris-Vendôme pendant 0:03:50",
+            "comment": null
+          }
+        ]
+      }
+    ]
+  }
+}

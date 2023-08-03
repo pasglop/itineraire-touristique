@@ -1,4 +1,5 @@
 import json
+import os
 
 import pandas as pd
 import requests
@@ -37,6 +38,11 @@ class itinaryApi:
                              })
 
     def create_itinary_response(self, days, hotel_poi) -> dict | requests.Response:
+        if os.getenv('ENV') == 'test':
+            with open('stub.json') as json_file:
+                data = json.load(json_file)
+                return data['itinary']
+
         response = self._create_itinary(days, hotel_poi)
         if response.status_code == 200:
             data = response.json()
