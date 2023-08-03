@@ -1,27 +1,16 @@
 import dash
 import dash_leaflet as dl
-from dash import html, dcc, callback, Output, Input
+from dash import html, callback, Output, Input
 
-from source.dash.app.components.itinary import itinaryComponent
-from source.dash.app.utils.api import itinaryApi
+from .components.form import display_form
+from .components.itinary import ItinaryDisplay
 
 dash.register_page(__name__, path='/demo')
 
-iti = itinaryApi()
-hotels_df = iti.getHotelDataframe()
 
 layout = html.Div([
     html.H1('Démo de l\'application'),
-    html.Div([
-        html.Label('Nombre de jours de visite'),
-        dcc.Input(id='visitdays', type='number', min=1, max=10),
-        html.Label('Sélectionnez votre hôtel'),
-        dcc.Dropdown(id='basehotel',
-                     options=[{'label': name, 'value': id} for id, name in zip(hotels_df['id'], hotels_df['name'])]),
-        html.Button("Submit", id="submit-button", n_clicks=0)
-    ]),
-
-    html.Div(id='erreur-jours-visite'),
+    display_form(),
     html.Br(),
     html.Br(),
     dl.Map(id='map', children=[dl.TileLayer()], center=[48.8566, 2.3522], zoom=10,
@@ -61,11 +50,7 @@ layout = html.Div([
 def update_output(n_clicks, visitdays, basehotel):
     if n_clicks > 0:
         # Here you can send a POST request with the entered data.
-        iti = itinaryApi()
-        responseJson = iti.createItinaryDataFrame(visitdays, basehotel)
+        iti = ItinaryDisplay()
+        return iti.generate_itinary(visitdays, basehotel)
 
-        if responseJson is not None:
-            return itinaryComponent(responseJson)
-        else:
-            return f"Error: {responseJson.text}"  # Update the store with the error message.
     return {}

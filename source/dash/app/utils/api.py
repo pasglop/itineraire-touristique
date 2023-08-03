@@ -10,14 +10,14 @@ class itinaryApi:
         self.request = requests
         self.uri = "http://localhost:8000"
 
-    def getApiStatus(self):
+    def get_api_status(self):
         return requests.get(self.uri + "/").json()
 
-    def _getHotelList(self):
+    def _get_hotel_list(self):
         return requests.get(self.uri + "/poi_by_class/Hotel")
 
-    def getHotelDataframe(self):
-        response = self._getHotelList()
+    def get_hotel_dataframe(self):
+        response = self._get_hotel_list()
         if response.status_code == 200:
             data = response.json()
             df = pd.DataFrame(data['poi'])
@@ -25,7 +25,7 @@ class itinaryApi:
 
         return None
 
-    def _createItinary(self, days: int, poi: str):
+    def _create_itinary(self, days: int, poi: str):
         data = {
             "hotel_poi": poi,
             "days": days
@@ -36,9 +36,9 @@ class itinaryApi:
                                  'Content-Type': 'application/json'
                              })
 
-    def createItinaryDataFrame(self, days, hotel_poi):
-        response = self._createItinary(days, hotel_poi)
+    def create_itinary_response(self, days, hotel_poi) -> dict | requests.Response:
+        response = self._create_itinary(days, hotel_poi)
         if response.status_code == 200:
             data = response.json()
             return data['itinary']
-        return None
+        return response

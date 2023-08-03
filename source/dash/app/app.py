@@ -1,15 +1,7 @@
-import json
-import sys
-
 import dash
-import requests
-from dash import Dash, Output, Input, callback
+from dash import Dash
 from dash import dcc
 from dash import html
-from dash.dependencies import State, MATCH, ALL
-
-from source.dash.app.components.itinary import itinaryComponent
-from source.dash.app.utils.api import itinaryApi
 
 external_stylesheets = [
     'https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap',  # Police calligraphique
