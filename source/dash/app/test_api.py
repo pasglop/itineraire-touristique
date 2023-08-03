@@ -2,6 +2,7 @@ import json
 
 import pandas as pd
 
+from .pages.components.itinary import ItinaryDisplay
 from .pages.utils.api import itinaryApi
 
 
@@ -86,3 +87,19 @@ def test_should_get_poi_detail():
     assert status_code == 200
     assert isinstance(data, dict)
     assert data['id'] == poi_id
+
+def test_should_get_poi_list_for_map():
+    """
+    Request API to get the list of Hotels as a dataframe
+    :return:
+    """
+
+    days = 4
+    hotel_poi = "226b4112-02fd-bbc4-0a6b-501b9f9d1089"
+    iti = ItinaryDisplay(days, hotel_poi)
+    res = iti.get_poi_list()
+    assert isinstance(res, list)
+    assert len(res) == days
+    assert isinstance(res[0], dict)
+    assert isinstance(res[0]['pois'], list)
+

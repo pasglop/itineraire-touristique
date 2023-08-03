@@ -1,6 +1,9 @@
+import random
+
 import dash
 from dash import callback, Output, Input
 import dash_leaflet as dl
+from dash_extensions.javascript import assign
 
 from ..utils.api import itinaryApi
 
@@ -9,29 +12,33 @@ def display_map():
     return dl.Map(id='map', children=[dl.TileLayer()], center=[48.8566, 2.3522], zoom=12,
            style={'width': '100%', 'height': '50vh'})
 
-def generate_additional_markers(name: str, lat: float, long: float):
-    markers = []
-    marker = dl.Marker(position=[lat, long],
-                       children=[dl.Tooltip(name)])
-    markers.append(marker)
 
-    return markers
+class ShowMap:
+    def __init__(self):
+        self.markers = []
 
+    def get(self):
+        return self.markers
 
-@callback(
-    Output('map', 'children'),
-    [Input('basehotel', 'value')]
-)
-def afficher_hotel(val):
-    children = [dl.TileLayer()]
-    if val is not None:
-        # call API POI with val
+    def display_hotel(self, hotel_poi):
         iti = itinaryApi()
-        status, poi = iti.get_poi_detail(val)
+        status, poi = iti.get_poi_detail(hotel_poi)
 
         if status == 402:
-            return poi['detail']
+            return {'error': poi['detail']}
 
-        children.extend(generate_additional_markers(poi['name'], poi['latitude'], poi['longitude']))
+        name = f"Votre Hôtel : {poi['address']}"
+        marker = dl.Marker(position=[poi['latitude'], poi['longitude']],
+                           children=[dl.Tooltip(name)])
+        self.markers.append(marker)
 
-    return children
+    def display_itinary(self, hotel_poi, poi_list: list):
+        self.display_hotel(hotel_poi)
+        for day in poi_list:
+            day_color = ["#"+''.join([random.choice('ABCDEF0123456789') for i in range(6)])]
+            for poi in day['pois']:
+                marker = dl.Marker(position=[poi['latitude'], poi['longitude']],
+                               children=[dl.Tooltip(poi['name'])])
+                self.markers.append(marker)
+
+        return self.get()

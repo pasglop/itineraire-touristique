@@ -4,7 +4,7 @@ from dash import html, callback, Output, Input
 
 from .components.form import display_form
 from .components.itinary import ItinaryDisplay
-from .components.map import display_map
+from .components.map import display_map, ShowMap
 
 dash.register_page(__name__, path='/demo')
 
@@ -42,15 +42,31 @@ layout = html.Div([
 
 
 @callback(
-    Output("output", "children"),
-    Input("submit-button", "n_clicks"),
-    [dash.dependencies.State("visitdays", "value"),
-     dash.dependencies.State("basehotel", "value")]
+    [
+        Output("output", "children"),
+        Output("map", "children")],
+    [
+        Input("submit-button", "n_clicks"),
+        Input("basehotel", "value")],
+    [dash.dependencies.State("visitdays", "value")]
 )
-def update_output(n_clicks, visitdays, basehotel):
+def update_output(n_clicks, basehotel, visitdays):
+    map = ShowMap()
+    maplayer = [dl.TileLayer()]
     if n_clicks > 0:
         # Here you can send a POST request with the entered data.
-        iti = ItinaryDisplay()
-        return iti.generate_itinary(visitdays, basehotel)
+        iti = ItinaryDisplay(visitdays, basehotel)
+        list_itinary = iti.generate_itinary()
+        display_itinary = map.display_itinary(basehotel, iti.get_poi_list())
 
-    return {}
+        maplayer.extend(display_itinary)
+
+        return list_itinary, maplayer
+
+    elif basehotel is not None:
+        # call API POI with val
+        map.display_hotel(basehotel)
+        maplayer.extend(map.get())
+        return None, maplayer
+
+    return {}, maplayer

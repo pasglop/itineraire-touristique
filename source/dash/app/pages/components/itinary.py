@@ -3,12 +3,13 @@ from dash import html
 from source.dash.app.pages.utils.api import itinaryApi
 
 
-
 class ItinaryDisplay:
-    def __init__(self):
+    def __init__(self, visitdays, basehotel):
         self.responseJson = None
         self.raw_layout = []
         self.layout = None
+        self.visit_days = visitdays
+        self.base_hotel = basehotel
 
     def _build(self):
         for day_index, day in enumerate(self.responseJson['days']):
@@ -54,14 +55,33 @@ class ItinaryDisplay:
     def get(self):
         return self.layout
 
-    def generate_itinary(self, visitdays, basehotel):
-        iti = itinaryApi()
-        self.responseJson = iti.create_itinary_response(visitdays, basehotel)
-        if self.responseJson is not None:
+    def generate_itinary(self):
+        if self._get_itinary():
             self._build()
-            self.process_poi()
             return self.get()
         return None
 
-    def process_poi(self):
-        pass
+    def _get_itinary(self) -> bool:
+        if self.responseJson is not None:
+            return True
+        iti = itinaryApi()
+        self.responseJson = iti.create_itinary_response(self.visit_days, self.base_hotel)
+        if self.responseJson is not None:
+            return True
+        return False
+
+    def get_poi_list(self):
+        if self._get_itinary():
+            list_pois = []
+            for day_index, day in enumerate(self.responseJson['days']):
+                poi = {
+                    'day': day_index + 1,
+                    'pois': []
+                }
+                for step in day['steps']:
+                    if step['step_type'] == 'Visiter':
+                        poi['pois'].append(step['step_detail'])
+
+                list_pois.append(poi)
+
+            return list_pois
