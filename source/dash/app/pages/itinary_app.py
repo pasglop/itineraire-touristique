@@ -4,6 +4,7 @@ from dash import html, callback, Output, Input
 
 from .components.form import display_form
 from .components.itinary import ItinaryDisplay
+from .components.map import display_map
 
 dash.register_page(__name__, path='/demo')
 
@@ -13,8 +14,7 @@ layout = html.Div([
     display_form(),
     html.Br(),
     html.Br(),
-    dl.Map(id='map', children=[dl.TileLayer()], center=[48.8566, 2.3522], zoom=10,
-           style={'width': '100%', 'height': '50vh'}),
+    display_map(),
     html.Br(),
     html.Div(id='output'),
     html.Br(),

@@ -1,6 +1,7 @@
 from dash import html
 
-from source.dash.app.utils.api import itinaryApi
+from source.dash.app.pages.utils.api import itinaryApi
+
 
 
 class ItinaryDisplay:
@@ -58,5 +59,9 @@ class ItinaryDisplay:
         self.responseJson = iti.create_itinary_response(visitdays, basehotel)
         if self.responseJson is not None:
             self._build()
+            self.process_poi()
             return self.get()
         return None
+
+    def process_poi(self):
+        pass

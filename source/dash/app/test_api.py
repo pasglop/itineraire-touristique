@@ -1,10 +1,8 @@
 import json
 
 import pandas as pd
-import pytest
-from dash.testing.application_runners import import_app
 
-from .utils.api import itinaryApi
+from .pages.utils.api import itinaryApi
 
 
 def validateJSON(jsonData):
@@ -74,3 +72,17 @@ def test_should_get_valid_for_itinary():
     iti = itinaryApi()
     data = iti.create_itinary_response(days, hotel_poi)
     assert len(data['days']) == days
+
+
+def test_should_get_poi_detail():
+    """
+    Request API to get the list of Hotels as a dataframe
+    :return:
+    """
+    poi_id = "226b4112-02fd-bbc4-0a6b-501b9f9d1089"
+
+    iti = itinaryApi()
+    status_code, data = iti.get_poi_detail(poi_id)
+    assert status_code == 200
+    assert isinstance(data, dict)
+    assert data['id'] == poi_id
