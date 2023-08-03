@@ -51,13 +51,13 @@ layout = html.Div([
     [dash.dependencies.State("visitdays", "value")]
 )
 def update_output(n_clicks, basehotel, visitdays):
-    map = ShowMap()
+    itimap = ShowMap()
     maplayer = [dl.TileLayer()]
     if n_clicks > 0:
         # Here you can send a POST request with the entered data.
         iti = ItinaryDisplay(visitdays, basehotel)
         list_itinary = iti.generate_itinary()
-        display_itinary = map.display_itinary(basehotel, iti.get_poi_list())
+        display_itinary = itimap.display_itinary(basehotel, iti.get_poi_list())
 
         maplayer.extend(display_itinary)
 
@@ -65,8 +65,7 @@ def update_output(n_clicks, basehotel, visitdays):
 
     elif basehotel is not None:
         # call API POI with val
-        map.display_hotel(basehotel)
-        maplayer.extend(map.get())
-        return None, maplayer
+        maplayer.extend(itimap.display_hotel(basehotel))
+        return {}, maplayer
 
     return {}, maplayer

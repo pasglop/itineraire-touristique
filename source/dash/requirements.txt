@@ -6,3 +6,5 @@ requests~=2.31.0
 python-dateutil~=2.8.2
 pandas
 pytest
+dash-bootstrap-components
+protobuf==3.20.*
