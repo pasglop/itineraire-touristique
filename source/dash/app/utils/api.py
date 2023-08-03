@@ -39,7 +39,8 @@ class itinaryApi:
 
     def create_itinary_response(self, days, hotel_poi) -> dict | requests.Response:
         if os.getenv('ENV') == 'test':
-            with open('stub.json') as json_file:
+            with open(os.path.abspath("stub.json")) as json_file:
+                
                 data = json.load(json_file)
                 return data['itinary']
 

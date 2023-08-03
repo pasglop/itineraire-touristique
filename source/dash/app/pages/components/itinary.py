@@ -10,8 +10,8 @@ class ItinaryDisplay:
         self.layout = None
 
     def _build(self):
-        for day in self.responseJson['days']:
-            self._day_header(day + 1)
+        for day_index, day in enumerate(self.responseJson['days']):
+            self._day_header(day_index + 1)
             for step in day['steps']:
                 match step['step_type']:
                     case 'Visiter':
