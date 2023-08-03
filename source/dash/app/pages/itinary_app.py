@@ -1,8 +1,9 @@
 import dash
 import pandas as pd
 import dash_leaflet as dl
-from dash import html, dcc
+from dash import html, dcc, Output, Input
 
+from source.dash.app import app
 from source.dash.app.utils.api import itinaryApi
 
 dash.register_page(__name__, path='/demo')
@@ -11,26 +12,23 @@ iti = itinaryApi()
 hotels_df = iti.getHotelDataframe()
 
 layout = html.Div([
-    html.H1('Démo de l\'application', style={'textAlign': 'center', 'color': 'mediumturquoise'}),
+    html.H1('Démo de l\'application'),
     html.Div([
-        html.Div([
-            html.Label('Nombre de jours de visite', style={'textAlign': 'center'}),
-            dcc.Input(id='jours-visite', type='number', min=0, max=10, style={'width': '600px'}),
-        ], style={'display': 'flex', 'flexDirection': 'column', 'alignItems': 'center', 'marginRight': '20px'}),
-        html.Div([
-            html.Label('Sélectionnez votre hôtel', style={'textAlign': 'center'}),
-            dcc.Dropdown(id='menu-deroulant',
-                         options=[{'label': hotel['name'], 'value': index} for index, hotel in hotels_df.iterrows()],
-                         style={'width': '600px'}),
-        ], style={'display': 'flex', 'flexDirection': 'column', 'alignItems': 'center', 'marginLeft': '20px'}),
-    ], style={'display': 'flex', 'justifyContent': 'center', 'alignItems': 'center'}),
-    html.Div(id='erreur-jours-visite', style={'color': 'red', 'textAlign': 'center'}),
+        html.Label('Nombre de jours de visite'),
+        dcc.Input(id='visitdays', type='number', min=1, max=10),
+        html.Label('Sélectionnez votre hôtel'),
+        dcc.Dropdown(id='basehotel',
+                     options=[{'label': name, 'value': id} for id, name in zip(hotels_df['id'], hotels_df['name'])]),
+        html.Button("Submit", id="submit-button", n_clicks=0)
+    ]),
+
+    html.Div(id='erreur-jours-visite'),
     html.Br(),
     html.Br(),
     dl.Map(id='map', children=[dl.TileLayer()], center=[48.8566, 2.3522], zoom=10,
            style={'width': '100%', 'height': '50vh'}),
     html.Br(),
-    html.Br(),
+    html.Div(id='output'),
     html.Br(),
     html.Br(),
     html.Br(),

@@ -1,6 +1,4 @@
 FROM python:3.10-buster
-ENV API_HOST="localhost"
-ENV API_PORT="8000"
 WORKDIR /code
 COPY api/requirements.txt /code/requirements.txt
 RUN pip install --no-cache-dir --upgrade pip \

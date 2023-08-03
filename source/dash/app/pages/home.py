@@ -6,7 +6,7 @@ dash.register_page(__name__, path='/')
 
 layout = html.Div([
     html.Div([
-        html.A('Démo de l\'application', href='/page-3', style={
+        html.A('Démo de l\'application', href='/demo', style={
             'font-family': 'Roboto',
             'background-color': 'orange',
             'color': 'white',
