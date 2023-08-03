@@ -3,13 +3,13 @@ import sys
 
 import dash
 import requests
-from dash import Dash, Output, Input
+from dash import Dash, Output, Input, callback
 from dash import dcc
 from dash import html
+from dash.dependencies import State, MATCH, ALL
 
-from utils.api import itinaryApi
-
-sys.path.append('..')
+from source.dash.app.components.itinary import itinaryComponent
+from source.dash.app.utils.api import itinaryApi
 
 external_stylesheets = [
     'https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap',  # Police calligraphique
@@ -36,27 +36,6 @@ app.layout = html.Div([
 
     dash.page_container
 ])
-
-
-@app.callback(
-    Output("output", "children"),
-    Input("submit-button", "n_clicks"),
-    [dash.dependencies.State("visitdays", "value"),
-     dash.dependencies.State("basehotel", "value")]
-)
-def update_output(n_clicks, visitdays, basehotel):
-    if n_clicks > 0:
-        # Here you can send a POST request with the entered data.
-        iti = itinaryApi()
-        response = iti._createItinary(visitdays, basehotel)
-
-        if response.status_code == 200:
-            data = response.json()  # Update the store with the response.
-            return json.dumps(data, indent=2)
-        else:
-            return f"Error: {response.text}"  # Update the store with the error message.
-    return {}
-
 
 
 if __name__ == '__main__':

@@ -1,9 +1,8 @@
 import dash
-import pandas as pd
 import dash_leaflet as dl
-from dash import html, dcc, Output, Input
+from dash import html, dcc, callback, Output, Input
 
-from source.dash.app import app
+from source.dash.app.components.itinary import itinaryComponent
 from source.dash.app.utils.api import itinaryApi
 
 dash.register_page(__name__, path='/demo')
@@ -51,3 +50,22 @@ layout = html.Div([
         })
     ])
 ], style={'alignItems': 'center'})
+
+
+@callback(
+    Output("output", "children"),
+    Input("submit-button", "n_clicks"),
+    [dash.dependencies.State("visitdays", "value"),
+     dash.dependencies.State("basehotel", "value")]
+)
+def update_output(n_clicks, visitdays, basehotel):
+    if n_clicks > 0:
+        # Here you can send a POST request with the entered data.
+        iti = itinaryApi()
+        responseJson = iti.createItinaryDataFrame(visitdays, basehotel)
+
+        if responseJson is not None:
+            return itinaryComponent(responseJson)
+        else:
+            return f"Error: {responseJson.text}"  # Update the store with the error message.
+    return {}

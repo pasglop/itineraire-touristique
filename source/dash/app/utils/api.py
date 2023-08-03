@@ -1,3 +1,5 @@
+import json
+
 import pandas as pd
 import requests
 
@@ -28,7 +30,6 @@ class itinaryApi:
             "hotel_poi": poi,
             "days": days
         }
-        print(data)
         return requests.post(self.uri + "/itinary/",
                              json=data,
                              headers={
@@ -39,7 +40,5 @@ class itinaryApi:
         response = self._createItinary(days, hotel_poi)
         if response.status_code == 200:
             data = response.json()
-            df = pd.DataFrame(data['itinary'])
-            return df
-
+            return data['itinary']
         return None
