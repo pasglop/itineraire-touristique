@@ -3,35 +3,52 @@ from dash import html
 from source.dash.app.utils.api import itinaryApi
 
 
-def itinaryComponent(responseJson):
-    raw_layout = []
-    for day in responseJson['days']:
-        for step in day['steps']:
-            raw_layout.append(
-                html.H4(step['name'])
-            )
-            raw_layout.append(
-                html.P(step['instruction'])
-            )
-
-    return html.Div(raw_layout)
-
 class ItinaryDisplay:
     def __init__(self):
         self.responseJson = None
         self.raw_layout = []
         self.layout = None
 
-    def build(self):
+    def _build(self):
         for day in self.responseJson['days']:
+            self._day_header(day + 1)
             for step in day['steps']:
-                self.raw_layout.append(
-                    html.H4(step['name'])
-                )
-                self.raw_layout.append(
-                    html.P(step['instruction'])
-                )
+                match step['step_type']:
+                    case 'Visiter':
+                        self._visit_card(step)
+                    case 'Marcher':
+                        self._walk_card(step)
+                    case 'Prendre le métro':
+                        self._subway_card(step)
+
         self.layout = html.Div(self.raw_layout)
+
+    def _walk_card(self, step):
+        self.raw_layout.append(
+            html.H4(step['name'])
+        )
+        self.raw_layout.append(
+            html.P(step['instruction'])
+        )
+
+    def _visit_card(self, step):
+        self.raw_layout.append(
+            html.H4(step['name'])
+        )
+        self.raw_layout.append(
+            html.P(step['instruction'])
+        )
+
+    def _subway_card(self, step):
+        self.raw_layout.append(
+            html.H4(step['name'])
+        )
+        self.raw_layout.append(
+            html.P(step['instruction'])
+        )
+
+    def _day_header(self, day):
+        self.raw_layout.append(f"Jour {day}")
 
     def get(self):
         return self.layout
@@ -40,6 +57,6 @@ class ItinaryDisplay:
         iti = itinaryApi()
         self.responseJson = iti.create_itinary_response(visitdays, basehotel)
         if self.responseJson is not None:
-            self.build()
+            self._build()
             return self.get()
         return None
