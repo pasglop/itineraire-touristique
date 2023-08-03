@@ -1,6 +1,8 @@
+import dash
 from dash import html
+import dash_bootstrap_components as dbc
 
-from source.dash.app.pages.utils.api import itinaryApi
+from ..utils.api import itinaryApi
 
 
 class ItinaryDisplay:
@@ -12,8 +14,9 @@ class ItinaryDisplay:
         self.base_hotel = basehotel
 
     def _build(self):
+        day_layout = []
         for day_index, day in enumerate(self.responseJson['days']):
-            self._day_header(day_index + 1)
+            self.raw_layout = []
             for step in day['steps']:
                 match step['step_type']:
                     case 'Visiter':
@@ -23,27 +26,56 @@ class ItinaryDisplay:
                     case 'Prendre le métro':
                         self._subway_card(step)
 
-        self.layout = html.Div(self.raw_layout)
+            day_layout.append(dbc.AccordionItem(
+                self.raw_layout,
+                title=f"Jour {day_index + 1}"
+            ))
+
+        self.layout = html.Div(
+            dbc.Accordion(
+                day_layout
+            ))
 
     def _walk_card(self, step):
         self.raw_layout.append(
-            html.H4(step['name'])
+            html.Img(src=dash.get_asset_url('walking.png'))
+        )
+
+        self.raw_layout.append(
+            html.H5(step['name'])
         )
         self.raw_layout.append(
             html.P(step['instruction'])
         )
 
     def _visit_card(self, step):
-        self.raw_layout.append(
-            html.H4(step['name'])
+
+        body = [html.Img(src=dash.get_asset_url('map.png'), className="card-img-left", alt="..."),
+                html.H4(f"Visiter {step['name']}", className="card-title"),
+                html.H6(step['step_detail']['address'], className="card-subtitle"),
+                html.P(step['step_detail']['description'], className="card-text")]
+        if step['step_detail']['website'] is not None:
+            body.append(
+                dbc.CardLink("Site web", href=step['step_detail']['website'])
+            )
+        card = dbc.Card(
+            dbc.CardBody(
+                body
+            ),
+            style={"width": "100%"},
         )
         self.raw_layout.append(
-            html.P(step['instruction'])
+            card
         )
 
     def _subway_card(self, step):
+
         self.raw_layout.append(
-            html.H4(step['name'])
+            html.Img(src=dash.get_asset_url('icons/metro.png'))
+        )
+
+        self.raw_layout.append(
+            html.H5(step['name'])
         )
         self.raw_layout.append(
             html.P(step['instruction'])
