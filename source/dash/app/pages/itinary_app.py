@@ -3,9 +3,12 @@ import pandas as pd
 import dash_leaflet as dl
 from dash import html, dcc
 
+from source.dash.app.utils.api import itinaryApi
+
 dash.register_page(__name__, path='/demo')
 
-hotels_df = pd.DataFrame()
+iti = itinaryApi()
+hotels_df = iti.getHotelDataframe()
 
 layout = html.Div([
     html.H1('Démo de l\'application', style={'textAlign': 'center', 'color': 'mediumturquoise'}),

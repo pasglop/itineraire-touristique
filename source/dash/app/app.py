@@ -1,7 +1,11 @@
+import sys
+
 import dash
 from dash import Dash
 from dash import dcc
 from dash import html
+
+sys.path.append('..')
 
 external_stylesheets = [
     'https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap',  # Police calligraphique
