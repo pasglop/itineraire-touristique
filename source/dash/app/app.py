@@ -1,17 +1,24 @@
 import dash
 from dash import Dash
-from dash import dcc
 from dash import html
 import dash_bootstrap_components as dbc
 
+from pages.components.navbar import navbar
+
 external_stylesheets = [
-    dbc.themes.SIMPLEX
+    dbc.themes.FLATLY
 ]
+
 
 app = Dash(__name__, external_stylesheets=external_stylesheets, use_pages=True)
 
 app.layout = html.Div([
-    dash.page_container
+    navbar,
+    dbc.Container([
+        dash.page_container
+    ]
+    , className="pt-4 pb-4", fluid=True),
+
 ])
 
 

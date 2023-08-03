@@ -1,6 +1,7 @@
 import dash
 import dash_leaflet as dl
 from dash import html, callback, Output, Input
+import dash_bootstrap_components as dbc
 
 from .components.form import display_form
 from .components.itinary import ItinaryDisplay
@@ -9,35 +10,16 @@ from .components.map import display_map, ShowMap
 dash.register_page(__name__, path='/demo')
 
 
-layout = html.Div([
-    html.H1('Démo de l\'application'),
-    display_form(),
+layout = dbc.Container([
+    dbc.Row([
+        display_form()]
+    ),
     html.Br(),
+    dbc.Row([
+        display_map()]
+    ),
     html.Br(),
-    display_map(),
-    html.Br(),
-    html.Div(id='output'),
-    html.Br(),
-    html.Br(),
-    html.Br(),
-    html.Br(),
-    html.Br(),
-    html.Div([
-        html.A('Revenir à la page d\'accueil', href='/', style={
-            'font-family': 'Roboto',  # On peut remplacer Roboto par la police de notre choix
-            'background-color': 'orange',
-            'color': 'white',
-            'padding': '10px 20px',
-            'border-radius': '5px',
-            'text-decoration': 'none',
-            'font-weight': 'bold',
-            'display': 'block',
-            'text-align': 'center',
-            'margin': 'auto',
-            'width': '200px',
-            'boxShadow': '0px 10px 20px 0px rgba(0,0,0,0.3)'  # Effet ombragé
-        })
-    ])
+    dbc.Row(id='output'),
 ], style={'alignItems': 'center'})
 
 
