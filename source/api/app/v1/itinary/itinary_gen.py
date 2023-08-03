@@ -280,7 +280,9 @@ class ItinaryGenerator:
             direction=dir,
             nb_stations=nb_stations,
             final_station=final_station,
-            list_station=list_station
+            list_station=list_station,
+            latitude=current_step.get('latitude'),
+            longitude=current_step.get('longitude'),
         )
 
     def _map_to_visit(self, step_detail) -> VisitDetailSchema:

@@ -71,9 +71,13 @@ class ShowMap:
             day_color = self._pick_color()
             positions = [[self.hotel['latitude'], self.hotel['longitude']]]
             for poi in day['pois']:
+                if poi['type'] == 'metro':
+                    type = poi['type']
+                else:
+                    type = day_color['name']
                 geo_markers.append(dict(
                     name=poi['name'],
-                    type=day_color['name'],
+                    type=type,
                     lat=poi['latitude'],
                     lon=poi['longitude']
                 ))

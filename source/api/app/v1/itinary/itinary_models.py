@@ -49,6 +49,8 @@ class SubwayDetailSchema(BaseModel):
     nb_stations: int
     final_station: str
     list_station: list[str]
+    latitude: float
+    longitude: float
 
     class Config:
         json_schema_extra = {
@@ -57,7 +59,14 @@ class SubwayDetailSchema(BaseModel):
                 "duration": 14,
                 "line": "6",
                 "direction": "Charles de Gaulle Etoile",
-                "nb_stations": 10
+                "nb_stations": 10,
+                "final_station": "Charles de Gaulle Etoile",
+                "list_station": [
+                    "Bir-Hakeim",
+                    "Dupleix",
+                ],
+                "latitude": 48.85836,
+                "longitude": 2.294543
             }
         }
 

@@ -80,8 +80,12 @@ class ItinaryDisplay:
                 }
                 for step in day['steps']:
                     if step['step_type'] == 'Visiter':
+                        step['step_detail']['type'] = 'visit'
                         poi['pois'].append(step['step_detail'])
-
+                    elif step['step_type'] == 'Prendre le métro':
+                        step['step_detail']['name'] = step['name']
+                        step['step_detail']['type'] = 'metro'
+                        poi['pois'].append(step['step_detail'])
                 list_pois.append(poi)
 
             return list_pois
