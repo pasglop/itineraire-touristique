@@ -9,7 +9,7 @@ class itinaryApi:
 
     def __init__(self):
         self.request = requests
-        self.uri = "http://localhost:8000"
+        self.uri = os.getenv("API_URL", "http://localhost:8000")
 
     def get_api_status(self):
         return requests.get(self.uri + "/").json()

@@ -1,9 +1,12 @@
+import sys
+
 import dash
 from dash import Dash
 from dash import html
 import dash_bootstrap_components as dbc
-
 from pages.components.navbar import navbar
+
+sys.path.append('..')
 
 external_stylesheets = [
     dbc.themes.FLATLY
@@ -23,4 +26,4 @@ app.layout = html.Div([
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True, host="0.0.0.0")
+    app.run_server(debug=True, host="0.0.0.0", port=8080)

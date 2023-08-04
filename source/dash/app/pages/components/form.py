@@ -1,6 +1,6 @@
 from dash import Output, Input, callback, html, dcc
 import dash_bootstrap_components as dbc
-from source.dash.app.pages.utils.api import itinaryApi
+from ..utils.api import itinaryApi
 
 
 def display_form():

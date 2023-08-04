@@ -28,7 +28,7 @@ navbar = dbc.Navbar(
                     align="center",
                     className="g-0",
                 ),
-                href="https://localhost:8050/",
+                href="http://localhost:8080/",
                 style={"textDecoration": "none"},
             ),
             dbc.NavbarToggler(id="navbar-toggler", n_clicks=0),
